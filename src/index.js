@@ -1,13 +1,18 @@
+/* IF NEEDED THEN SEPARATE app.js AND index.js WHERE
+  app.js will only have server related code
+  index.js will have all other code. */
 const express = require("express");
-const http = require("http");
+const cors = require("cors");
+const app = express();
 require("./db/mongoose");
-
 const port = process.env.PORT;
 
-const app = express();
-const server = http.createServer(app);
+const userRouter = require("./routers/users.routers");
 
 app.use(express.json());
-server.listen(port, () => {
-  console.log("Server is on at port ", port, "!!!");
+app.use(cors());
+app.use("/users", userRouter);
+
+app.listen(port, () => {
+  console.log("Server is on at port", port, "!!!");
 });

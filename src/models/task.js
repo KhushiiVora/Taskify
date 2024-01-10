@@ -13,14 +13,18 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  assignedTo: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    },
-  ],
+  // assignedTo: [
+  //   {
+  //     user: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: "User",
+  //     },
+  //   },
+  // ],
+  assignedTo: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "User",
+  },
 });
 
 taskSchema.virtual("taskCategory", {

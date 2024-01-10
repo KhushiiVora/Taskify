@@ -6,14 +6,18 @@ const taskCategorySchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  tasks: [
-    {
-      task: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Task",
-      },
-    },
-  ],
+  // tasks: [
+  //   {
+  //     task: {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: "Task",
+  //     },
+  //   },
+  // ],
+  tasks: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Task",
+  },
 });
 
 taskCategorySchema.virtual("workspace", {
