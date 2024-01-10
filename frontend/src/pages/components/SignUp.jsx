@@ -31,7 +31,7 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
     await axios
-      .post("/users/signup", formData)
+      .post("/auth/signup", formData)
       .then((res) => console.log(res.data))
       .catch((e) => console.log(e));
     navigate("/workspace");

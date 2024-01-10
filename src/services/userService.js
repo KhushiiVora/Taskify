@@ -1,10 +1,10 @@
 const User = require("../models/user");
 
 class userService {
-  signup = async (data) => {
+  register = async (data) => {
     const user = new User(data);
     try {
-      const savedUser = await user.save().then((savedUser) => savedUser);
+      const savedUser = await user.save();
       return { savedUser };
     } catch (error) {
       console.log(error);

@@ -7,11 +7,11 @@ const app = express();
 require("./db/mongoose");
 const port = process.env.PORT;
 
-const userRouter = require("./routers/users.routers");
+const authRouter = require("./routers/auth.routers");
 
 app.use(express.json());
 app.use(cors());
-app.use("/users", userRouter);
+app.use("/auth", authRouter);
 
 app.listen(port, () => {
   console.log("Server is on at port", port, "!!!");

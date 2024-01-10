@@ -2,8 +2,8 @@ const Joi = require("joi");
 const { joiPasswordExtendCore } = require("joi-password");
 const JoiPassword = Joi.extend(joiPasswordExtendCore);
 
-const userValidationSchema = Joi.object().keys({
-  username: Joi.string().required().max(25).min(3),
+const userSignupValidationSchema = Joi.object().keys({
+  username: Joi.string().alphanum().required().max(25).min(3),
   email: Joi.string().email().required().max(35),
   password: JoiPassword.string()
     .minOfSpecialCharacters(2)
@@ -14,4 +14,4 @@ const userValidationSchema = Joi.object().keys({
     .required(),
 });
 
-module.exports = { userValidationSchema };
+module.exports = { userSignupValidationSchema };
