@@ -5,9 +5,12 @@ const taskSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
+    validate: (value) =>
+      validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
   dueDate: {
     type: Date,
+    validate: (value) => validator.isDate(value),
   },
   state: {
     type: Boolean,

@@ -5,6 +5,8 @@ const taskCategorySchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: true,
+    validate: (value) =>
+      validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
   // tasks: [
   //   {

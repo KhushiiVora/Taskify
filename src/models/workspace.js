@@ -5,12 +5,16 @@ const workspaceSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    validate: (value) =>
+      validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
   code: {
     type: String,
     required: true,
     trim: true,
     unique: true,
+    validate: (value) =>
+      validator.isAlphanumeric(validator.blacklist(value, "_.")),
   },
   locked: {
     type: Boolean,
