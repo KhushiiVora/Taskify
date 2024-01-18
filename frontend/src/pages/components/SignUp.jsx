@@ -1,13 +1,19 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Checkbox from "@mui/material/Checkbox";
-import Input from "../atoms/Input";
-import { FormControlLabel } from "@mui/material";
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
 
+import { FormControl } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 export default function SignUp() {
-  const [displayPassword, setDisplayPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -15,9 +21,11 @@ export default function SignUp() {
   });
   const navigate = useNavigate();
 
-  function showPassword() {
-    setDisplayPassword(!displayPassword);
-  }
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   function handleChange(e) {
     const value = e.target.value;
@@ -31,7 +39,7 @@ export default function SignUp() {
   async function handleSubmit(e) {
     e.preventDefault();
     await axios
-      .post("/auth/signup", formData)
+      .post("/auth/signup", formData, { withCredentials: true })
       .then((res) => console.log(res.data))
       .catch((e) => console.log(e));
     navigate("/workspace");
@@ -41,31 +49,51 @@ export default function SignUp() {
     <div>
       SignUp page
       <form onSubmit={handleSubmit}>
-        <Input
+        <TextField
           name="username"
-          type="text"
+          id="outlined-basic"
+          label="Username"
+          variant="outlined"
+          onChange={handleChange}
           value={formData.username}
-          onChange={handleChange}
           required
         />
-        <Input
+        <TextField
           name="email"
+          id="outlined-basic"
+          label="Email"
           type="email"
+          variant="outlined"
+          onChange={handleChange}
           value={formData.email}
-          onChange={handleChange}
           required
         />
-        <Input
-          name="password"
-          type={displayPassword ? "text" : "password"}
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
-        <FormControlLabel
-          control={<Checkbox onChange={showPassword} />}
-          label="Show Password"
-        />
+        <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">
+            Password
+          </InputLabel>
+          <OutlinedInput
+            name="password"
+            id="outlined-adornment-password"
+            type={showPassword ? "text" : "password"}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </FormControl>
         <Button type="submit" text="Sign Up" />
       </form>
     </div>

@@ -16,6 +16,7 @@ const postSignup = async (req, res) => {
 };
 
 const postLogin = async (req, res) => {
+  console.log(req.headers);
   const result = await authService.login(req.body);
   if (result.isLoggedIn) {
     res.cookie("token", result.jwt, {

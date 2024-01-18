@@ -12,15 +12,6 @@ class userService {
     }
   };
 
-  saveToken = async (user, token) => {
-    try {
-      user.tokens = user.tokens.concat({ token });
-      await user.save();
-    } catch (error) {
-      console.log(error);
-      return error;
-    }
-  };
   findByUsername = async (username) => {
     try {
       const user = await User.findOne({
@@ -30,6 +21,15 @@ class userService {
     } catch (error) {
       console.log(error);
       return { error };
+    }
+  };
+
+  findById = async (userId) => {
+    try {
+      const user = await User.findOne({ _id: userId });
+      return user;
+    } catch (error) {
+      throw error;
     }
   };
 }

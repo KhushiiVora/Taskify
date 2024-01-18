@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FormControl } from "@mui/material";
+import validator from "validator";
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
 
 import TextField from "@mui/material/TextField";
 
+import { FormControl } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -18,7 +19,6 @@ export default function Login() {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
-    email: "",
   });
   const navigate = useNavigate();
 
@@ -39,6 +39,14 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const isEmail = validator.isEmail(formData.username);
+    if (isEmail) {
+      setFormData({
+        password: formData.password,
+        email: formData.username,
+      });
+    }
+    console.log(formData);
     await axios
       .post("/auth/login", formData, { withCredentials: true })
       .then((res) => console.log(res.data))
@@ -53,10 +61,9 @@ export default function Login() {
         <TextField
           name="username"
           id="outlined-basic"
-          label="Username"
+          label="Username or Email"
           variant="outlined"
           onChange={handleChange}
-          placeholder="Username or Email"
           value={formData.username}
           required
         />

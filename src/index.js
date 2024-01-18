@@ -9,6 +9,9 @@ const port = process.env.PORT;
 
 const authRouter = require("./routers/auth.routers");
 
+const passport = require("passport");
+const configurePassport = require("./config/passport");
+
 app.use(
   cors({
     origin: `http://localhost:5173`,
@@ -17,7 +20,10 @@ app.use(
   })
 );
 app.use(express.json());
+
 app.use("/auth", authRouter);
+
+configurePassport(passport);
 
 app.listen(port, () => {
   console.log("Server is on at port", port, "!!!");

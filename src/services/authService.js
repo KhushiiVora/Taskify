@@ -18,8 +18,7 @@ class AuthService {
 
     const token = this.generateToken(savedUser._id);
     if (token) {
-      const error = await userService.saveToken(savedUser, token);
-      if (!error) return { isSignedUp: true, jwt: token };
+      return { isSignedUp: true, jwt: token };
     }
     return { isSignedUp: true };
   };
@@ -32,19 +31,19 @@ class AuthService {
 
   /* 2. Login function */
   login = async (data) => {
-    const { username, password } = data;
-    const { user } = await userService.findByUsername(username);
+    const { username, password, email } = data;
+    const { user } = await userService.findByUsername(
+      username ? username : email
+    );
 
     if (user) {
-      console.log(user);
       const isValidPassword = bcrypt.compare(password, user.password);
 
       if (!isValidPassword) return { isLoggedIn: false };
 
       const token = this.generateToken(user._id);
       if (token) {
-        const error = await userService.saveToken(user, token);
-        if (!error) return { isLoggedIn: true, jwt: token };
+        return { isLoggedIn: true, jwt: token };
       }
       return { isLoggedIn: false };
     }

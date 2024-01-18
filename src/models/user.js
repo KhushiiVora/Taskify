@@ -29,15 +29,6 @@ const userSchema = new mongoose.Schema({
     validate: (value) =>
       validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
-  tokens: [
-    {
-      /*Each token in an tokens array will be an object with a single field called token.*/
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
 });
 
 // need to figure out whether the leader is included as members array also
