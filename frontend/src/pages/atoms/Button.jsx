@@ -1,10 +1,16 @@
 import React from "react";
 
 export default function Button(props) {
-  const { type, text } = props;
+  const { type, text, onClick, dataButton } = props;
   return (
     <>
-      <button type={type}>{text}</button>
+      {onClick ? (
+        <button type={type} onClick={onClick}>
+          {text}
+        </button>
+      ) : (
+        <button type={type}>{text}</button>
+      )}
     </>
   );
 }

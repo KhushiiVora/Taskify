@@ -1,6 +1,6 @@
 const User = require("../models/user");
 
-class userService {
+class UserService {
   register = async (data) => {
     const user = new User(data);
     try {
@@ -34,4 +34,4 @@ class userService {
   };
 }
 
-module.exports = userService;
+module.exports = UserService;

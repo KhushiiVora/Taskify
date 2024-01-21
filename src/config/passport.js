@@ -1,14 +1,14 @@
-const userService = new require("../services/userService");
-// const userService = new UserService();
+const UserService = require("../services/userService");
+const userService = new UserService();
 const JWTStrategy = require("passport-jwt").Strategy;
 require("dotenv").config();
 
 const secretKey = process.env.JWT_SECRET_KEY;
 
 const getTokenFromCookie = (req) => {
-  const token = null;
+  let token = null;
   if (req && req.cookies) {
-    const token = req.cookies["token"];
+    token = req.cookies["token"];
   }
   return token;
 };
@@ -17,10 +17,9 @@ const options = {
   jwtFromRequest: getTokenFromCookie,
   secretOrKey: secretKey,
 };
-
 const strategy = new JWTStrategy(options, async (payload, done) => {
   try {
-    const user = userService.findById(payload.userId);
+    const user = await userService.findById(payload.userId);
     return done(null, user);
   } catch (error) {
     return done(error, false);

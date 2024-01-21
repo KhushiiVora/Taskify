@@ -6,6 +6,7 @@ import Profile from "./pages/components/Profile";
 import SignUp from "./pages/components/SignUp";
 import Login from "./pages/components/Login";
 import Workspace from "./pages/components/Workspace";
+import Dashboard from "./pages/components/Dashboard";
 
 function App() {
   return (
@@ -16,8 +17,9 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
-          <Route path="workspace" element={<Workspace />} />
         </Route>
+        {/* <Route path="workspace" element={<Workspace />} /> */}
+        <Route path="dashboard/:username" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );

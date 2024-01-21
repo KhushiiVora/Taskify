@@ -29,11 +29,11 @@ export default function Login() {
   };
 
   function handleChange(e) {
-    const value = e.target.value;
+    const value = e?.target?.value;
 
     setFormData({
       ...formData,
-      [e.target.name]: value,
+      [e?.target?.name]: value,
     });
   }
 
@@ -49,9 +49,11 @@ export default function Login() {
     console.log(formData);
     await axios
       .post("/auth/login", formData, { withCredentials: true })
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data);
+        navigate(`/dashboard/${res.data.username}`);
+      })
       .catch((e) => console.log(e));
-    navigate("/workspace");
   }
 
   return (

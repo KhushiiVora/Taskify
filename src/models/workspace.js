@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const workspaceSchema = new mongoose.Schema({
   name: {
