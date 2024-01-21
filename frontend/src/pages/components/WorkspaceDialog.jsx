@@ -30,6 +30,13 @@ export default function WorkspaceDialog(props) {
         })
         .then((res) => console.log(res.data))
         .catch((error) => console.log(error));
+    } else {
+      await axios
+        .post(`/dashboard/workspace/${username}/join`, formData, {
+          withCredentials: true,
+        })
+        .then((res) => console.log(res.data))
+        .catch((error) => console.log(error));
     }
   }
 

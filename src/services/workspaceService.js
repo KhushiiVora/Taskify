@@ -6,7 +6,6 @@ const userService = new UserService();
 class WorkspaceService {
   saveWorkspace = async (username, data) => {
     const { user } = await userService.findByUsername(username);
-    console.log(user);
     const workspace = new Workspace(data);
 
     try {
@@ -18,6 +17,26 @@ class WorkspaceService {
       console.log(error);
       return { error };
     }
+  };
+  findWorkspace = async (code) => {
+    try {
+      const workspace = await Workspace.findOne({ code });
+      return { workspace };
+    } catch (error) {
+      console.log(error);
+      return { error };
+    }
+  };
+  joinWorkspace = async (username, data) => {
+    const { user } = await userService.findByUsername(username);
+    console.log(user);
+    const { workspace, error } = await this.findWorkspace(data.code);
+    if (workspace) {
+      workspace.members.push(user._id);
+      const updatedWorkspace = await workspace.save();
+      return { updatedWorkspace };
+    }
+    return { error };
   };
 }
 
