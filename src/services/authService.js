@@ -37,7 +37,7 @@ class AuthService {
     );
 
     if (user) {
-      const isValidPassword = bcrypt.compare(password, user.password);
+      const isValidPassword = await bcrypt.compare(password, user.password);
 
       if (!isValidPassword) return { isLoggedIn: false };
 
@@ -45,8 +45,8 @@ class AuthService {
       if (token) {
         return { isLoggedIn: true, jwt: token };
       }
-      return { isLoggedIn: false };
     }
+    return { isLoggedIn: false };
   };
 
   /* 3. Generate token function  */

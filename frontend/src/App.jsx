@@ -7,6 +7,7 @@ import SignUp from "./pages/components/SignUp";
 import Login from "./pages/components/Login";
 import Workspace from "./pages/components/Workspace";
 import Dashboard from "./pages/components/Dashboard";
+// import Certificate from "./this";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
+          {/* <Route
+            path="abc"
+            element={<Certificate name="khushi" title="abc" company="KHUSHI" />}
+          /> */}
         </Route>
         {/* <Route path="workspace" element={<Workspace />} /> */}
         <Route path="dashboard/:username" element={<Dashboard />} />

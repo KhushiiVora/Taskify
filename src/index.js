@@ -13,4 +13,3 @@ app.use("/auth", authRouter);
 app.use(authMiddleware);
 //it will return 401 unauthorized when token is not there
 app.use("/dashboard", dashboardRouter);
-
