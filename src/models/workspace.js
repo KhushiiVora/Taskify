@@ -1,14 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-// const isUnique = async (value) => {
-//   // Check if the value already exists in the User collection
-//   const count = await User.countDocuments({ username: value });
-
-//   // If count is greater than 0, the value is not unique
-//   return count === 0;
-// };
-
 const workspaceSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -41,7 +33,6 @@ const workspaceSchema = new mongoose.Schema({
     type: [mongoose.Schema.Types.ObjectId],
     ref: "User",
     required: true,
-    // validate: (value) => validator.isUnique(value),
   },
   /* leader ids will also be member ids */
   // members: [
@@ -52,15 +43,14 @@ const workspaceSchema = new mongoose.Schema({
   //     },
   //   },
   // ],
-  
+
   members: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "User",
     required: true,
-    // validate: {
-    //   validator: isUnique,
-    //   message: "Each member must be unique.",
-    // },
+    validate: (value) => {
+      console.log(value);
+    },
   },
   // taskCategories: [
   //   {
@@ -77,5 +67,6 @@ const workspaceSchema = new mongoose.Schema({
   },
 });
 
+// Define the model
 const Workspace = mongoose.model("Workspace", workspaceSchema);
 module.exports = Workspace;
