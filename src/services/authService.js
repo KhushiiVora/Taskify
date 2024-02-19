@@ -18,7 +18,7 @@ class AuthService {
 
     const token = this.generateToken(savedUser._id);
     if (token) {
-      return { isSignedUp: true, jwt: token };
+      return { isSignedUp: true, jwt: token, savedUser };
     }
     return { isSignedUp: true };
   };
@@ -43,7 +43,7 @@ class AuthService {
 
       const token = this.generateToken(user._id);
       if (token) {
-        return { isLoggedIn: true, jwt: token };
+        return { isLoggedIn: true, jwt: token, user };
       }
     }
     return { isLoggedIn: false };

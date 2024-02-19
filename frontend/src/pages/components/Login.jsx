@@ -5,7 +5,8 @@ import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
 
 import TextField from "@mui/material/TextField";
-
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FormControl } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -28,17 +29,17 @@ export default function Login() {
     event.preventDefault();
   };
 
-  function handleChange(e) {
-    const value = e?.target?.value;
+  function handleChange(event) {
+    const value = event?.target?.value;
 
     setFormData({
       ...formData,
-      [e?.target?.name]: value,
+      [event?.target?.name]: value,
     });
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     const isEmail = validator.isEmail(formData.username);
     if (isEmail) {
       setFormData({
@@ -49,11 +50,24 @@ export default function Login() {
     console.log(formData);
     await axios
       .post("/auth/login", formData, { withCredentials: true })
-      .then((res) => {
-        console.log(res.data);
-        navigate(`/dashboard/${res.data.username}`);
+      .then((response) => {
+        console.log("response.data", response.data);
+        navigate(`/dashboard/${response.data.username}`);
       })
-      .catch((e) => console.log(e));
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
   }
 
   return (
@@ -96,6 +110,7 @@ export default function Login() {
           />
         </FormControl>
         <Button type="submit" text="Login" />
+        <ToastContainer />
       </form>
     </div>
   );

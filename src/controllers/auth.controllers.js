@@ -1,17 +1,22 @@
 const AuthService = require("../services/authService");
+const ErrorService = require("../services/errorService");
+
 const authService = new AuthService();
+const errorService = new ErrorService();
 
 const postSignup = async (req, res) => {
   const result = await authService.signup(req.body);
   if (result.error) {
-    res.status(403).send(result.error);
+    console.log(result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
   if (result.jwt) {
     res.cookie("token", result.jwt, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    res.status(200).send("Successfully Signed Up");
+    res.status(200).send(result.savedUser);
   }
 };
 
@@ -22,9 +27,9 @@ const postLogin = async (req, res) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
     });
-    res.status(200).send("Successfully Logged In");
+    res.status(200).send(result.user);
   } else {
-    res.status(401).send("Authentication Failed");
+    res.status(401).send("Invalid username or password!");
   }
 };
 

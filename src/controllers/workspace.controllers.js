@@ -1,13 +1,20 @@
 const WorkspaceService = require("../services/workspaceService");
+const ErrorService = require("../services/errorService");
+
 const workspaceService = new WorkspaceService();
+const errorService = new ErrorService();
 
 const postCreateWorkspace = async (req, res) => {
   const result = await workspaceService.saveWorkspace(
     req.params.username,
     req.body
   );
-  if (result.savedWorkspace) res.status(200).json(result.savedWorkspace);
-  else res.status(500).send(result.error);
+  if (result.savedWorkspace) res.status(200).send(result.savedWorkspace);
+  else {
+    console.log(result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
+  }
 };
 
 const postJoinWorkspace = async (req, res) => {
@@ -16,8 +23,12 @@ const postJoinWorkspace = async (req, res) => {
     req.params.username,
     req.body
   );
-  if (result.updatedWorkspace) res.status(200).json(result.updatedWorkspace);
-  else res.status(400).send(result.error);
+  if (result.updatedWorkspace) res.status(200).send(result.updatedWorkspace);
+  else {
+    console.log(result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
+  }
 };
 
 module.exports = { postCreateWorkspace, postJoinWorkspace };
