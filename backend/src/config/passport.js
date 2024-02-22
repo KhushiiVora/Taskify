@@ -10,7 +10,6 @@ const getTokenFromCookie = (req) => {
   if (req && req.cookies) {
     token = req.cookies["token"];
   }
-  console.log(token);
   return token;
 };
 

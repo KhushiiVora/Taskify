@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
+
+import { saved as userSaved } from "../../state/userSlice";
 
 import { FormControl } from "@mui/material";
 import { toast, Slide, ToastContainer } from "react-toastify";
@@ -21,6 +24,8 @@ export default function SignUp() {
     password: "",
     email: "",
   });
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -44,6 +49,7 @@ export default function SignUp() {
       .post("/auth/signup", formData, { withCredentials: true })
       .then((response) => {
         console.log("response.data", response.data);
+        dispatch(userSaved(response.data));
         navigate(`/dashboard/${response.data.username}`);
       })
       .catch((error) => {

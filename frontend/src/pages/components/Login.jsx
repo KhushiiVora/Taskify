@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import validator from "validator";
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
+
+import { saved as userSaved } from "../../state/userSlice";
 
 import TextField from "@mui/material/TextField";
 import { toast, Slide, ToastContainer } from "react-toastify";
@@ -21,6 +24,9 @@ export default function Login() {
     username: "",
     password: "",
   });
+  let data = null;
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -41,19 +47,22 @@ export default function Login() {
   async function handleSubmit(event) {
     event.preventDefault();
     const isUsernameEmail = validator.isEmail(formData.username);
-    console.log("isUsernameEmail", isUsernameEmail);
     if (isUsernameEmail) {
-      const username = formData.username;
-      setFormData({
+      data = {
         password: formData.password,
-        email: username,
-      });
+        email: formData.username,
+      };
+    } else {
+      data = {
+        password: formData.password,
+        username: formData.username,
+      };
     }
-    console.log("formData", formData);
     await axios
-      .post("/auth/login", formData, { withCredentials: true })
+      .post("/auth/login", data, { withCredentials: true })
       .then((response) => {
         console.log("response.data", response.data);
+        dispatch(userSaved(response.data));
         navigate(`/dashboard/${response.data.username}`);
       })
       .catch((error) => {

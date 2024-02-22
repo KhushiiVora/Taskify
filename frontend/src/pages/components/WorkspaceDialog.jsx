@@ -5,7 +5,7 @@ import Button from "../atoms/Button";
 import TextField from "@mui/material/TextField";
 
 export default function WorkspaceDialog(props) {
-  const { username } = props;
+  const { username, open } = props;
   const [formData, setFormData] = useState({
     name: "",
     code: "",
@@ -42,29 +42,35 @@ export default function WorkspaceDialog(props) {
 
   return (
     <>
-      <h1>Workspace</h1>
-      <form onSubmit={handleSubmit}>
-        <TextField
-          name="name"
-          id="outlined-basic"
-          label="Name"
-          variant="outlined"
-          onChange={handleChange}
-          value={formData.name}
-          required
-        />
-        <TextField
-          name="code"
-          id="outlined-basic"
-          label="Secret Code"
-          variant="outlined"
-          onChange={handleChange}
-          value={formData.code}
-          required
-        />
-        <Button type="submit" text="Create Workspace" />
-        <Button type="submit" text="Join Workspace" />
-      </form>
+      {open ? (
+        <>
+          <h1>Workspace</h1>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              name="name"
+              id="outlined-basic"
+              label="Name"
+              variant="outlined"
+              onChange={handleChange}
+              value={formData.name}
+              required
+            />
+            <TextField
+              name="code"
+              id="outlined-basic"
+              label="Secret Code"
+              variant="outlined"
+              onChange={handleChange}
+              value={formData.code}
+              required
+            />
+            <Button type="submit" text="Create Workspace" />
+            <Button type="submit" text="Join Workspace" />
+          </form>
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

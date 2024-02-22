@@ -1,15 +1,34 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "./axiosConfig";
+
+import { saved as userSaved } from "./state/userSlice";
+
 import Navbar from "./pages/components/Navbar";
 import Home from "./pages/components/Home";
 import Profile from "./pages/components/Profile";
 import SignUp from "./pages/components/SignUp";
 import Login from "./pages/components/Login";
+import ProtectedRoute from "./pages/components/ProtectedRoute";
 import Workspace from "./pages/components/Workspace";
 import Dashboard from "./pages/components/Dashboard";
 // import Certificate from "./this";
 
 function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+
+  useEffect(() => {
+    axios
+      .get("/user", { withCredentials: true })
+      .then((response) => response.data)
+      .then((user) => {
+        dispatch(userSaved(user));
+      })
+      .catch((error) => console.log("Hello user"));
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -18,13 +37,17 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
-          {/* <Route
-            path="abc"
-            element={<Certificate name="khushi" title="abc" company="KHUSHI" />}
-          /> */}
         </Route>
-        {/* <Route path="workspace" element={<Workspace />} /> */}
-        <Route path="dashboard/:username" element={<Dashboard />} />
+        <Route path="/dashboard">
+          <Route
+            path=":username"
+            element={
+              <ProtectedRoute user={user}>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
