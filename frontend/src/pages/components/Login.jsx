@@ -40,14 +40,16 @@ export default function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const isEmail = validator.isEmail(formData.username);
-    if (isEmail) {
+    const isUsernameEmail = validator.isEmail(formData.username);
+    console.log("isUsernameEmail", isUsernameEmail);
+    if (isUsernameEmail) {
+      const username = formData.username;
       setFormData({
         password: formData.password,
-        email: formData.username,
+        email: username,
       });
     }
-    console.log(formData);
+    console.log("formData", formData);
     await axios
       .post("/auth/login", formData, { withCredentials: true })
       .then((response) => {

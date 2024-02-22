@@ -8,7 +8,7 @@ class ErrorService {
   };
 
   handleError(error) {
-    if (error instanceof mongoose.Error.ValidationError || error.code) {
+    if (error instanceof mongoose.Error.ValidationError || error?.code) {
       this.handleMongooseError(error);
     }
 

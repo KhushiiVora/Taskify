@@ -32,15 +32,19 @@ class WorkspaceService {
     console.log(user);
     const { workspace, error } = await this.findWorkspace(data.code);
     if (workspace) {
-      const member = workspace.members.find(
-        (member) => user._id.valueOf() == member.valueOf()
-      );
-      if (!member) {
-        workspace.members.push(user._id);
-        const updatedWorkspace = await workspace.save();
-        return { updatedWorkspace };
+      if (data.name === workspace.name) {
+        const member = workspace.members.find(
+          (member) => user._id.valueOf() == member.valueOf()
+        );
+        if (!member) {
+          workspace.members.push(user._id);
+          const updatedWorkspace = await workspace.save();
+          return { updatedWorkspace };
+        } else {
+          return new Error("Already a member");
+        }
       } else {
-        return new Error("Already a member");
+        return new Error("Workspace name or code did not matched");
       }
     }
     return { error };
