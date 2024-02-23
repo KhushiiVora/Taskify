@@ -29,14 +29,17 @@ const userSchema = new mongoose.Schema({
     validate: (value) =>
       validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
+  workspaces: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Workspace",
+  },
 });
 
-// need to figure out whether the leader is included as members array also
-userSchema.virtual("workspaces", {
-  ref: "Workspace",
-  localField: "_id",
-  foreignField: "members",
-});
+// userSchema.virtual("workspaces", {
+//   ref: "Workspace",
+//   localField: "_id",
+//   foreignField: "members",
+// });
 
 const User = mongoose.model("User", userSchema);
 

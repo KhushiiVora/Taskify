@@ -30,8 +30,12 @@ class ErrorService {
         mongooseError.errors[Object.keys(mongooseError.errors)[0]].message;
       this.error.status = 400;
     } else if (mongooseError.code === 11000) {
-      const field = Object.values(mongooseError.keyValue);
-      this.error.message = `An account with ${field} already exists.`;
+      const [[field, value]] = Object.entries(mongooseError.keyValue);
+      if (field.includes("username") || field.includes("email")) {
+        this.error.message = `An account with '${value}' already exists.`;
+      } else if (field.includes("code")) {
+        this.error.message = `A Workspace with code '${value}' already exists.`;
+      }
       this.error.status = 409;
     }
     console.log(this.error);

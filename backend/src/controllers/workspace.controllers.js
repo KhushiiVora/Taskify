@@ -9,7 +9,11 @@ const postCreateWorkspace = async (req, res) => {
     req.params.username,
     req.body
   );
-  if (result.savedWorkspace) res.status(200).send(result.savedWorkspace);
+  if (result.savedWorkspace && result.updatedUser)
+    res.status(200).send({
+      savedWorkspace: result.savedWorkspace,
+      updatedUser: result.updatedUser,
+    });
   else {
     console.log(result.error);
     const error = errorService.handleError(result.error);
@@ -23,7 +27,11 @@ const postJoinWorkspace = async (req, res) => {
     req.params.username,
     req.body
   );
-  if (result.updatedWorkspace) res.status(200).send(result.updatedWorkspace);
+  if (result.updatedWorkspace && result.updatedUser)
+    res.status(200).send({
+      updatedWorkspace: result.updatedWorkspace,
+      updatedUser: result.updatedUser,
+    });
   else {
     console.log(result.error);
     const error = errorService.handleError(result.error);

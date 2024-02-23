@@ -11,8 +11,10 @@ class WorkspaceService {
     try {
       workspace.leaders.push(user._id);
       workspace.members.push(user._id);
+      user.workspaces.push(workspace._id);
       const savedWorkspace = await workspace.save();
-      return { savedWorkspace };
+      const updatedUser = await user.save();
+      return { savedWorkspace, updatedUser };
     } catch (error) {
       console.log(error);
       return { error };
@@ -38,8 +40,10 @@ class WorkspaceService {
         );
         if (!member) {
           workspace.members.push(user._id);
+          user.workspaces.push(workspace._id);
           const updatedWorkspace = await workspace.save();
-          return { updatedWorkspace };
+          const updatedUser = await user.save();
+          return { updatedWorkspace, updatedUser };
         } else {
           return new Error("Already a member");
         }
