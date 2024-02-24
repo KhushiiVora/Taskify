@@ -14,8 +14,10 @@ export default function Workspace(props) {
     console.log(username);
   }, []);
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleClose = (event) => {
+    if (event.target.tagName === "SECTION") {
+      setOpen(false);
+    }
   };
   const handleOpen = () => {
     setOpen(true);
@@ -25,7 +27,11 @@ export default function Workspace(props) {
     <>
       <h1>Dashboard</h1>
       <Button type="button" text="Add Workspace" onClick={handleOpen} />
-      <WorkspaceDialog username={username} open={open} />
+      <WorkspaceDialog
+        username={username}
+        open={open}
+        handleClose={handleClose}
+      />
     </>
   );
 }

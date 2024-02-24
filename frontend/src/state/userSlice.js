@@ -11,9 +11,6 @@ const userSlice = createSlice({
     saved: (state, action) => {
       state.user = action.payload;
     },
-    workspaceRestored: (state, action) => {
-      state.user.workspaces = action.payload;
-    },
     cleared: (state) => {
       state.user = null;
     },
@@ -21,4 +18,4 @@ const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
-export const { saved, workspaceRestored, cleared } = userSlice.actions;
+export const { saved, cleared } = userSlice.actions;

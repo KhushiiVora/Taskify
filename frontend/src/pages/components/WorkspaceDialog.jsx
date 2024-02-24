@@ -3,26 +3,27 @@ import axios from "../../axiosConfig";
 
 import Button from "../atoms/Button";
 import TextField from "@mui/material/TextField";
+import { StyledSection } from "../../styles/workspaceDialog.styles";
 
 export default function WorkspaceDialog(props) {
-  const { username, open } = props;
+  const { username, open, handleClose } = props;
   const [formData, setFormData] = useState({
     name: "",
     code: "",
   });
 
-  const handleChange = (e) => {
-    const value = e?.target?.value;
+  const handleChange = (event) => {
+    const value = event?.target?.value;
 
     setFormData({
       ...formData,
-      [e?.target?.name]: value,
+      [event?.target?.name]: value,
     });
   };
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const btnText = e.nativeEvent.submitter.innerText;
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const btnText = event.nativeEvent.submitter.innerText;
     if (btnText === "Create Workspace") {
       await axios
         .post(`/dashboard/workspace/${username}/create`, formData, {
@@ -38,35 +39,46 @@ export default function WorkspaceDialog(props) {
         .then((res) => console.log(res.data))
         .catch((error) => console.log(error));
     }
+    setFormData({
+      name: "",
+      code: "",
+    });
   }
 
   return (
     <>
       {open ? (
         <>
-          <h1>Workspace</h1>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              name="name"
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              onChange={handleChange}
-              value={formData.name}
-              required
-            />
-            <TextField
-              name="code"
-              id="outlined-basic"
-              label="Secret Code"
-              variant="outlined"
-              onChange={handleChange}
-              value={formData.code}
-              required
-            />
-            <Button type="submit" text="Create Workspace" />
-            <Button type="submit" text="Join Workspace" />
-          </form>
+          <StyledSection onClick={handleClose}>
+            <div className="workspace_container">
+              <form
+                onSubmit={handleSubmit}
+                className="workspace_container__form"
+              >
+                <h1>Workspace</h1>
+                <TextField
+                  name="name"
+                  id="outlined-basic"
+                  label="Name"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={formData.name}
+                  required
+                />
+                <TextField
+                  name="code"
+                  id="outlined-basic"
+                  label="Secret Code"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={formData.code}
+                  required
+                />
+                <Button type="submit" text="Create Workspace" />
+                <Button type="submit" text="Join Workspace" />
+              </form>
+            </div>
+          </StyledSection>
         </>
       ) : (
         <></>

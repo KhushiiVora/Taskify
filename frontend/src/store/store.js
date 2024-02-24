@@ -3,9 +3,11 @@ import { thunk } from "redux-thunk";
 import { persistReducer, persistStore } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
 import userReducer from "../state/userSlice";
+import workspaceReducer from "../state/workspaceSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
+  workspaces: workspaceReducer,
 });
 const persistConfig = {
   key: "root",

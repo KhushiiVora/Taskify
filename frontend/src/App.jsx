@@ -24,6 +24,7 @@ function App() {
       .get("/user", { withCredentials: true })
       .then((response) => response.data)
       .then((user) => {
+        console.log("user", user);
         dispatch(userSaved(user));
       })
       .catch((error) => console.log("Hello user"));

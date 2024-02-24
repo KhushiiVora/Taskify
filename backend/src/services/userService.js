@@ -26,7 +26,7 @@ class UserService {
 
   findById = async (userId) => {
     try {
-      const user = await User.findOne({ _id: userId });
+      const user = await User.findOne({ _id: userId }).populate("workspaces");
       return user;
     } catch (error) {
       throw error;
