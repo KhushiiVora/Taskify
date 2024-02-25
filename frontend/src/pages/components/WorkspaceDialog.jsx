@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import { StyledSection } from "../../styles/workspaceDialog.styles";
 
 export default function WorkspaceDialog(props) {
-  const { username, open, handleClose } = props;
+  const { username, open, handleDialogClose } = props;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,7 +38,7 @@ export default function WorkspaceDialog(props) {
         .then((response) => response.data)
         .then((workspace) => {
           dispatch(workspaceSaved(workspace));
-          handleClose(event);
+          handleDialogClose(event);
           setFormData({
             name: "",
             code: "",
@@ -53,7 +53,7 @@ export default function WorkspaceDialog(props) {
         .then((response) => response.data)
         .then((workspace) => {
           dispatch(workspaceSaved(workspace));
-          handleClose(event);
+          handleDialogClose(event);
           setFormData({
             name: "",
             code: "",
@@ -67,7 +67,7 @@ export default function WorkspaceDialog(props) {
     <>
       {open ? (
         <>
-          <StyledSection onClick={handleClose}>
+          <StyledSection onClick={handleDialogClose}>
             <div className="workspace_container">
               <form
                 onSubmit={handleSubmit}

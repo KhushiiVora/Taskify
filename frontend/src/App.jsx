@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "./axiosConfig";
+import "./App.css";
 
 import { saved as userSaved } from "./state/userSlice";
 import { restored as workspaceRestored } from "./state/workspaceSlice";

@@ -2,36 +2,55 @@ import React, { useEffect, useState } from "react";
 import Button from "../atoms/Button";
 import WorkspaceDialog from "./WorkspaceDialog";
 import WorkspaceList from "./WorkspaceList";
+import Workspace from "./Workspace";
 
 import { useSelector } from "react-redux";
 
+import { StyledSection } from "../../styles/dashboard.styles";
+
 export default function Dashboard() {
   const { username } = useSelector((state) => state.user.user);
-  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  // const [workspaceOpen, setWorkspaceOpen] = useState(false);
+  const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
 
   useEffect(() => {
     console.log(username);
   }, []);
 
-  const handleClose = (event) => {
+  const handleDialogClose = (event) => {
     if (event.target.tagName === "SECTION" || event.type === "submit") {
-      setOpen(false);
+      setDialogOpen(false);
     }
   };
-  const handleOpen = () => {
-    setOpen(true);
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
 
+  const handleWorkspaceOpen = (event, key) => {
+    // setWorkspaceOpen(true);
+    console.log(key);
+    setOpenedWorkspaceId(key);
+  };
+  // const handleWorkspaceClose = (event) => {
+  //   setWorkspaceOpen(false);
+  // };
+
   return (
-    <>
-      <h1>Dashboard</h1>
-      <Button type="button" text="Add Workspace" onClick={handleOpen} />
-      <WorkspaceList />
+    <StyledSection>
+      <header className="dashboard__header">
+        <h1>Dashboard</h1>
+        <Button type="button" text="Add Workspace" onClick={handleDialogOpen} />
+      </header>
+      <section className="dashboard__workspace-container">
+        <WorkspaceList handleWorkspaceOpen={handleWorkspaceOpen} />
+        <Workspace workspaceId={openedWorkspaceId} />
+      </section>
       <WorkspaceDialog
         username={username}
-        open={open}
-        handleClose={handleClose}
+        open={dialogOpen}
+        handleDialogClose={handleDialogClose}
       />
-    </>
+    </StyledSection>
   );
 }
