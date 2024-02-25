@@ -43,7 +43,11 @@ class AuthService {
 
       const token = this.generateToken(user._id);
       if (token) {
-        return { isLoggedIn: true, jwt: token, user };
+        return {
+          isLoggedIn: true,
+          jwt: token,
+          user: await user.populate("workspaces"),
+        };
       }
     }
     return { isLoggedIn: false };

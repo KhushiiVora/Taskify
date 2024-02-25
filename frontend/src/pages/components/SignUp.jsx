@@ -47,10 +47,12 @@ export default function SignUp() {
     event.preventDefault();
     await axios
       .post("/auth/signup", formData, { withCredentials: true })
-      .then((response) => {
-        console.log("response.data", response.data);
-        dispatch(userSaved(response.data));
-        navigate(`/dashboard/${response.data.username}`);
+      .then((response) => response.data)
+      .then((user) => {
+        delete user.workspaces;
+        delete user.password;
+        dispatch(userSaved(user));
+        navigate(`/dashboard/${user.username}`);
       })
       .catch((error) => {
         console.log(error.response.data);

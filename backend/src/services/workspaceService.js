@@ -13,8 +13,8 @@ class WorkspaceService {
       workspace.members.push(user._id);
       user.workspaces.push(workspace._id);
       const savedWorkspace = await workspace.save();
-      const updatedUser = await user.save();
-      return { savedWorkspace, updatedUser };
+      await user.save();
+      return { savedWorkspace };
     } catch (error) {
       console.log(error);
       return { error };
@@ -31,7 +31,6 @@ class WorkspaceService {
   };
   joinWorkspace = async (username, data) => {
     const { user } = await userService.findByUsername(username);
-    console.log(user);
     const { workspace, error } = await this.findWorkspace(data.code);
     if (workspace) {
       if (data.name === workspace.name) {
@@ -42,8 +41,8 @@ class WorkspaceService {
           workspace.members.push(user._id);
           user.workspaces.push(workspace._id);
           const updatedWorkspace = await workspace.save();
-          const updatedUser = await user.save();
-          return { updatedWorkspace, updatedUser };
+          await user.save();
+          return { updatedWorkspace };
         } else {
           return new Error("Already a member");
         }
