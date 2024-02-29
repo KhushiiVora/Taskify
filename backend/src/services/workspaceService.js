@@ -29,6 +29,16 @@ class WorkspaceService {
       return { error };
     }
   };
+  findWorkspaceById = async (workspaceId) => {
+    try {
+      const workspace = await Workspace.findById(workspaceId).populate(
+        "taskCategories"
+      );
+      return workspace;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   joinWorkspace = async (username, data) => {
     const { user } = await userService.findByUsername(username);
     const { workspace, error } = await this.findWorkspace(data.code);

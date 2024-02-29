@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Button(props) {
-  const { type, text, onClick, dataButton } = props;
+  const { type, text, onClick } = props;
   return (
     <>
       {onClick ? (

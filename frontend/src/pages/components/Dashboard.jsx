@@ -44,7 +44,11 @@ export default function Dashboard() {
       </header>
       <section className="dashboard__workspace-container">
         <WorkspaceList handleWorkspaceOpen={handleWorkspaceOpen} />
-        <Workspace workspaceId={openedWorkspaceId} />
+        {openedWorkspaceId ? (
+          <Workspace workspaceId={openedWorkspaceId} />
+        ) : (
+          <></>
+        )}
       </section>
       <WorkspaceDialog
         username={username}
