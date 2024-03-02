@@ -12,17 +12,21 @@ const StyledSection = styled.section`
   justify-content: center;
   align-items: center;
 
-  .workspace_container {
+  .dialog_container {
     padding: 3rem;
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
   }
-  .workspace_container__form {
+  .dialog_container__form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+
+    h1 {
+      font-size: 1.5rem;
+    }
   }
 `;
 

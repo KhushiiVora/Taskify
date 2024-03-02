@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "../../axiosConfig";
 
-function TaskCategory({ setOpen, setTaskCategories, workspaceId }) {
+function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
   const [title, setTitle] = useState("");
 
   const handleChange = (event) => {
@@ -18,9 +18,9 @@ function TaskCategory({ setOpen, setTaskCategories, workspaceId }) {
         }
       )
       .then((response) => response.data)
-      .then((data) => {
-        console.log("handleSubmit in taskcategory", data);
-        setTaskCategories((previousState) => [...previousState, data]);
+      .then((taskCategory) => {
+        console.log("handleSubmit in taskcategory", taskCategory);
+        setTaskCategories((previousList) => [...previousList, taskCategory]);
         setOpen(false);
       })
       .catch((error) => console.log(error));
@@ -43,4 +43,4 @@ function TaskCategory({ setOpen, setTaskCategories, workspaceId }) {
   );
 }
 
-export default TaskCategory;
+export default AddTaskCategory;

@@ -6,7 +6,7 @@ const {
   postCreateTaskCatogory,
 } = require("../controllers/taskCategory.controllers");
 
-router.get("/:workspaceId/get", getTaskCategories);
+router.get("/:workspaceId/", getTaskCategories);
 router.post("/:workspaceId/create", postCreateTaskCatogory);
 
 module.exports = router;

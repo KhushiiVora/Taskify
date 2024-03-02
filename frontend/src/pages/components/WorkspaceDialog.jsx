@@ -6,7 +6,7 @@ import { saved as workspaceSaved } from "../../state/workspaceSlice";
 
 import Button from "../atoms/Button";
 import TextField from "@mui/material/TextField";
-import { StyledSection } from "../../styles/workspaceDialog.styles";
+import { StyledSection } from "../../styles/dialog.styles";
 
 export default function WorkspaceDialog(props) {
   const { username, open, handleDialogClose } = props;
@@ -68,11 +68,8 @@ export default function WorkspaceDialog(props) {
       {open ? (
         <>
           <StyledSection onClick={handleDialogClose}>
-            <div className="workspace_container">
-              <form
-                onSubmit={handleSubmit}
-                className="workspace_container__form"
-              >
+            <div className="dialog_container">
+              <form onSubmit={handleSubmit} className="dialog_container__form">
                 <h1>Workspace</h1>
                 <TextField
                   name="name"
