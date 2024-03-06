@@ -14,6 +14,7 @@ import SignUp from "./pages/components/SignUp";
 import Login from "./pages/components/Login";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
 import Dashboard from "./pages/components/Dashboard";
+import MainNavbar from "./pages/components/MainNavbar";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +37,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />}>
+        <Route
+          path="/"
+          element={user ? <Navbar username={user.username} /> : <MainNavbar />}
+        >
           <Route index element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="signup" element={<SignUp />} />

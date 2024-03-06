@@ -1,7 +1,6 @@
-import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 
-export default function Navbar({ username }) {
+export default function MainNavbar() {
   return (
     <>
       <nav>
@@ -9,8 +8,9 @@ export default function Navbar({ username }) {
         {"      "}
         <NavLink to="/profile">Profile</NavLink>
         {"      "}
-        <NavLink to={`/dashboard/${username}`}>Dashboard</NavLink>
-        {/* Add logout over here */}
+        <NavLink to="/signup">Sign Up</NavLink>
+        {"  "}
+        <NavLink to="/login">Login</NavLink>
       </nav>
       <Outlet />
     </>

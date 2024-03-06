@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import WorkspaceDialog from "./WorkspaceDialog";
 import WorkspaceList from "./WorkspaceList";
@@ -13,6 +14,7 @@ export default function Dashboard() {
   const [dialogOpen, setDialogOpen] = useState(false);
   // const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(username);
@@ -39,7 +41,10 @@ export default function Dashboard() {
   return (
     <StyledSection>
       <header className="dashboard__header">
-        <h1>Dashboard</h1>
+        <div>
+          <Button type="button" onClick={() => navigate("/")} text="🏠" />
+          <h1>Dashboard</h1>
+        </div>
         <Button type="button" text="Add Workspace" onClick={handleDialogOpen} />
       </header>
       <section className="dashboard__workspace-container">

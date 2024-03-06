@@ -36,7 +36,7 @@ function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
         autoFocus
         onBlur={() => (!title ? setOpen(false) : setOpen(true))}
         onKeyDown={(event) => {
-          if (event.key === "Enter") handleSubmit(event);
+          if (event.key === "Enter" && title) handleSubmit(event);
         }}
       />
     </>

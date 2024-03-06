@@ -48,6 +48,7 @@ function TaskList(props) {
               <th>Status</th>
               <th>Assignee</th>
               <th>Due</th>
+              <th></th>
             </thead>
             <tbody>
               {tasks.map((task) => {
@@ -57,6 +58,7 @@ function TaskList(props) {
                     <td>{`${task.state}`}</td>
                     <td>{task.assignedTo.length}</td>
                     <td>{task.dueDate.split("T")[0]}</td>
+                    <td>🚽</td>
                   </tr>
                 );
               })}
