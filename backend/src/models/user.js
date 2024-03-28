@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema({
     validate: (value) =>
       validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
+  profilePic: {
+    type: String,
+    default: "",
+  },
   workspaces: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Workspace",
