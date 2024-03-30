@@ -6,7 +6,10 @@ const taskService = new TaskService();
 const getTaskCategories = async (req, res) => {
   const { workspaceId } = req.params;
   try {
-    const workspace = await workspaceService.findWorkspaceById(workspaceId);
+    const workspace = await workspaceService.findWorkspaceById(
+      workspaceId,
+      "taskCategories"
+    );
     res.status(200).send(workspace.taskCategories);
   } catch (error) {
     console.log("error in taskController", error);
@@ -17,7 +20,7 @@ const postCreateTaskCatogory = async (req, res) => {
   const { workspaceId } = req.params;
   const { categoryName } = req.body;
   try {
-    const workspace = await workspaceService.findWorkspaceById(workspaceId);
+    const workspace = await workspaceService.findWorkspaceById(workspaceId, "");
     const { savedTaskCategory, error } = await taskService.saveTaskCategory({
       name: categoryName,
     });

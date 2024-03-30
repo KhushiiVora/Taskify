@@ -4,10 +4,12 @@ import { persistReducer, persistStore } from "redux-persist";
 import storageSession from "redux-persist/lib/storage/session";
 import userReducer from "../state/userSlice";
 import workspaceReducer from "../state/workspaceSlice";
+import chatReducer from "../state/chatSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   workspaces: workspaceReducer,
+  chats: chatReducer,
 });
 const persistConfig = {
   key: "root",

@@ -15,6 +15,7 @@ import Login from "./pages/components/Login";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
 import Dashboard from "./pages/components/Dashboard";
 import MainNavbar from "./pages/components/MainNavbar";
+import ChatBox from "./pages/components/ChatBox";
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +57,7 @@ function App() {
             }
           />
         </Route>
+        <Route path="/chatbox/:workspaceId" element={<ChatBox />} />
       </Routes>
     </BrowserRouter>
   );

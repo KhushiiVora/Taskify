@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 
 import { StyledSection } from "../../styles/dashboard.styles";
 
+import { TiMessages } from "react-icons/ti";
+
 export default function Dashboard() {
   const { username } = useSelector((state) => state.user.user);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -52,7 +54,7 @@ export default function Dashboard() {
         {openedWorkspaceId ? (
           <Workspace workspaceId={openedWorkspaceId} />
         ) : (
-          <></>
+          <NoWorkspaceSelected />
         )}
       </section>
       <WorkspaceDialog
@@ -63,3 +65,16 @@ export default function Dashboard() {
     </StyledSection>
   );
 }
+
+const NoWorkspaceSelected = () => {
+  const user = useSelector((state) => state.user.user);
+  return (
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
+        <p>Welcome 👋 {user.username} ❄</p>
+        <p>Select a workspace to start with</p>
+        <TiMessages className="text-3xl md:text-6xl text-center" />
+      </div>
+    </div>
+  );
+};

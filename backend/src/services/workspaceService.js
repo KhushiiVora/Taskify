@@ -29,11 +29,16 @@ class WorkspaceService {
       return { error };
     }
   };
-  findWorkspaceById = async (workspaceId) => {
+  findWorkspaceById = async (workspaceId, populateWith) => {
     try {
-      const workspace = await Workspace.findById(workspaceId).populate(
-        "taskCategories"
-      );
+      let workspace = null;
+      if (populateWith) {
+        workspace = await Workspace.findById(workspaceId).populate(
+          populateWith
+        );
+      } else {
+        workspace = await Workspace.findById(workspaceId);
+      }
       return workspace;
     } catch (error) {
       console.log(error);
@@ -61,6 +66,13 @@ class WorkspaceService {
       }
     }
     return { error };
+  };
+  getWorkspaceMembers = async (workspaceId) => {
+    const workspace = await this.findWorkspaceById(workspaceId, "members");
+    if (workspace) return workspace.members;
+    else {
+      console.log("workspace members cannot be found!!!");
+    }
   };
 }
 

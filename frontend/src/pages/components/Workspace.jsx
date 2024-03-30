@@ -7,6 +7,7 @@ import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
 import { StyledSection } from "../../styles/workspace.styles";
 import TaskList from "./TaskList";
+import { useNavigate } from "react-router-dom";
 
 export default function Workspace(props) {
   const { workspaceId } = props;
@@ -15,6 +16,7 @@ export default function Workspace(props) {
   const [expand, setExpand] = useState(false);
   const [taskCategories, setTaskCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const navigate = useNavigate();
 
   const workspaceData = useSelector((state) =>
     state.workspaces.workspaces.find(
@@ -63,6 +65,11 @@ export default function Workspace(props) {
             ) : (
               <></>
             )}
+            <Button
+              type="button"
+              onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
+              text="Chat box"
+            />
             {open ? (
               <AddTaskCategory
                 setOpen={setOpen}

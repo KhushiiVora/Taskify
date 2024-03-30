@@ -1,62 +1,41 @@
-const Message = require("../models/message");
-const Conversation = require("../models/conversation");
+const MessageService = require("../services/messageService");
+const ConversationService = require("../services/conversationService");
+const messageService = new MessageService();
+const conversationService = new ConversationService();
 
-const sendMessage = async (req, res) => {
+const postSaveMessage = async (req, res) => {
   try {
     const { message } = req.body;
-    const { id: receiverId } = req.params; // Got from URL
-    const senderId = req.user._id; // Got as we set req.user=user in  protectRoute function
+    const { workspaceId } = req.params;
+    const senderId = req.user._id;
+    const data = { message, workspaceId, senderId };
 
-    // console.log("Sender", req.user);
-    // Finding existing conversations between the sender and receiver
-    let conversation = await Conversation.findOne({
-      participants: { $all: [senderId, receiverId] },
-    });
+    const { savedMessage } = await messageService.saveMessage(data);
 
-    //If there is no conversation found it means that the sender and receiver are communication for the first time.So create the conversation
-    if (!conversation) {
-      conversation = await Conversation.create({
-        participants: [senderId, receiverId],
-      });
-    }
-
-    //Whenever sender will send any message. Message object will be instantiated containing info about message
-    const newMessage = new Message({ senderId, receiverId, message });
-
-    if (newMessage) {
-      conversation.messages.push(newMessage._id);
-    }
-
-    // await conversation.save();
-    // await newMessage.save();
-
-    // this will run in parallel
-    await Promise.all([conversation.save(), newMessage.save()]);
-
-    res.status(201).json(newMessage);
+    res.status(201).send(savedMessage);
   } catch (error) {
-    console.log("Error in sendMessage controller: ", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.log("Error in saveMessage controller: ", error);
+    res.status(500).send({ error: "Internal server error" });
   }
 };
 
 const getMessages = async (req, res) => {
   try {
-    const { id: userToChatId } = req.params;
-    const senderId = req.user._id;
+    const { workspaceId } = req.params;
 
-    const conversation = await Conversation.findOne({
-      participants: { $all: [senderId, userToChatId] },
-    }).populate("messages");
+    const { conversation } = await conversationService.findConversation(
+      workspaceId,
+      "messages"
+    );
 
-    if (!conversation) return res.status(200).json([]);
+    if (!conversation) return res.status(200).send([]);
 
     const messages = conversation.messages;
 
-    res.status(200).json(messages);
+    res.status(200).send(messages);
   } catch (error) {
-    console.log("Error in getMessages controller: ", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    console.log("Error in getMessages controller: ", error);
+    res.status(500).send({ error: "Internal server error" });
   }
 };
-module.exports = { sendMessage, getMessages };
+module.exports = { postSaveMessage, getMessages };
