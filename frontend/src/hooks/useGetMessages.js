@@ -34,7 +34,7 @@ const useGetMessages = () => {
     // }, [selectedConversation._id, setMessages]);
   }, [chatsData.workspaceId]);
 
-  return { loading, messages: chatsData.messages };
+  return { loading };
 };
 
 export default useGetMessages;

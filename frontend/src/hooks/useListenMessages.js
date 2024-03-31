@@ -1,17 +1,21 @@
 import { useEffect } from "react";
-import { useSocketContext } from "../context/SocketContext";
-import useConversation from "../zustand/useConversation";
+import { useDispatch, useSelector } from "react-redux";
+import { messageSaved } from "../state/chatSlice";
 
 const useListenMessages = () => {
-  const { socket } = useSocketContext();
-  const { messages, setMessages } = useConversation();
+  const { socket } = useSelector((state) => state.socket);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    socket?.on("newMessage", (newMessage) => {
-      setMessages([...messages, newMessage]);
+    socket?.on("newMessage", (newMessage, cb) => {
+      dispatch(messageSaved(newMessage));
     });
-    return () => socket?.off("newMessage");
-  }, [socket, setMessages, messages]);
+
+    return () => {
+      socket?.off("newMessage");
+    };
+  }, [socket]);
 };
 
 export default useListenMessages;

@@ -2,6 +2,7 @@ const MessageService = require("../services/messageService");
 const ConversationService = require("../services/conversationService");
 const messageService = new MessageService();
 const conversationService = new ConversationService();
+const { io } = require("../socket");
 
 const postSaveMessage = async (req, res) => {
   try {
@@ -12,6 +13,7 @@ const postSaveMessage = async (req, res) => {
 
     const { savedMessage } = await messageService.saveMessage(data);
 
+    io.to(workspaceId).emit("newMessage", savedMessage);
     res.status(201).send(savedMessage);
   } catch (error) {
     console.log("Error in saveMessage controller: ", error);

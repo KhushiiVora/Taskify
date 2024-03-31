@@ -12,7 +12,7 @@ const chatSlice = createSlice({
     workspaceIdSaved: (state, action) => {
       state.workspaceId = action.payload;
     },
-    messagesSaved: (state, action) => {
+    messageSaved: (state, action) => {
       state.messages.push(action.payload);
     },
     messagesRestored: (state, action) => {
@@ -27,7 +27,7 @@ const chatSlice = createSlice({
 export default chatSlice.reducer;
 export const {
   workspaceIdSaved,
-  messagesSaved,
+  messageSaved,
   messagesRestored,
   workspaceIdCleared,
 } = chatSlice.actions;

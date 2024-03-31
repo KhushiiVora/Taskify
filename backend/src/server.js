@@ -1,7 +1,8 @@
 const express = require("express");
+const { app, server } = require("./socket");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const app = express();
+// const app = express();
 require("./db/mongoose");
 const port = process.env.PORT;
 
@@ -15,8 +16,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("Server is on at port", port, "!!!");
 });
+// app.listen(port, () => {
+//   console.log("Server is on at port", port, "!!!");
+// });
 
 module.exports = app;

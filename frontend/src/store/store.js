@@ -5,11 +5,13 @@ import storageSession from "redux-persist/lib/storage/session";
 import userReducer from "../state/userSlice";
 import workspaceReducer from "../state/workspaceSlice";
 import chatReducer from "../state/chatSlice";
+import socketReducer from "../state/socketSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   workspaces: workspaceReducer,
   chats: chatReducer,
+  socket: socketReducer,
 });
 const persistConfig = {
   key: "root",

@@ -1,15 +1,17 @@
 import { useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import useGetMessages from "../../hooks/useGetMessages";
 import MessageSkeleton from "./MessageSkeleton";
 import MessageCard from "./MessageCard";
-// import useListenMessages from "../../hooks/useListenMessages";
+import useListenMessages from "../../hooks/useListenMessages";
 
 const Messages = () => {
-  const { messages, loading } = useGetMessages();
-  // useListenMessages(); // It will listen for any incoming messages from the socket
+  let { loading } = useGetMessages();
+  useListenMessages();
   const lastMessageRef = useRef();
 
-  // Need to write within the setTimeout because of rendering time
+  const { messages } = useSelector((state) => state.chats);
+
   useEffect(() => {
     setTimeout(() => {
       lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
