@@ -3,7 +3,6 @@ import useGetMembers from "../../hooks/useGetMembers";
 import MemberCard from "./MemberCard";
 
 const MemberList = () => {
-  // const { workspaceId } = props;
   const { workspaceId } = useParams();
   const { loading, members } = useGetMembers(workspaceId);
   return (
