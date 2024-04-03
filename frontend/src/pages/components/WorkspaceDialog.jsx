@@ -6,6 +6,8 @@ import { saved as workspaceSaved } from "../../state/workspaceSlice";
 
 import Button from "../atoms/Button";
 import TextField from "@mui/material/TextField";
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dialog.styles";
 
 export default function WorkspaceDialog(props) {
@@ -44,7 +46,20 @@ export default function WorkspaceDialog(props) {
             code: "",
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error.response.data);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        });
     } else {
       await axios
         .post(`/dashboard/workspace/${username}/join`, formData, {
@@ -59,7 +74,20 @@ export default function WorkspaceDialog(props) {
             code: "",
           });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error.response.data);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        });
     }
   }
 
@@ -92,6 +120,7 @@ export default function WorkspaceDialog(props) {
                 <Button type="submit" text="Create Workspace" />
                 <Button type="submit" text="Join Workspace" />
               </form>
+              <ToastContainer />
             </div>
           </StyledSection>
         </>

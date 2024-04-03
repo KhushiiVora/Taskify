@@ -1,6 +1,9 @@
 import { useState } from "react";
 import axios from "../../axiosConfig";
 
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
   const [title, setTitle] = useState("");
 
@@ -23,7 +26,20 @@ function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
         setTaskCategories((previousList) => [...previousList, taskCategory]);
         setOpen(false);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
   };
 
   return (
@@ -39,6 +55,7 @@ function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
           if (event.key === "Enter" && title) handleSubmit(event);
         }}
       />
+      <ToastContainer />
     </>
   );
 }

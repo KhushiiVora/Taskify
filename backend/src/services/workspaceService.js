@@ -39,9 +39,10 @@ class WorkspaceService {
       } else {
         workspace = await Workspace.findById(workspaceId);
       }
-      return workspace;
+      return { workspace };
     } catch (error) {
       console.log(error);
+      return { error };
     }
   };
   joinWorkspace = async (username, data) => {
@@ -59,10 +60,10 @@ class WorkspaceService {
           await user.save();
           return { updatedWorkspace };
         } else {
-          return new Error("Already a member");
+          return { error: new Error("Already a member") };
         }
       } else {
-        return new Error("Workspace name or code did not matched");
+        return { error: new Error("Workspace name or code did not matched") };
       }
     }
     return { error };

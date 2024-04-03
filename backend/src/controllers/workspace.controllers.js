@@ -25,7 +25,6 @@ const postJoinWorkspace = async (req, res) => {
   );
   if (result.updatedWorkspace) res.status(200).send(result.updatedWorkspace);
   else {
-    console.log(result.error);
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
