@@ -12,12 +12,20 @@ class TaskService {
       return { error };
     }
   };
-  findTaskCategoryById = async (categoryId) => {
+  findTaskCategoryById = async (categoryId, populateWith) => {
     try {
-      const taskCategory = await TaskCategory.findById(categoryId);
+      let taskCategory = null;
+      if (populateWith) {
+        taskCategory = await TaskCategory.findById(categoryId).populate(
+          populateWith
+        );
+      } else {
+        taskCategory = await TaskCategory.findById(categoryId);
+      }
       return { taskCategory };
     } catch (error) {
       console.log("error in findTaskCategoryById", error);
+      return { error };
     }
   };
   saveTask = async (data) => {

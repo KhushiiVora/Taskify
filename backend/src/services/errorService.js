@@ -19,6 +19,7 @@ class ErrorService {
   handleCustomError(error) {
     this.error.message = error.message;
     this.error.status = 400;
+
     return this.error;
   }
   // handleHttpError(httpError) {

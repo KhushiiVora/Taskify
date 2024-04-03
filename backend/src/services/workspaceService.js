@@ -41,7 +41,7 @@ class WorkspaceService {
       }
       return { workspace };
     } catch (error) {
-      console.log(error);
+      console.log("error in findWorkspaceById service", error);
       return { error };
     }
   };

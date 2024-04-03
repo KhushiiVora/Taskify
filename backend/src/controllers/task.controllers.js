@@ -1,21 +1,21 @@
 const TaskService = require("../services/taskService");
+const ErrorService = require("../services/errorService");
+
 const taskService = new TaskService();
+const errorService = new ErrorService();
 
 const getTasks = async (req, res) => {
   const { categoryId } = req.params;
-  try {
-    const { taskCategory, error } = await taskService.findTaskCategoryById(
-      categoryId
+  const result = await taskService.findTaskCategoryById(categoryId, "tasks");
+
+  if (result.taskCategory) {
+    res.status(200).send(result.taskCategory.tasks);
+  } else {
+    console.log("error in getTasks", result.error);
+    const error = errorService.handleError(
+      new Error("Could not retrieve tasks!")
     );
-    if (taskCategory) {
-      const populatedTaskCategory = await taskCategory.populate("tasks");
-      res.status(200).send(populatedTaskCategory.tasks);
-    } else {
-      console.log("error in getTasks", error);
-      res.status(500).send(error);
-    }
-  } catch (error) {
-    console.log("error in getTask", error);
+    res.status(500).send(error.message);
   }
 };
 

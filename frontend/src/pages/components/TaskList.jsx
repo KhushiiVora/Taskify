@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "../../axiosConfig";
-import Button from "../atoms/Button";
 import TaskDialog from "./TaskDialog";
+import Button from "../atoms/Button";
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TaskList(props) {
   const { categoryId } = props;
@@ -16,7 +18,20 @@ function TaskList(props) {
       })
       .then((response) => response.data)
       .then((data) => setTasks(data))
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
   }, []);
 
   const handleDialogOpen = () => {
@@ -68,6 +83,7 @@ function TaskList(props) {
           <p>Please Create a task</p>
         )}
       </section>
+      <ToastContainer />
     </div>
   );
 }
