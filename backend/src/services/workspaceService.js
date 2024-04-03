@@ -33,9 +33,10 @@ class WorkspaceService {
     try {
       let workspace = null;
       if (populateWith) {
-        workspace = await Workspace.findById(workspaceId).populate(
-          populateWith
-        );
+        workspace = await Workspace.findById(workspaceId).populate({
+          path: populateWith,
+          select: "-password -workspaces",
+        });
       } else {
         workspace = await Workspace.findById(workspaceId);
       }
@@ -69,8 +70,12 @@ class WorkspaceService {
     return { error };
   };
   getWorkspaceMembers = async (workspaceId) => {
-    const workspace = await this.findWorkspaceById(workspaceId, "members");
-    if (workspace) return workspace.members;
+    const result = await this.findWorkspaceById(workspaceId, "members");
+    if (result.workspace)
+      return {
+        leaders: result.workspace.leaders,
+        members: result.workspace.members,
+      };
     else {
       console.log("workspace members cannot be found!!!");
     }

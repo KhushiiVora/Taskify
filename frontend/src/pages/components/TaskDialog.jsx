@@ -16,15 +16,19 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { StyledSection } from "../../styles/dialog.styles";
+import { useSelector } from "react-redux";
 
 export default function TaskDialog(props) {
+  const theme = useTheme();
   const { categoryId, open, handleDialogClose, setTasks } = props;
+
+  const { members } = useSelector((state) => state.members);
+
   const [formData, setFormData] = useState({
     name: "",
   });
   const [dueDate, setDueDate] = useState(dayjs());
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
+  const [assignees, setAssignees] = useState([]);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -36,10 +40,10 @@ export default function TaskDialog(props) {
       },
     },
   };
-  function getStyles(name, personName, theme) {
+  function getStyles(name, assignees, theme) {
     return {
       fontWeight:
-        personName.indexOf(name) === -1
+        assignees.indexOf(name) === -1
           ? theme.typography.fontWeightRegular
           : theme.typography.fontWeightMedium,
     };
@@ -47,14 +51,15 @@ export default function TaskDialog(props) {
 
   const handleChange = (event) => {
     const value = event?.target?.value;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
     setFormData({
       ...formData,
       [event?.target?.name]: value,
     });
+  };
+
+  const handleAssigneesChange = (event) => {
+    const value = event?.target?.value;
+    setAssignees(typeof value === "string" ? value.split(",") : value);
   };
 
   async function handleSubmit(event) {
@@ -63,6 +68,7 @@ export default function TaskDialog(props) {
     let data = {
       ...formData,
       dueDate,
+      assignedTo: assignees,
     };
     await axios
       .post(`/dashboard/tasks/${categoryId}/create`, data, {
@@ -75,6 +81,7 @@ export default function TaskDialog(props) {
           name: "",
         });
         setDueDate(dayjs());
+        setAssignees([]);
         handleDialogClose(event);
       })
       .catch((error) => console.log("createTask", error));
@@ -98,23 +105,26 @@ export default function TaskDialog(props) {
                   required
                 />
                 <FormControl sx={{ m: 1, width: 300 }}>
-                  <InputLabel id="demo-multiple-name-label">Name</InputLabel>
+                  <InputLabel id="demo-multiple-name-label">
+                    Assignees
+                  </InputLabel>
                   <Select
                     labelId="demo-multiple-name-label"
                     id="demo-multiple-name"
                     multiple
-                    value={personName}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Name" />}
+                    value={assignees}
+                    onChange={handleAssigneesChange}
+                    input={<OutlinedInput label="Assignee" />}
                     MenuProps={MenuProps}
+                    required
                   >
-                    {names.map((name) => (
+                    {members.map((member) => (
                       <MenuItem
-                        key={name}
-                        value={name}
-                        style={getStyles(name, personName, theme)}
+                        key={member._id}
+                        value={member._id}
+                        style={getStyles(member.username, assignees, theme)}
                       >
-                        {name}
+                        {member.username}
                       </MenuItem>
                     ))}
                   </Select>

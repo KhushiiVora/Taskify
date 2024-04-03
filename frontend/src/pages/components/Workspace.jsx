@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
 
 import AddTaskCategory from "./AddTaskCategory";
@@ -18,6 +19,7 @@ export default function Workspace(props) {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const workspaceData = useSelector((state) =>
     state.workspaces.workspaces.find(
       (workspace) => workspace._id === workspaceId
@@ -33,6 +35,17 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => setTaskCategories(data))
       .catch((error) => console.log("in catch", error));
+
+    axios
+      .get(`/dashboard/members/${workspaceId}/`, { withCredentials: true })
+      .then((response) => response.data)
+      .then((data) => {
+        console.log("members in workspace", data);
+        dispatch(membersRestored(data));
+      })
+      .catch((error) =>
+        console.log("error in fetching members", error.response.data)
+      );
   }, []);
 
   const handleClick = (event) => {

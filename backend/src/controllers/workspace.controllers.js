@@ -32,8 +32,10 @@ const postJoinWorkspace = async (req, res) => {
 
 const getMembers = async (req, res) => {
   const { workspaceId } = req.params;
-  const members = await workspaceService.getWorkspaceMembers(workspaceId);
-  res.status(200).send(members);
+  const workspaceMembers = await workspaceService.getWorkspaceMembers(
+    workspaceId
+  );
+  res.status(200).send(workspaceMembers);
 };
 
 module.exports = { postCreateWorkspace, postJoinWorkspace, getMembers };

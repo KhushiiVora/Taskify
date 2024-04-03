@@ -13,7 +13,7 @@ const useGetMembers = (workspaceId) => {
     const getWorkspaceMembers = async () => {
       setLoading(true);
       try {
-        const workspaceMembers = await axios
+        const { members: workspaceMembers } = await axios
           .get(`/chat/${workspaceId}/members`, {
             withCredentials: true,
           })

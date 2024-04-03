@@ -1,26 +1,27 @@
 // import { useSocketContext } from "../../context/SocketContext";
 
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const MemberCard = ({ member }) => {
+  const { workspaceId } = useParams();
   const { socket } = useSelector((state) => state.socket);
 
   const [onlineUsers, setOnlineUsers] = useState([]);
-  const [isOnline, setIsOnline] = useState(true);
-  // let isOnline = onlineUsers.includes(member._id);
+  let isOnline = onlineUsers.includes(member._id);
+
+  useEffect(() => {
+    socket.emit("join-workspace-room", workspaceId);
+  }, []);
 
   useEffect(() => {
     console.log("inside membercard online users");
     socket.on("online-users", (users) => {
+      console.log("socket online users: ", users);
       setOnlineUsers(users);
     });
   }, [onlineUsers]);
-
-  useEffect(() => {
-    console.log("inside setOnline useEffect");
-    setIsOnline(onlineUsers.includes(member._id));
-  });
 
   return (
     <>
@@ -29,7 +30,7 @@ const MemberCard = ({ member }) => {
       >
         <div>
           <b>{isOnline ? "online" : "offline"}</b>
-          {console.log("online users", onlineUsers)}
+          {/* {console.log("online users", onlineUsers)} */}
           <div className="w-12 rounded-full">
             <img src={member.profilePic} alt="user avatar" />
           </div>

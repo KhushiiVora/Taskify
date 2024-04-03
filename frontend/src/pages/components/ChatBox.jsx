@@ -36,7 +36,7 @@ const ChatBox = () => {
       console.log("connected", socket.id);
     });
 
-    socket.emit("join-workspace-room", workspaceId);
+    // socket.emit("join-workspace-room", workspaceId);
   }, []);
 
   return (

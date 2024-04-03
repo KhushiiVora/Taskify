@@ -59,11 +59,13 @@ function TaskList(props) {
         {tasks.length ? (
           <table>
             <thead>
-              <th>Name</th>
-              <th>Status</th>
-              <th>Assignee</th>
-              <th>Due</th>
-              <th></th>
+              <tr>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Assignee</th>
+                <th>Due</th>
+                <th></th>
+              </tr>
             </thead>
             <tbody>
               {tasks.map((task) => {

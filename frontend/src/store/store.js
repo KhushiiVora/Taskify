@@ -6,12 +6,14 @@ import userReducer from "../state/userSlice";
 import workspaceReducer from "../state/workspaceSlice";
 import chatReducer from "../state/chatSlice";
 import socketReducer from "../state/socketSlice";
+import memberReducer from "../state/memberSlice";
 
 const rootReducer = combineReducers({
   user: userReducer,
   workspaces: workspaceReducer,
   chats: chatReducer,
   socket: socketReducer,
+  members: memberReducer,
 });
 const persistConfig = {
   key: "root",
