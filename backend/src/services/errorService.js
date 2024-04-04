@@ -11,6 +11,7 @@ class ErrorService {
     if (error instanceof mongoose.Error.ValidationError || error?.code) {
       this.handleMongooseError(error);
     } else if (error instanceof Error) {
+      console.log("Inside Custom error: ");
       this.handleCustomError(error);
     }
     return this.error;
@@ -32,7 +33,8 @@ class ErrorService {
       const field = this.error.message.split(" ");
       if (field[0] === `"name"` || field[0] === `"categoryName"`)
         this.error.message =
-          field[0] + " should only contain letters, numbers, spaces, peroid(.) and underscore(_).";
+          field[0] +
+          " should only contain letters, numbers, spaces, peroid(.) and underscore(_).";
       else
         this.error.message =
           field[0] + " should only contain letters and numbers.";

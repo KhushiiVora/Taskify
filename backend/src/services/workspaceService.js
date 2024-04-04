@@ -61,23 +61,30 @@ class WorkspaceService {
           await user.save();
           return { updatedWorkspace };
         } else {
-          return { error: new Error("Already a member") };
+          return { error: new Error("You're a Member Already.") };
         }
       } else {
-        return { error: new Error("Workspace name or code did not matched") };
+        return { error: new Error("Workspace name or code did not matched.") };
       }
+    } else {
+      return { error: new Error("Workspace doesn't exist.") };
     }
-    return { error };
   };
   getWorkspaceMembers = async (workspaceId) => {
     const result = await this.findWorkspaceById(workspaceId, "members");
-    if (result.workspace)
+    if (result.workspace) {
       return {
-        leaders: result.workspace.leaders,
-        members: result.workspace.members,
+        workspaceMembers: {
+          leaders: result.workspace.leaders,
+          members: result.workspace.members,
+        },
       };
-    else {
-      console.log("workspace members cannot be found!!!");
+    } else {
+      return {
+        error: new Error(
+          "Workspace members cannot be found. Try refreshing the page!"
+        ),
+      };
     }
   };
 }

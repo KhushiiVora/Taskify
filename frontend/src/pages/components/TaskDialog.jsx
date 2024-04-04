@@ -1,9 +1,10 @@
 import { useState } from "react";
 import axios from "../../axiosConfig";
+import { useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 import Button from "../atoms/Button";
 import TextField from "@mui/material/TextField";
-import dayjs from "dayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -15,8 +16,9 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dialog.styles";
-import { useSelector } from "react-redux";
 
 export default function TaskDialog(props) {
   const theme = useTheme();
@@ -84,7 +86,20 @@ export default function TaskDialog(props) {
         setAssignees([]);
         handleDialogClose(event);
       })
-      .catch((error) => console.log("createTask", error));
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
   }
 
   return (
@@ -98,7 +113,7 @@ export default function TaskDialog(props) {
                 <TextField
                   name="name"
                   id="outlined-basic"
-                  label="Task Name"
+                  label="Name"
                   variant="outlined"
                   onChange={handleChange}
                   value={formData.name}
@@ -150,6 +165,7 @@ export default function TaskDialog(props) {
       ) : (
         <></>
       )}
+      <ToastContainer />
     </>
   );
 }

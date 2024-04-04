@@ -35,6 +35,7 @@ class TaskService {
       return { savedTask };
     } catch (error) {
       console.log("error in saveTask", error);
+      return { error };
     }
   };
 }

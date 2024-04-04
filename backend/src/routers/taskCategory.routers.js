@@ -12,7 +12,11 @@ const {
 } = require("../validators/task.validators");
 const taskCategoryMiddleware = validateSchema(taskCategoryValidationSchema);
 
-router.get("/:workspaceId/",getTaskCategories);
-router.post("/:workspaceId/create",taskCategoryMiddleware, postCreateTaskCatogory);
+router.get("/:workspaceId/", getTaskCategories);
+router.post(
+  "/:workspaceId/create",
+  taskCategoryMiddleware,
+  postCreateTaskCatogory
+);
 
 module.exports = router;

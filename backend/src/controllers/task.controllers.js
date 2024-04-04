@@ -23,25 +23,23 @@ const postCreateTask = async (req, res) => {
   const data = req.body;
   const { categoryId } = req.params;
   data.dueDate = data.dueDate.split("T")[0];
-  try {
-    const { taskCategory, error } = await taskService.findTaskCategoryById(
-      categoryId
-    );
-    if (taskCategory) {
-      const { savedTask } = await taskService.saveTask(data);
-      if (savedTask) {
-        taskCategory.tasks.push(savedTask._id);
-        await taskCategory.save();
-        res.status(200).send(savedTask);
-      } else {
-        res.status(500).send("couldn't create Task");
-      }
+  const { taskCategory, error: taskCategoryError } =
+    await taskService.findTaskCategoryById(categoryId, "");
+
+  if (taskCategory) {
+    const result = await taskService.saveTask(data);
+    if (result.savedTask) {
+      taskCategory.tasks.push(result.savedTask._id);
+      await taskCategory.save();
+      res.status(200).send(result.savedTask);
     } else {
-      console.log("error in findTaskCategory: ", error);
-      res.status(500).send("createTask couldn't succeed");
+      console.log("Error in postCreateTask: ", result.error);
+      const error = errorService.handleError(result.error);
+      res.status(error.status).send(error.message);
     }
-  } catch (error) {
-    console.log("error in createTask", error);
+  } else {
+    const error = errorService.handleError(taskCategoryError);
+    res.status(error.status).send(error.message);
   }
 };
 

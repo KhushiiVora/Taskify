@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
 
 import AddTaskCategory from "./AddTaskCategory";
 import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
-import { StyledSection } from "../../styles/workspace.styles";
 import TaskList from "./TaskList";
-import { useNavigate } from "react-router-dom";
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { StyledSection } from "../../styles/workspace.styles";
 
 export default function Workspace(props) {
   const { workspaceId } = props;
@@ -34,7 +36,20 @@ export default function Workspace(props) {
       })
       .then((response) => response.data)
       .then((data) => setTaskCategories(data))
-      .catch((error) => console.log("in catch", error));
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
 
     axios
       .get(`/dashboard/members/${workspaceId}/`, { withCredentials: true })
@@ -43,9 +58,20 @@ export default function Workspace(props) {
         console.log("members in workspace", data);
         dispatch(membersRestored(data));
       })
-      .catch((error) =>
-        console.log("error in fetching members", error.response.data)
-      );
+      .catch((error) => {
+        console.log(error.response.data);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
   }, []);
 
   const handleClick = (event) => {
@@ -107,6 +133,7 @@ export default function Workspace(props) {
           )}
         </>
       )}
+      <ToastContainer />
     </StyledSection>
   );
 }
