@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "../../axiosConfig";
 import TaskDialog from "./TaskDialog";
 import Button from "../atoms/Button";
+import Chip from "@mui/material/Chip";
+import Checkbox from "@mui/material/Checkbox";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -10,6 +13,16 @@ function TaskList(props) {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [overDueTaskIds, setOverDueTaskIds] = useState([]);
+
+  const { members } = useSelector((state) => state.members);
+
+  /* dbTasks-fetched from db
+  tasks.forEach(task=>{
+    task.state, assignned, dueDate,
+    .save()
+  })
+  tasks deleted */
 
   useEffect(() => {
     axios
@@ -32,6 +45,18 @@ function TaskList(props) {
           transition: Slide,
         });
       });
+  }, []);
+
+  useEffect(() => {
+    const pendingTasks = tasks.filter((task) => !task.status);
+
+    setOverDueTaskIds(
+      pendingTasks
+        .filter(
+          (task) => new Date(task.dueDate).getDate() < new Date().getDate()
+        )
+        .map((task) => task._id)
+    );
   }, []);
 
   const handleDialogOpen = () => {
@@ -60,6 +85,9 @@ function TaskList(props) {
           <table>
             <thead>
               <tr>
+                <th>
+                  <Checkbox />
+                </th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>Assignee</th>
@@ -71,9 +99,34 @@ function TaskList(props) {
               {tasks.map((task) => {
                 return (
                   <tr key={task._id}>
+                    <td>
+                      <Checkbox />
+                    </td>
                     <td>{task.name}</td>
-                    <td>{`${task.state}`}</td>
-                    <td>{task.assignedTo.length}</td>
+                    <td>
+                      {task.state ? (
+                        <Chip label="Completed" color="success" />
+                      ) : overDueTaskIds.includes(task._id) ? (
+                        <Chip label="Over Due" color="error" />
+                      ) : (
+                        <Chip label="Pending..." color="primary" />
+                      )}
+                    </td>
+                    <td>
+                      <ul>
+                        {task.assignedTo.map((member) => {
+                          return (
+                            <li key={member._id}>
+                              {
+                                members.find(
+                                  (stateMember) => stateMember._id === member
+                                )?.username
+                              }
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </td>
                     <td>{task.dueDate.split("T")[0]}</td>
                     <td>🚽</td>
                   </tr>
