@@ -6,6 +6,7 @@ const StyledSection = styled.section`
   overflow-y: scroll;
   height: 100%;
   padding: 0.5rem;
+  cursor: pointer;
 `;
 
 export { StyledSection };

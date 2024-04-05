@@ -55,7 +55,6 @@ export default function Workspace(props) {
       .get(`/dashboard/members/${workspaceId}/`, { withCredentials: true })
       .then((response) => response.data)
       .then((data) => {
-        console.log("members in workspace", data);
         dispatch(membersRestored(data));
       })
       .catch((error) => {

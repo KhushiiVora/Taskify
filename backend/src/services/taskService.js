@@ -38,6 +38,39 @@ class TaskService {
       return { error };
     }
   };
+  findTaskById = async (taskId) => {
+    try {
+      const task = await Task.findById(taskId);
+
+      return { task };
+    } catch (error) {
+      console.log("error in taskService find task", error);
+      return { error };
+    }
+  };
+  deleteTask = async (categoryId, taskId) => {
+    console.log("in task servicee", categoryId, taskId);
+    try {
+      const { taskCategory, error } = await this.findTaskCategoryById(
+        categoryId,
+        ""
+      );
+      if (taskCategory) {
+        taskCategory.tasks.splice(taskCategory.tasks.indexOf(taskId), 1);
+
+        console.log(taskCategory.tasks);
+        await taskCategory.save();
+        const task = await Task.deleteOne({ _id: taskId });
+        /*{ acknowledged: true, deletedCount: 1 } */
+        // console.log(task);
+        const { tasks } = await taskCategory.populate("tasks");
+        // console.log(tasks);
+        return tasks;
+      }
+    } catch (error) {
+      console.log("error in taskService delete task", error);
+    }
+  };
 }
 
 module.exports = TaskService;

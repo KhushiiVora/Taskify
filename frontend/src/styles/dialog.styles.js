@@ -17,6 +17,7 @@ const StyledSection = styled.section`
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+    z-index: 1;
   }
   .dialog_container__form {
     display: flex;

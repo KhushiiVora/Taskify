@@ -23,6 +23,7 @@ const postCreateTask = async (req, res) => {
   const data = req.body;
   const { categoryId } = req.params;
   data.dueDate = data.dueDate.split("T")[0];
+  data.taskCategoryId = categoryId;
   const { taskCategory, error: taskCategoryError } =
     await taskService.findTaskCategoryById(categoryId, "");
 
@@ -43,4 +44,16 @@ const postCreateTask = async (req, res) => {
   }
 };
 
-module.exports = { getTasks, postCreateTask };
+const deleteTask = async (req, res) => {
+  const { categoryId, taskId } = req.params;
+  console.log(taskId);
+  const tasks = await taskService.deleteTask(categoryId, taskId);
+  if (tasks) {
+    res.status(200).send(tasks);
+  } else {
+    console.log("in task controller");
+    res.end();
+  }
+};
+
+module.exports = { getTasks, postCreateTask, deleteTask };
