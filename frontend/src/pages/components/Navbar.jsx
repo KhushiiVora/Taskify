@@ -7,7 +7,7 @@ export default function Navbar({ username }) {
       <nav>
         <NavLink to="/">Home</NavLink>
         {"      "}
-        <NavLink to="/profile">Profile</NavLink>
+        <NavLink to={`/profile/${username}`}>Profile</NavLink>
         {"      "}
         <NavLink to={`/dashboard/${username}`}>Dashboard</NavLink>
         {/* Add logout over here */}

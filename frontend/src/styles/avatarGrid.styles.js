@@ -9,13 +9,12 @@ const StyledDiv = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
   }
   .avatars_container__avatar {
-    padding-top: 1.2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid black;
-    border-radius: 5px;
+    border-radius: 50%;
     cursor: pointer;
   }
   img {
@@ -43,6 +42,10 @@ const StyledDiv = styled.div`
   }
   .selected {
     background-color: #777;
+  }
+  .avatar--selected {
+    border: 2px solid black;
+    box-shadow: 0 0 10px 2px #777;
   }
   .disabled {
     opacity: 0;

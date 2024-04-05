@@ -52,7 +52,7 @@ export default function SignUp() {
         delete user.workspaces;
         delete user.password;
         dispatch(userSaved(user));
-        navigate(`/dashboard/${user.username}`);
+        navigate(`/profile/${user.username}`, { state: { isSignedUp: true } });
       })
       .catch((error) => {
         console.log(error.response.data);

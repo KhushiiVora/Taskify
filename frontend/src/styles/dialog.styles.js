@@ -14,6 +14,9 @@ const StyledSection = styled.section`
 
   .dialog_container {
     padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
     border-radius: 1rem;
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);

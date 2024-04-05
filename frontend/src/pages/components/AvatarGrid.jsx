@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { StyledDiv } from "../../styles/avatarGrid.styles";
 
 function AvatarGrid(props) {
-  const { isGirl } = props;
+  const { isGirl, selectedImage, setSelectedImage } = props;
   const [avatarLinks, setAvatarLinks] = useState([]);
 
   const [page, setPage] = useState(1);
@@ -16,7 +16,7 @@ function AvatarGrid(props) {
     if (isGirl) {
       response = [...new Array(6)].map((_, index) => {
         return `https://avatar.iran.liara.run/public/${
-          (page - 1) * avatarsCountPerPage + (index + 1) + 50
+          (page - 1) * avatarsCountPerPage + (index + 1) + 75
         }`;
       });
     } else {
@@ -26,13 +26,12 @@ function AvatarGrid(props) {
         }`;
       });
     }
-    console.log(response);
     setAvatarLinks(response);
   };
 
   useEffect(() => {
     fetchAvatars();
-  }, [page]);
+  }, [page, isGirl]);
 
   const handlePageChange = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= totalPages && pageNumber !== page) {
@@ -47,9 +46,15 @@ function AvatarGrid(props) {
             return (
               <div
                 key={`${link}-${index}`}
-                className="avatars_container__avatar"
+                className={`avatars_container__avatar ${
+                  link === selectedImage ? "avatar--selected" : ""
+                }`}
               >
-                <img src={link} alt="avatar image" />
+                <img
+                  src={link}
+                  alt="avatar image"
+                  onClick={() => setSelectedImage(link)}
+                />
                 {/* <h4>{link.title}</h4> */}
               </div>
             );
@@ -69,6 +74,7 @@ function AvatarGrid(props) {
               {[...Array(totalPages)].map((_, index) => {
                 return (
                   <span
+                    key={`${index}`}
                     className={`pagination--page_number ${
                       page === index + 1 ? "selected" : ""
                     }`}
@@ -79,7 +85,9 @@ function AvatarGrid(props) {
                 );
               })}
               <span
-                className={`pagination--right ${page === 10 ? "disabled" : ""}`}
+                className={`pagination--right ${
+                  page === totalPages ? "disabled" : ""
+                }`}
                 onClick={() => handlePageChange(page + 1)}
               >
                 ▶️

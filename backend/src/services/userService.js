@@ -32,6 +32,19 @@ class UserService {
       throw error;
     }
   };
+  setProfilePic = async (username, profilePic) => {
+    const { user } = await this.findByUsername(username);
+    try {
+      if (user) {
+        user.profilePic = profilePic;
+        const isSet = await user.save();
+        console.log(isSet);
+        return { isSet };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 module.exports = UserService;
