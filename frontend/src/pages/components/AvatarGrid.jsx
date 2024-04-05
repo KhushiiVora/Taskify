@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import { StyledDiv } from "../../styles/avatarGrid.styles";
 
-function AvatarGrid() {
+function AvatarGrid(props) {
   const { isGirl } = props;
   const [avatarLinks, setAvatarLinks] = useState([]);
 
@@ -14,18 +14,19 @@ function AvatarGrid() {
     const avatarsCountPerPage = 6;
 
     if (isGirl) {
-      response = new Array(6).map((_, index) => {
+      response = [...new Array(6)].map((_, index) => {
         return `https://avatar.iran.liara.run/public/${
           (page - 1) * avatarsCountPerPage + (index + 1) + 50
         }`;
       });
     } else {
-      response = new Array(6).map((_, index) => {
+      response = [...new Array(6)].map((_, index) => {
         return `https://avatar.iran.liara.run/public/${
           (page - 1) * avatarsCountPerPage + (index + 1) + 0
         }`;
       });
     }
+    console.log(response);
     setAvatarLinks(response);
   };
 
@@ -42,11 +43,14 @@ function AvatarGrid() {
     <StyledDiv>
       {avatarLinks.length && (
         <div className="avatars_container">
-          {avatarLinks.map((product) => {
+          {avatarLinks.map((link, index) => {
             return (
-              <div key={product.id} className="avatars_container__avatar">
-                <img src={product.thumbnail} alt={product.title} />
-                <h4>{product.title}</h4>
+              <div
+                key={`${link}-${index}`}
+                className="avatars_container__avatar"
+              >
+                <img src={link} alt="avatar image" />
+                {/* <h4>{link.title}</h4> */}
               </div>
             );
           })}

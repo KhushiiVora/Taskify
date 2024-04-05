@@ -11,6 +11,7 @@ import Navbar from "./pages/components/Navbar";
 import Home from "./pages/components/Home";
 import Profile from "./pages/components/Profile";
 import SignUp from "./pages/components/SignUp";
+import AvatarDialog from "./pages/components/AvatarDialog";
 import Login from "./pages/components/Login";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
 import Dashboard from "./pages/components/Dashboard";
@@ -43,7 +44,7 @@ function App() {
           element={user ? <Navbar username={user.username} /> : <MainNavbar />}
         >
           <Route index element={<Home />} />
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<AvatarDialog open />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
         </Route>
