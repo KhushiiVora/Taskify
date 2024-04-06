@@ -22,7 +22,8 @@ import { StyledSection } from "../../styles/dialog.styles";
 
 export default function TaskDialog(props) {
   const theme = useTheme();
-  const { categoryId, open, handleDialogClose, setTasks } = props;
+  const { categoryId, open, handleDialogClose, setTasks, setIsMainChecked } =
+    props;
 
   const { members } = useSelector((state) => state.members);
 
@@ -79,6 +80,7 @@ export default function TaskDialog(props) {
       .then((response) => response.data)
       .then((task) => {
         setTasks((previousList) => [...previousList, task]);
+        setIsMainChecked(false);
         setFormData({
           name: "",
         });

@@ -56,4 +56,11 @@ const deleteTask = async (req, res) => {
   }
 };
 
-module.exports = { getTasks, postCreateTask, deleteTask };
+const postEditState = async (req, res) => {
+  const { taskId } = req.params;
+  const { state } = req.body;
+  const { task } = await taskService.editState(taskId, state);
+  res.status(200).send(task);
+};
+
+module.exports = { getTasks, postCreateTask, deleteTask, postEditState };

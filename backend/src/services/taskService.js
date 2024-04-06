@@ -49,7 +49,6 @@ class TaskService {
     }
   };
   deleteTask = async (categoryId, taskId) => {
-    console.log("in task servicee", categoryId, taskId);
     try {
       const { taskCategory, error } = await this.findTaskCategoryById(
         categoryId,
@@ -58,7 +57,6 @@ class TaskService {
       if (taskCategory) {
         taskCategory.tasks.splice(taskCategory.tasks.indexOf(taskId), 1);
 
-        console.log(taskCategory.tasks);
         await taskCategory.save();
         const task = await Task.deleteOne({ _id: taskId });
         /*{ acknowledged: true, deletedCount: 1 } */
@@ -69,6 +67,21 @@ class TaskService {
       }
     } catch (error) {
       console.log("error in taskService delete task", error);
+    }
+  };
+
+  editState = async (taskId, state) => {
+    const { task } = await this.findTaskById(taskId);
+    try {
+      if (task.state !== state) {
+        task.state = state;
+        const editedTask = await task.save();
+        return { task: editedTask };
+      } else {
+        return { task };
+      }
+    } catch (error) {
+      console.log("error in taskService editState", error);
     }
   };
 }

@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 function TaskList(props) {
   const { categoryId } = props;
 
+  const [isChecked, setIsChecked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [overDueTaskIds, setOverDueTaskIds] = useState([]);
@@ -33,7 +34,9 @@ function TaskList(props) {
         withCredentials: true,
       })
       .then((response) => response.data)
-      .then((data) => setTasks(data))
+      .then((data) => {
+        setTasks(data);
+      })
       .catch((error) => {
         console.log(error.response.data);
         toast.error(error.response.data, {
@@ -62,6 +65,27 @@ function TaskList(props) {
     );
   }, []);
 
+  useEffect(computeMainCheckedValueOnTasksChange, [tasks]);
+
+  function computeMainCheckedValueOnTasksChange() {
+    const mainCheckedValue = tasks.reduce((result, currentTask) => {
+      return result && currentTask.state;
+    }, true);
+    setIsChecked(mainCheckedValue);
+  }
+
+  const updateTaskState = (taskId, state) => {
+    const updatedTasks = [...tasks];
+
+    updatedTasks.forEach((task) => {
+      if (task._id === taskId) {
+        task.state = state;
+      }
+    });
+
+    setTasks(updatedTasks);
+  };
+
   const handleDialogOpen = () => {
     setDialogOpen(true);
   };
@@ -81,6 +105,7 @@ function TaskList(props) {
           open={dialogOpen}
           handleDialogClose={handleDialogClose}
           setTasks={setTasks}
+          setIsMainChecked={setIsChecked}
         />
       </section>
       <section>
@@ -89,7 +114,11 @@ function TaskList(props) {
             <thead>
               <tr>
                 <th>
-                  <Checkbox />
+                  <Checkbox
+                    checked={isChecked}
+                    onClick={() => setIsChecked(!isChecked)}
+                    color="success"
+                  />
                 </th>
                 <th>Name</th>
                 <th>Status</th>
@@ -102,12 +131,15 @@ function TaskList(props) {
               {tasks.map((task) => {
                 return (
                   <TaskRowCard
+                    isMainChecked={isChecked}
+                    setIsMainChecked={setIsChecked}
                     key={task._id}
                     task={task}
                     overDueTaskIds={overDueTaskIds}
                     workspaceMembers={workspaceMembers}
                     user={user}
                     setTasks={setTasks}
+                    updateTaskState={updateTaskState}
                   />
                 );
               })}
