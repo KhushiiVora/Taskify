@@ -11,10 +11,23 @@ export default function Profile() {
     if (location.state?.isSignedUp) setOpenAvatarDialog(true);
   }, []);
 
+  const handleDialogOpen = () => {
+    setOpenAvatarDialog(true);
+  };
+  const handleDialogClose = (event) => {
+    if (event.target.tagName === "SECTION" || event.type === "submit") {
+      setOpenAvatarDialog(false);
+    }
+  };
+
   return (
     <>
       <div>Profile page</div>
-      <AvatarDialog open={openAvatarDialog} />
+      {/* fields */}
+      <AvatarDialog
+        open={openAvatarDialog}
+        handleDialogClose={handleDialogClose}
+      />
     </>
   );
 }

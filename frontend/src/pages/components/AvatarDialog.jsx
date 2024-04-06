@@ -18,10 +18,11 @@ export default function AvatarDialog(props) {
 
   const handleChange = (event, value) => {
     setIsGirl(value);
+    setSelectedImage("");
     console.log(value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
     await axios
       .post(
         `/profile/edit/${username}/pic`,
@@ -33,6 +34,8 @@ export default function AvatarDialog(props) {
       .then((response) => response.data)
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
+
+    handleDialogClose(event);
   };
 
   return (
