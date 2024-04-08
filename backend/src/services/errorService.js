@@ -31,7 +31,11 @@ class ErrorService {
     this.error.message = joiError.details[0].message;
     if (this.error.message.includes("pattern")) {
       const field = this.error.message.split(" ");
-      if (field[0] === `"name"` || field[0] === `"categoryName"`)
+      if (
+        field[0] === `"name"` ||
+        field[0] === `"categoryName"` ||
+        field[0] === `"bio"`
+      )
         this.error.message =
           field[0] +
           " should only contain letters, numbers, spaces, peroid(.) and underscore(_).";

@@ -37,4 +37,18 @@ const userLoginValidationSchema = Joi.object()
   })
   .or("username", "email");
 
-module.exports = { userSignupValidationSchema, userLoginValidationSchema };
+const userProfileValidationSchema = Joi.object()
+  .keys({
+    username: Joi.string()
+      .regex(/^[a-zA-Z0-9_.]+$/)
+      .min(3)
+      .max(25),
+    bio: Joi.string().regex(/^[a-zA-Z0-9_.\s]+$/),
+  })
+  .or("username", "bio");
+
+module.exports = {
+  userSignupValidationSchema,
+  userLoginValidationSchema,
+  userProfileValidationSchema,
+};

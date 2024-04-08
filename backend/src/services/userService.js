@@ -24,6 +24,37 @@ class UserService {
     }
   };
 
+  findUserById = async (userId, populateWith) => {
+    try {
+      let user = null;
+      if (populateWith) {
+        user = await User.findById(userId).populate({
+          path: populateWith,
+          select: "-password",
+        });
+      } else {
+        user = await User.findById(userId).select("-password");
+        return { user };
+      }
+    } catch (error) {
+      console.log("error in findUserById service", error);
+      return { error };
+    }
+  };
+
+  editUserData = async (userId, value, fieldToEdit) => {
+    const { user, error } = await this.findUserById(userId, "");
+    try {
+      if (user) {
+        user[fieldToEdit] = value;
+        const editedUser = await user.save();
+        return { editedUser };
+      }
+    } catch (error) {
+      return { error };
+    }
+  };
+  //----------------Below two functions need to be modify--------------------
   findById = async (userId) => {
     try {
       const user = await User.findOne({ _id: userId }).populate("workspaces");
@@ -45,6 +76,7 @@ class UserService {
       console.log(error);
     }
   };
+  //---------------------------------------------
 }
 
 module.exports = UserService;

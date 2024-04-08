@@ -22,7 +22,7 @@ export default function AvatarDialog(props) {
     console.log(value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSelectAvatar = async (event) => {
     await axios
       .post(
         `/profile/edit/${username}/pic`,
@@ -64,7 +64,12 @@ export default function AvatarDialog(props) {
                 setSelectedImage={setSelectedImage}
               />
               <div>
-                <Button type="submit" text="Select" onClick={handleSubmit} />
+                <Button
+                  type="button"
+                  text="Select"
+                  onClick={handleSelectAvatar}
+                  name="selectAvatarButton"
+                />
               </div>
             </div>
           </StyledSection>
