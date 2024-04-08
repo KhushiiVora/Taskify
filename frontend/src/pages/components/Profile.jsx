@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { saved as userSaved } from "../../state/userSlice";
 import { useLocation } from "react-router-dom";
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
@@ -21,6 +22,7 @@ export default function Profile() {
   const [userBio, setUserBio] = useState(user.bio);
 
   const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (location.state?.isSignedUp) setOpenAvatarDialog(true);
@@ -49,7 +51,10 @@ export default function Profile() {
           { withCredentials: true }
         )
         .then((response) => response.data)
-        .then((data) => console.log("Updated user: ", data))
+        .then((data) => {
+          console.log("Updated user: ", data);
+          dispatch(userSaved(data));
+        })
         .catch((error) => console.log(error));
     } else {
       console.log("ME to nahi gaya🤪😝");
@@ -66,7 +71,10 @@ export default function Profile() {
           { withCredentials: true }
         )
         .then((response) => response.data)
-        .then((data) => console.log("Updated user: ", data))
+        .then((data) => {
+          console.log("Updated user: ", data);
+          dispatch(userSaved(data));
+        })
         .catch((error) => console.log(error));
     } else {
       console.log("ME to nahi gaya🤪😝");
@@ -81,7 +89,6 @@ export default function Profile() {
           <tbody>
             <tr>
               <td>
-                {" "}
                 <img
                   src={user.profilePic}
                   alt="avatar image"
