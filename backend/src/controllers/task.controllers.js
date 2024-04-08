@@ -46,7 +46,7 @@ const postCreateTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   const { categoryId, taskId } = req.params;
-  console.log(taskId);
+  // console.log(taskId);
   const tasks = await taskService.deleteTask(categoryId, taskId);
   if (tasks) {
     res.status(200).send(tasks);
@@ -63,4 +63,38 @@ const postEditState = async (req, res) => {
   res.status(200).send(task);
 };
 
-module.exports = { getTasks, postCreateTask, deleteTask, postEditState };
+const patchEditTask = async (req, res) => {
+  const { taskId } = req.params;
+  const data = req.body;
+  data.dueDate = data.dueDate.split("T")[0];
+  const result = await taskService.editTaskData(taskId, data);
+  if (!result) {
+    res.status(200);
+    return;
+  }
+  if (result.editedTask) {
+    res.status(200).send(result.editedTask);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
+
+const patchEditAllStatesTrue = async (req, res) => {
+  const { categoryId } = req.params;
+
+  const result = await taskService.editAllStatesTrue(categoryId);
+  if (result.tasks) {
+    res.status(200).send(result.tasks);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
+
+module.exports = {
+  getTasks,
+  postCreateTask,
+  deleteTask,
+  postEditState,
+  patchEditTask,
+  patchEditAllStatesTrue,
+};

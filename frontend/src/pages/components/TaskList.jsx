@@ -13,9 +13,11 @@ import "react-toastify/dist/ReactToastify.css";
 function TaskList(props) {
   const { categoryId } = props;
 
+  const [isNewTask, setIsNewTask] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [taskToEdit, setTaskToEdit] = useState({});
   const [overDueTaskIds, setOverDueTaskIds] = useState([]);
 
   const workspaceMembers = useSelector((state) => state.members);
@@ -63,7 +65,7 @@ function TaskList(props) {
         )
         .map((task) => task._id)
     );
-  }, []);
+  }, [isChecked]);
 
   useEffect(computeMainCheckedValueOnTasksChange, [tasks]);
 
@@ -71,6 +73,7 @@ function TaskList(props) {
     const mainCheckedValue = tasks.reduce((result, currentTask) => {
       return result && currentTask.state;
     }, true);
+
     setIsChecked(mainCheckedValue);
   }
 
@@ -86,22 +89,55 @@ function TaskList(props) {
     setTasks(updatedTasks);
   };
 
-  const handleDialogOpen = () => {
+  const handleDialogOpen = (eventName) => {
+    if (eventName === "add") {
+      setIsNewTask(true);
+    } else {
+      setIsNewTask(false);
+    }
     setDialogOpen(true);
   };
   const handleDialogClose = (event) => {
     if (event.target.tagName === "SECTION" || event.type === "submit") {
+      setIsNewTask(true);
       setDialogOpen(false);
     }
+  };
+
+  const setAllTaskStatesTrue = () => {
+    setIsChecked(async (prev) => {
+      if (!prev) {
+        await axios
+          .patch(
+            `/dashboard/tasks/edit/${categoryId}/allStatesTrue`,
+            {},
+            { withCredentials: true }
+          )
+          .then((response) => response.data)
+          .then((data) => {
+            setTasks(data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+      return !prev;
+    });
   };
 
   return (
     <div>
       <section>
         <h1>Do the following</h1>
-        <Button type="button" text="Add Task" onClick={handleDialogOpen} />
+        <Button
+          type="button"
+          text="Add Task"
+          onClick={() => handleDialogOpen("add")}
+        />
         <TaskDialog
+          task={taskToEdit}
           categoryId={categoryId}
+          isNewTask={isNewTask}
           open={dialogOpen}
           handleDialogClose={handleDialogClose}
           setTasks={setTasks}
@@ -116,7 +152,8 @@ function TaskList(props) {
                 <th>
                   <Checkbox
                     checked={isChecked}
-                    onClick={() => setIsChecked(!isChecked)}
+                    disabled={isChecked ? true : false}
+                    onClick={setAllTaskStatesTrue}
                     color="success"
                   />
                 </th>
@@ -131,15 +168,16 @@ function TaskList(props) {
               {tasks.map((task) => {
                 return (
                   <TaskRowCard
-                    isMainChecked={isChecked}
                     setIsMainChecked={setIsChecked}
-                    key={task._id}
+                    key={`${task._id}-${task.state}`}
                     task={task}
                     overDueTaskIds={overDueTaskIds}
                     workspaceMembers={workspaceMembers}
                     user={user}
                     setTasks={setTasks}
                     updateTaskState={updateTaskState}
+                    handleDialogOpen={handleDialogOpen}
+                    setTaskToEdit={setTaskToEdit}
                   />
                 );
               })}

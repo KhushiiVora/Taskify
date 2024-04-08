@@ -13,35 +13,30 @@ function TaskRowCard(props) {
     workspaceMembers,
     user,
     setTasks,
-    isMainChecked,
     setIsMainChecked,
     updateTaskState,
+    handleDialogOpen,
+    setTaskToEdit,
   } = props;
 
   const [isChecked, setIsChecked] = useState(task.state);
 
   useEffect(() => {
-    if (!isMainChecked) {
-      setIsChecked(isChecked);
-    } else {
-      setIsChecked(isMainChecked);
+    if (isChecked !== task.state) {
+      axios
+        .post(
+          `/dashboard/tasks/edit/${task._id}/state`,
+          { state: isChecked },
+          { withCredentials: true }
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          updateTaskState(data._id, data.state);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }, [isMainChecked]);
-
-  useEffect(() => {
-    axios
-      .post(
-        `/dashboard/tasks/edit/${task._id}/state`,
-        { state: isChecked },
-        { withCredentials: true }
-      )
-      .then((response) => response.data)
-      .then((data) => {
-        updateTaskState(data._id, data.state);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }, [isChecked]);
 
   const handleClick = async (eventName) => {
@@ -58,6 +53,8 @@ function TaskRowCard(props) {
       console.log("delete");
     } else {
       console.log("edit");
+      setTaskToEdit(task);
+      handleDialogOpen(eventName);
     }
   };
 

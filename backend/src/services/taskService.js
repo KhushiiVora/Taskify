@@ -84,6 +84,54 @@ class TaskService {
       console.log("error in taskService editState", error);
     }
   };
+
+  editAllStatesTrue = async (categoryId) => {
+    const { taskCategory, error: taskCategoryError } =
+      await this.findTaskCategoryById(categoryId, "tasks");
+
+    try {
+      if (taskCategory) {
+        taskCategory.tasks.forEach(async (task) => {
+          task.state = true;
+          await task.save();
+        });
+
+        return { tasks: taskCategory.tasks };
+      } else {
+        return { error: taskCategoryError };
+      }
+    } catch (error) {
+      console.log("in edit all states true: ", error);
+      return { error };
+    }
+  };
+
+  editTaskData = async (taskId, data) => {
+    const { task, error } = await this.findTaskById(taskId);
+    try {
+      if (task) {
+        let isModified = false;
+        Object.keys(data).forEach((field) => {
+          if (task[field] !== data[field]) {
+            isModified = true;
+            task[field] = data[field];
+          }
+        });
+
+        if (isModified) {
+          const editedTask = await task.save();
+          return { editedTask };
+        } else {
+          return null;
+        }
+      } else {
+        return { error };
+      }
+    } catch (error) {
+      console.log("error in edit Task data", error);
+      return { error };
+    }
+  };
 }
 
 module.exports = TaskService;

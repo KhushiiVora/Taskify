@@ -6,6 +6,8 @@ const {
   postCreateTask,
   deleteTask,
   postEditState,
+  patchEditTask,
+  patchEditAllStatesTrue,
 } = require("../controllers/task.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
@@ -16,6 +18,8 @@ router.get("/:categoryId/", getTasks);
 router.post("/:categoryId/create", taskMiddleware, postCreateTask);
 router.delete("/delete/:categoryId/:taskId", deleteTask);
 
+router.patch("/edit/:categoryId/allStatesTrue", patchEditAllStatesTrue);
 router.post("/edit/:taskId/state", postEditState);
+router.patch("/edit/:taskId/", patchEditTask);
 
 module.exports = router;

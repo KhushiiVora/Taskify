@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "../../axiosConfig";
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -22,8 +22,15 @@ import { StyledSection } from "../../styles/dialog.styles";
 
 export default function TaskDialog(props) {
   const theme = useTheme();
-  const { categoryId, open, handleDialogClose, setTasks, setIsMainChecked } =
-    props;
+  const {
+    categoryId,
+    open,
+    handleDialogClose,
+    setTasks,
+    setIsMainChecked,
+    isNewTask,
+    task,
+  } = props;
 
   const { members } = useSelector((state) => state.members);
 
@@ -43,6 +50,21 @@ export default function TaskDialog(props) {
       },
     },
   };
+
+  useEffect(() => {
+    if (isNewTask) {
+      setFormData({ name: "" });
+      setAssignees([]);
+      setDueDate(dayjs());
+    } else {
+      setFormData({ name: task.name });
+      setAssignees(task.assignedTo);
+      if (new Date().getDate() <= new Date(task.dueDate).getDate()) {
+        setDueDate(dayjs(task.dueDate));
+      }
+    }
+  }, [isNewTask]);
+
   function getStyles(name, assignees, theme) {
     return {
       fontWeight:
@@ -67,41 +89,80 @@ export default function TaskDialog(props) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    //    axios call for creating a task and then in .then call handleClose function as well as set the field to ""
     let data = {
       ...formData,
       dueDate,
       assignedTo: assignees,
     };
-    await axios
-      .post(`/dashboard/tasks/${categoryId}/create`, data, {
-        withCredentials: true,
-      })
-      .then((response) => response.data)
-      .then((task) => {
-        setTasks((previousList) => [...previousList, task]);
-        setIsMainChecked(false);
-        setFormData({
-          name: "",
+    if (isNewTask) {
+      await axios
+        .post(`/dashboard/tasks/${categoryId}/create`, data, {
+          withCredentials: true,
+        })
+        .then((response) => response.data)
+        .then((task) => {
+          setTasks((previousList) => [...previousList, task]);
+          setIsMainChecked(false);
+          setFormData({
+            name: "",
+          });
+          setDueDate(dayjs());
+          setAssignees([]);
+          handleDialogClose(event);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
-        setDueDate(dayjs());
-        setAssignees([]);
-        handleDialogClose(event);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        toast.error(error.response.data, {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
+    } else {
+      await axios
+        .patch(`/dashboard/tasks/edit/${task._id}/`, data, {
+          withCredentials: true,
+        })
+        .then((response) => response.data)
+        .then((editedTask) => {
+          if (editedTask) {
+            setTasks((previousList) => {
+              const newTasks = previousList.filter(
+                (task) => task._id !== editedTask._id
+              );
+              newTasks.push(editedTask);
+              return newTasks;
+            });
+          }
+          setIsMainChecked(false);
+          setFormData({
+            name: "",
+          });
+          setDueDate(dayjs());
+          setAssignees([]);
+          handleDialogClose(event);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
-      });
+    }
   }
 
   return (
@@ -159,7 +220,7 @@ export default function TaskDialog(props) {
                     />
                   </DemoContainer>
                 </LocalizationProvider>
-                <Button type="submit" text="Add" />
+                <Button type="submit" text={isNewTask ? "Add" : "Edit"} />
               </form>
             </div>
           </StyledSection>
