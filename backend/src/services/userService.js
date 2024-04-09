@@ -28,14 +28,13 @@ class UserService {
     try {
       let user = null;
       if (populateWith) {
-        user = await User.findById(userId).populate({
-          path: populateWith,
-          select: "-password",
-        });
+        user = await User.findById(userId)
+          .populate(populateWith)
+          .select("-password");
       } else {
         user = await User.findById(userId).select("-password");
-        return { user };
       }
+      return { user };
     } catch (error) {
       console.log("error in findUserById service", error);
       return { error };
@@ -54,26 +53,13 @@ class UserService {
       return { error };
     }
   };
-  //----------------Below two functions need to be modify--------------------
+  //----------------Below one functions need to be modify--------------------
   findById = async (userId) => {
     try {
       const user = await User.findOne({ _id: userId }).populate("workspaces");
       return user;
     } catch (error) {
       throw error;
-    }
-  };
-  setProfilePic = async (username, profilePic) => {
-    const { user } = await this.findByUsername(username);
-    try {
-      if (user) {
-        user.profilePic = profilePic;
-        const isSet = await user.save();
-        console.log(isSet);
-        return { isSet };
-      }
-    } catch (error) {
-      console.log(error);
     }
   };
   //---------------------------------------------

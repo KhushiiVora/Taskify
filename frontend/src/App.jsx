@@ -43,7 +43,7 @@ function App() {
           element={user ? <Navbar username={user.username} /> : <MainNavbar />}
         >
           <Route index element={<Home />} />
-          <Route path="profile/:username" element={<Profile />} />
+          <Route path="profile" element={<Profile />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
         </Route>

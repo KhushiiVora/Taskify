@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* CONTROLLERS */
 const {
-  postEditProfilePic,
+  patchEditProfilePic,
   patchEditUsername,
   patchEditUserBio,
 } = require("../controllers/user.controllers");
@@ -16,7 +16,7 @@ const {
 
 const userProfileMiddleware = validateSchema(userProfileValidationSchema);
 
-router.post("/edit/:username/pic", postEditProfilePic);
+router.patch("/edit/:userId/pic", patchEditProfilePic);
 
 router.use(userProfileMiddleware);
 router.patch("/edit/:userId/username", patchEditUsername);

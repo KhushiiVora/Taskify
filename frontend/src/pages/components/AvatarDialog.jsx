@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { saved as userSaved } from "../../state/userSlice";
 
 import axios from "../../axiosConfig";
 import AvatarGrid from "./AvatarGrid";
@@ -8,13 +10,13 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import { StyledSection } from "../../styles/dialog.styles";
-import { useParams } from "react-router-dom";
 
 export default function AvatarDialog(props) {
   const { open, handleDialogClose } = props;
-  const { username } = useParams();
   const [isGirl, setIsGirl] = useState(1);
   const [selectedImage, setSelectedImage] = useState("");
+  const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const handleChange = (event, value) => {
     setIsGirl(value);
@@ -24,15 +26,18 @@ export default function AvatarDialog(props) {
 
   const handleSelectAvatar = async (event) => {
     await axios
-      .post(
-        `/profile/edit/${username}/pic`,
+      .patch(
+        `/profile/edit/${user._id}/pic`,
         { profilePic: selectedImage },
         {
           withCredentials: true,
         }
       )
       .then((response) => response.data)
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        dispatch(userSaved(data));
+      })
       .catch((error) => console.log(error));
 
     handleDialogClose(event);

@@ -1,4 +1,9 @@
 import { useEffect, useState } from "react";
+import {
+  AVATAR_URL,
+  TOTAL_PAGES,
+  AVATARS_COUNT_PER_PAGE,
+} from "../../utils/constants";
 
 import { StyledDiv } from "../../styles/avatarGrid.styles";
 
@@ -7,23 +12,23 @@ function AvatarGrid(props) {
   const [avatarLinks, setAvatarLinks] = useState([]);
 
   const [page, setPage] = useState(1);
-  const totalPages = 4;
 
   const fetchAvatars = async () => {
     let response = [];
-    const avatarsCountPerPage = 6;
 
     if (isGirl) {
-      response = [...new Array(6)].map((_, index) => {
-        return `https://avatar.iran.liara.run/public/${
-          (page - 1) * avatarsCountPerPage + (index + 1) + 75
-        }`;
+      response = [...new Array(AVATARS_COUNT_PER_PAGE)].map((_, index) => {
+        return (
+          AVATAR_URL +
+          `${(page - 1) * AVATARS_COUNT_PER_PAGE + (index + 1) + 75}`
+        );
       });
     } else {
-      response = [...new Array(6)].map((_, index) => {
-        return `https://avatar.iran.liara.run/public/${
-          (page - 1) * avatarsCountPerPage + (index + 1) + 0
-        }`;
+      response = [...new Array(AVATARS_COUNT_PER_PAGE)].map((_, index) => {
+        return (
+          AVATAR_URL +
+          `${(page - 1) * AVATARS_COUNT_PER_PAGE + (index + 1) + 0}`
+        );
       });
     }
     setAvatarLinks(response);
@@ -34,7 +39,7 @@ function AvatarGrid(props) {
   }, [page, isGirl]);
 
   const handlePageChange = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages && pageNumber !== page) {
+    if (pageNumber >= 1 && pageNumber <= TOTAL_PAGES && pageNumber !== page) {
       setPage(pageNumber);
     }
   };
@@ -71,7 +76,7 @@ function AvatarGrid(props) {
               >
                 ◀️
               </span>
-              {[...Array(totalPages)].map((_, index) => {
+              {[...Array(TOTAL_PAGES)].map((_, index) => {
                 return (
                   <span
                     key={`${index}`}
@@ -86,7 +91,7 @@ function AvatarGrid(props) {
               })}
               <span
                 className={`pagination--right ${
-                  page === totalPages ? "disabled" : ""
+                  page === TOTAL_PAGES ? "disabled" : ""
                 }`}
                 onClick={() => handlePageChange(page + 1)}
               >

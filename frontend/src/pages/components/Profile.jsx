@@ -9,15 +9,25 @@ import AvatarDialog from "./AvatarDialog";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
+
 import { MdEdit } from "react-icons/md";
 import { MdSaveAs } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { PiUserListFill } from "react-icons/pi";
+import { PiTreeStructureFill } from "react-icons/pi";
+import { IoLogOut } from "react-icons/io5";
 
 export default function Profile() {
   const [openAvatarDialog, setOpenAvatarDialog] = useState(false);
   const [editUsername, setEditUsername] = useState(false);
   const [editBio, setEditBio] = useState(false);
 
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
+  const { workspaces } = useSelector((state) => state.workspaces);
+
   const [username, setUsername] = useState(user.username);
   const [userBio, setUserBio] = useState(user.bio);
 
@@ -88,12 +98,11 @@ export default function Profile() {
           <thead></thead>
           <tbody>
             <tr>
-              <td>
-                <img
+              <td colSpan="2">
+                <Avatar
+                  alt={user.username}
                   src={user.profilePic}
-                  alt="avatar image"
-                  height="200"
-                  width="200"
+                  sx={{ width: 150, height: 150 }}
                 />
               </td>
               <td onClick={handleDialogOpen}>
@@ -105,6 +114,9 @@ export default function Profile() {
               </td>
             </tr>
             <tr>
+              <td>
+                <FaUser />
+              </td>
               <td>
                 {!editUsername ? (
                   <div>
@@ -141,6 +153,9 @@ export default function Profile() {
             </tr>
             <tr>
               <td>
+                <MdEmail />
+              </td>
+              <td>
                 <div>
                   <span>Email</span>
                   <div>{user.email}</div>
@@ -150,6 +165,9 @@ export default function Profile() {
               <td></td>
             </tr>
             <tr>
+              <td>
+                <PiUserListFill />
+              </td>
               <td>
                 {!editBio ? (
                   <div>
@@ -186,7 +204,26 @@ export default function Profile() {
             </tr>
             <tr>
               <td>
-                <Button type="submit" text="Log out" />
+                <PiTreeStructureFill />
+              </td>
+              <td colSpan="2">
+                <span>Workspaces</span>
+                <div>
+                  {workspaces.map((workspace) => {
+                    return (
+                      <Chip
+                        key={workspace._id}
+                        label={workspace.name}
+                        // onClick={handleClick}
+                      />
+                    );
+                  })}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="3">
+                <Button type="button" icon={<IoLogOut />} text="Logout" />
               </td>
             </tr>
           </tbody>

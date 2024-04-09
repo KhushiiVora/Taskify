@@ -2,11 +2,23 @@ const UserService = require("../services/userService");
 const userService = new UserService();
 
 // Error handling remaining
-const postEditProfilePic = async (req, res) => {
-  const { username } = req.params;
+const patchEditProfilePic = async (req, res) => {
+  const { userId } = req.params;
   const { profilePic } = req.body;
-  const isSet = await userService.setProfilePic(username, profilePic);
-  res.status(200).send(isSet);
+  console.log(profilePic);
+  const result = await userService.editUserData(
+    userId,
+    profilePic,
+    "profilePic"
+  );
+  if (result.editedUser) {
+    console.log("Profile Picture edited successfully");
+    res.status(200).send(result.editedUser);
+  } else {
+    console.log(result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
+  }
 };
 
 const patchEditUsername = async (req, res) => {
@@ -37,4 +49,4 @@ const patchEditUserBio = async (req, res) => {
   }
 };
 
-module.exports = { postEditProfilePic, patchEditUsername, patchEditUserBio };
+module.exports = { patchEditProfilePic, patchEditUsername, patchEditUserBio };
