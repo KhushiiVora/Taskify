@@ -85,14 +85,14 @@ class TaskService {
     }
   };
 
-  editAllStatesTrue = async (categoryId) => {
+  editAllStates = async (categoryId, state) => {
     const { taskCategory, error: taskCategoryError } =
       await this.findTaskCategoryById(categoryId, "tasks");
 
     try {
       if (taskCategory) {
         taskCategory.tasks.forEach(async (task) => {
-          task.state = true;
+          task.state = state;
           await task.save();
         });
 

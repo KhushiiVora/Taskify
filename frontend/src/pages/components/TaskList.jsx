@@ -65,7 +65,7 @@ function TaskList(props) {
         )
         .map((task) => task._id)
     );
-  }, [isChecked]);
+  }, [isChecked, tasks]);
 
   useEffect(computeMainCheckedValueOnTasksChange, [tasks]);
 
@@ -104,23 +104,22 @@ function TaskList(props) {
     }
   };
 
-  const setAllTaskStatesTrue = () => {
+  const setAllTaskStates = () => {
     setIsChecked(async (prev) => {
-      if (!prev) {
-        await axios
-          .patch(
-            `/dashboard/tasks/edit/${categoryId}/allStatesTrue`,
-            {},
-            { withCredentials: true }
-          )
-          .then((response) => response.data)
-          .then((data) => {
-            setTasks(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
+      await axios
+        .patch(
+          `/dashboard/tasks/edit/${categoryId}/allStates`,
+          { state: !prev },
+          { withCredentials: true }
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          setTasks(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
       return !prev;
     });
   };
@@ -152,8 +151,7 @@ function TaskList(props) {
                 <th>
                   <Checkbox
                     checked={isChecked}
-                    disabled={isChecked ? true : false}
-                    onClick={setAllTaskStatesTrue}
+                    onClick={setAllTaskStates}
                     color="success"
                   />
                 </th>

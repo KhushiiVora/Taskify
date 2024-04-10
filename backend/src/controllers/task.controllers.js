@@ -79,10 +79,11 @@ const patchEditTask = async (req, res) => {
   }
 };
 
-const patchEditAllStatesTrue = async (req, res) => {
+const patchEditAllStates = async (req, res) => {
   const { categoryId } = req.params;
+  const { state } = req.body;
 
-  const result = await taskService.editAllStatesTrue(categoryId);
+  const result = await taskService.editAllStates(categoryId, state);
   if (result.tasks) {
     res.status(200).send(result.tasks);
   } else {
@@ -96,5 +97,5 @@ module.exports = {
   deleteTask,
   postEditState,
   patchEditTask,
-  patchEditAllStatesTrue,
+  patchEditAllStates,
 };
