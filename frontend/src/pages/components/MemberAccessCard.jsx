@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 // import { StyledSection } from "../../styles/memberAccessPanel.styles";
 
 function MemberAccessCard(props) {
-  const { member, isLeader, handleRemove } = props;
+  const { member, isLeader, handleRemove, setPublicProfile } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -18,7 +18,7 @@ function MemberAccessCard(props) {
   const { user } = useSelector((state) => state.user);
   const { leaders } = useSelector((state) => state.members);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -58,15 +58,7 @@ function MemberAccessCard(props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem
-          onClick={() => {
-            if (member._id !== user._id)
-              navigate(`/profile/${member.username}`, { state: { member } });
-            else navigate("/profile");
-          }}
-        >
-          Profile
-        </MenuItem>
+        <MenuItem onClick={() => setPublicProfile(member)}>Profile</MenuItem>
         {member._id !== user._id && leaders.includes(user._id) && (
           <MenuItem onClick={handleClose}>{`${
             isLeader ? "Remove Leader" : "Make Leader"

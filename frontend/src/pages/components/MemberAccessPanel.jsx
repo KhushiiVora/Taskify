@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../axiosConfig";
 
@@ -7,9 +7,11 @@ import { membersRestored } from "../../state/memberSlice";
 import MemberAccessCard from "./MemberAccessCard";
 
 import { StyledSection } from "../../styles/memberAccessPanel.styles";
+import PublicProfile from "./PublicProfile";
 
 function MemberAccessPanel(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
+  const [publicProfile, setPublicProfile] = useState(null);
   const { leaders, members } = useSelector((state) => state.members);
   const dispatch = useDispatch();
 
@@ -36,17 +38,27 @@ function MemberAccessPanel(props) {
   return (
     <StyledSection onClick={(event) => handleClick(event)}>
       <div className="panel">
-        <h2>Members</h2>
-        {members.map((member) => {
-          return (
-            <MemberAccessCard
-              key={member._id}
-              handleRemove={handleRemove}
-              member={member}
-              isLeader={leaders.includes(member._id)}
-            />
-          );
-        })}
+        {publicProfile ? (
+          <PublicProfile
+            member={publicProfile}
+            setPublicProfile={setPublicProfile}
+          />
+        ) : (
+          <>
+            <h2>Members</h2>
+            {members.map((member) => {
+              return (
+                <MemberAccessCard
+                  key={member._id}
+                  handleRemove={handleRemove}
+                  member={member}
+                  isLeader={leaders.includes(member._id)}
+                  setPublicProfile={setPublicProfile}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </StyledSection>
   );
