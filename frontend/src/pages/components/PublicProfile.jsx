@@ -1,5 +1,4 @@
-import { useSelector } from "react-redux";
-
+import { useLocation } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 
 import { FaUser } from "react-icons/fa";
@@ -7,7 +6,9 @@ import { MdEmail } from "react-icons/md";
 import { PiUserListFill } from "react-icons/pi";
 
 export default function PublicProfile() {
-  const { user } = useSelector((state) => state.user);
+  const location = useLocation();
+
+  const { member } = location.state;
 
   return (
     <>
@@ -19,8 +20,8 @@ export default function PublicProfile() {
             <tr>
               <td colSpan="2">
                 <Avatar
-                  alt={user.username}
-                  src={user.profilePic}
+                  alt={member.username}
+                  src={member.profilePic}
                   sx={{ width: 150, height: 150 }}
                 />
               </td>
@@ -32,7 +33,7 @@ export default function PublicProfile() {
               <td>
                 <div>
                   <span>Username</span>
-                  <div>{user.username}</div>
+                  <div>{member.username}</div>
                   <hr />
                 </div>
               </td>
@@ -44,7 +45,7 @@ export default function PublicProfile() {
               <td>
                 <div>
                   <span>Email</span>
-                  <div>{user.email}</div>
+                  <div>{member.email}</div>
                   <hr />
                 </div>
               </td>
@@ -56,7 +57,7 @@ export default function PublicProfile() {
               <td>
                 <div>
                   <span>Bio</span>
-                  <div>{user.bio}</div>
+                  <div>{member.bio}</div>
                   <hr />
                 </div>
               </td>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Button from "@mui/material/Button";
@@ -16,6 +17,8 @@ function MemberAccessCard(props) {
 
   const { user } = useSelector((state) => state.user);
   const { leaders } = useSelector((state) => state.members);
+
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,7 +58,15 @@ function MemberAccessCard(props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
+        <MenuItem
+          onClick={() => {
+            if (member._id !== user._id)
+              navigate(`/profile/${member.username}`, { state: { member } });
+            else navigate("/profile");
+          }}
+        >
+          Profile
+        </MenuItem>
         {member._id !== user._id && leaders.includes(user._id) && (
           <MenuItem onClick={handleClose}>{`${
             isLeader ? "Remove Leader" : "Make Leader"
