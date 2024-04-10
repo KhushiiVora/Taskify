@@ -94,7 +94,7 @@ export default function Workspace(props) {
       {expand ? (
         <section>
           <Button onClick={handleExpand} type="button" text="Back" />
-          <TaskList categoryId={selectedCategoryId} />
+          <TaskList categoryId={selectedCategoryId} workspaceId={workspaceId} />
         </section>
       ) : (
         <>

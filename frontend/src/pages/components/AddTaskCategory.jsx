@@ -4,7 +4,11 @@ import axios from "../../axiosConfig";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
+function AddTaskCategory({
+  setOpenAddTaskCategory,
+  setTaskCategories,
+  workspaceId,
+}) {
   const [title, setTitle] = useState("");
 
   const handleChange = (event) => {
@@ -24,7 +28,7 @@ function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
       .then((taskCategory) => {
         console.log("handleSubmit in taskcategory", taskCategory);
         setTaskCategories((previousList) => [...previousList, taskCategory]);
-        setOpen(false);
+        setOpenAddTaskCategory(false);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -50,7 +54,9 @@ function AddTaskCategory({ setOpen, setTaskCategories, workspaceId }) {
         onChange={handleChange}
         value={title}
         autoFocus
-        onBlur={() => (!title ? setOpen(false) : setOpen(true))}
+        onBlur={() =>
+          !title ? setOpenAddTaskCategory(false) : setOpenAddTaskCategory(true)
+        }
         onKeyDown={(event) => {
           if (event.key === "Enter" && title) handleSubmit(event);
         }}

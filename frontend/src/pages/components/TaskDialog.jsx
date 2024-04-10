@@ -23,6 +23,7 @@ import { StyledSection } from "../../styles/dialog.styles";
 export default function TaskDialog(props) {
   const theme = useTheme();
   const {
+    workspaceId,
     categoryId,
     open,
     handleDialogClose,
@@ -96,7 +97,7 @@ export default function TaskDialog(props) {
     };
     if (isNewTask) {
       await axios
-        .post(`/dashboard/tasks/${categoryId}/create`, data, {
+        .post(`/dashboard/tasks/${workspaceId}/${categoryId}/create`, data, {
           withCredentials: true,
         })
         .then((response) => response.data)
@@ -126,7 +127,7 @@ export default function TaskDialog(props) {
         });
     } else {
       await axios
-        .patch(`/dashboard/tasks/edit/${task._id}/`, data, {
+        .patch(`/dashboard/tasks/${workspaceId}/edit/${task._id}/`, data, {
           withCredentials: true,
         })
         .then((response) => response.data)

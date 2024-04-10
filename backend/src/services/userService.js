@@ -56,7 +56,7 @@ class UserService {
   //----------------Below one functions need to be modify--------------------
   findById = async (userId) => {
     try {
-      const user = await User.findOne({ _id: userId }).populate("workspaces");
+      const user = await User.findOne({ _id: userId });
       return user;
     } catch (error) {
       throw error;

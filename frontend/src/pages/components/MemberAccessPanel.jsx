@@ -23,7 +23,7 @@ function MemberAccessPanel(props) {
     // console.log(member);
     await axios
       .patch(
-        `/dashboard/workspace/${workspaceId}/member/remove`,
+        `/dashboard/members/${workspaceId}/member/remove`,
         { memberId },
         { withCredentials: true }
       )

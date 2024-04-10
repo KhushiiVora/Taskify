@@ -11,7 +11,7 @@ import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function TaskList(props) {
-  const { categoryId } = props;
+  const { categoryId, workspaceId } = props;
 
   const [isNewTask, setIsNewTask] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
@@ -32,7 +32,7 @@ function TaskList(props) {
 
   useEffect(() => {
     axios
-      .get(`/dashboard/tasks/${categoryId}/`, {
+      .get(`/dashboard/tasks/${workspaceId}/${categoryId}/`, {
         withCredentials: true,
       })
       .then((response) => response.data)
@@ -108,7 +108,7 @@ function TaskList(props) {
     setIsChecked(async (prev) => {
       await axios
         .patch(
-          `/dashboard/tasks/edit/${categoryId}/allStates`,
+          `/dashboard/tasks/${workspaceId}/edit/${categoryId}/allStates`,
           { state: !prev },
           { withCredentials: true }
         )
@@ -135,6 +135,7 @@ function TaskList(props) {
         />
         <TaskDialog
           task={taskToEdit}
+          workspaceId={workspaceId}
           categoryId={categoryId}
           isNewTask={isNewTask}
           open={dialogOpen}
@@ -169,6 +170,7 @@ function TaskList(props) {
                     setIsMainChecked={setIsChecked}
                     key={`${task._id}-${task.state}`}
                     task={task}
+                    workspaceId={workspaceId}
                     overDueTaskIds={overDueTaskIds}
                     workspaceMembers={workspaceMembers}
                     user={user}

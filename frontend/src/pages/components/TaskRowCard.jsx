@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 function TaskRowCard(props) {
   const {
     task,
+    workspaceId,
     overDueTaskIds,
     workspaceMembers,
     user,
@@ -25,7 +26,7 @@ function TaskRowCard(props) {
     if (isChecked !== task.state) {
       axios
         .post(
-          `/dashboard/tasks/edit/${task._id}/state`,
+          `/dashboard/tasks/${workspaceId}/edit/${task._id}/state`,
           { state: isChecked },
           { withCredentials: true }
         )
@@ -42,9 +43,12 @@ function TaskRowCard(props) {
   const handleClick = async (eventName) => {
     if (eventName === "delete") {
       await axios
-        .delete(`/dashboard/tasks/delete/${task.taskCategoryId}/${task._id}`, {
-          withCredentials: true,
-        })
+        .delete(
+          `/dashboard/tasks/${workspaceId}/delete/${task.taskCategoryId}/${task._id}`,
+          {
+            withCredentials: true,
+          }
+        )
         .then((response) => response.data)
         .then((data) => {
           setTasks(data);

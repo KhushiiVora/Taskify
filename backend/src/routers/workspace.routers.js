@@ -10,15 +10,22 @@ const {
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
 const {
+  userPrivilegeMiddleware,
+} = require("../middlewares/userPrivilege.middlewares");
+const {
   workspaceValidationSchema,
 } = require("../validators/workspace.validators");
 
 const workspaceMiddleware = validateSchema(workspaceValidationSchema);
 
-router.get("/:workspaceId", getMembers);
 router.post("/:username/create", workspaceMiddleware, postCreateWorkspace);
 router.post("/:username/join", workspaceMiddleware, postJoinWorkspace);
 
-router.patch("/:workspaceId/member/remove", patchRemoveMember);
+router.get("/:workspaceId", userPrivilegeMiddleware, getMembers);
+router.patch(
+  "/:workspaceId/member/remove",
+  userPrivilegeMiddleware,
+  patchRemoveMember
+);
 
 module.exports = router;

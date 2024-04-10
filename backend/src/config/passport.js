@@ -19,7 +19,10 @@ const options = {
 };
 const strategy = new JWTStrategy(options, async (payload, done) => {
   try {
-    const user = await userService.findById(payload.userId);
+    const { user } = await userService.findUserById(
+      payload.userId,
+      "workspaces"
+    );
     return done(null, user);
   } catch (error) {
     return done(error, false);
