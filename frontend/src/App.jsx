@@ -10,6 +10,7 @@ import { restored as workspaceRestored } from "./state/workspaceSlice";
 import Navbar from "./pages/components/Navbar";
 import Home from "./pages/components/Home";
 import Profile from "./pages/components/Profile";
+import PublicProfile from "./pages/components/PublicProfile";
 import SignUp from "./pages/components/SignUp";
 import Login from "./pages/components/Login";
 import ProtectedRoute from "./pages/components/ProtectedRoute";
@@ -47,6 +48,7 @@ function App() {
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
         </Route>
+        <Route path="/profile/:username" element={<PublicProfile />} />
         <Route path="/dashboard">
           <Route
             path=":username"
