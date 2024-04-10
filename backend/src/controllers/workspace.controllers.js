@@ -1,5 +1,6 @@
 const WorkspaceService = require("../services/workspaceService");
 const ErrorService = require("../services/errorService");
+const { updateMany } = require("../models/workspace");
 
 const workspaceService = new WorkspaceService();
 const errorService = new ErrorService();
@@ -43,4 +44,24 @@ const getMembers = async (req, res) => {
   }
 };
 
-module.exports = { postCreateWorkspace, postJoinWorkspace, getMembers };
+const patchRemoveMember = async (req, res) => {
+  const { workspaceId } = req.params;
+  const { memberId } = req.body;
+
+  const result = await workspaceService.removeWorkspaceMember(
+    workspaceId,
+    memberId
+  );
+  if (result.updatedWorkspace) {
+    res.status(200).send(result.updatedWorkspace);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
+
+module.exports = {
+  postCreateWorkspace,
+  postJoinWorkspace,
+  getMembers,
+  patchRemoveMember,
+};

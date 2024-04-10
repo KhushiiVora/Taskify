@@ -4,7 +4,7 @@ const StyledSection = styled.section`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding: 1rem;
+  /* padding: 1rem; */
 
   .dashboard__header {
     display: flex;
@@ -14,6 +14,9 @@ const StyledSection = styled.section`
     height: 100%;
     width: 100%;
     display: flex;
+  }
+  .blur-background {
+    filter: blur(1px);
   }
 `;
 

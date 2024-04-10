@@ -87,6 +87,35 @@ class WorkspaceService {
       };
     }
   };
+  removeWorkspaceMember = async (workspaceId, memberId) => {
+    const { workspace, error: workspaceError } = await this.findWorkspaceById(
+      workspaceId,
+      "members"
+    );
+    const { user, error: userError } = await userService.findUserById(
+      memberId,
+      ""
+    );
+    if (workspaceError || userError) {
+      return { error: workspaceError ?? userError };
+    }
+    try {
+      if (workspace.leaders.includes(memberId)) {
+        workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
+      }
+      workspace.members.splice(workspace.members.indexOf(memberId), 1);
+      user.workspaces.splice(user.workspaces.indexOf(workspaceId), 1);
+
+      await user.save();
+      const updatedWorkspace = await (
+        await workspace.save()
+      ).populate("members");
+      return { updatedWorkspace };
+    } catch (error) {
+      console.log("error in removeWorkspaceMember", error);
+      return { error };
+    }
+  };
 }
 
 module.exports = WorkspaceService;

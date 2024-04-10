@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../atoms/Button";
 import WorkspaceDialog from "./WorkspaceDialog";
 import WorkspaceList from "./WorkspaceList";
+import MemberAccessPanel from "./MemberAccessPanel";
 import Workspace from "./Workspace";
 
 import { useSelector } from "react-redux";
@@ -14,6 +15,7 @@ import { TiMessages } from "react-icons/ti";
 export default function Dashboard() {
   const { username } = useSelector((state) => state.user.user);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [openMemberAccessPanel, setOpenMemberAccessPanel] = useState(false);
   // const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
   const navigate = useNavigate();
@@ -42,17 +44,28 @@ export default function Dashboard() {
 
   return (
     <StyledSection>
-      <header className="dashboard__header">
+      <header
+        className={`dashboard__header ${
+          openMemberAccessPanel ? "blur-background" : ""
+        }`}
+      >
         <div>
           <Button type="button" onClick={() => navigate("/")} text="🏠" />
           <h1>Dashboard</h1>
         </div>
         <Button type="button" text="Add Workspace" onClick={handleDialogOpen} />
       </header>
-      <section className="dashboard__workspace-container">
+      <section
+        className={`dashboard__workspace-container ${
+          openMemberAccessPanel ? "blur-background" : ""
+        }`}
+      >
         <WorkspaceList handleWorkspaceOpen={handleWorkspaceOpen} />
         {openedWorkspaceId ? (
-          <Workspace workspaceId={openedWorkspaceId} />
+          <Workspace
+            workspaceId={openedWorkspaceId}
+            setOpenMemberAccessPanel={setOpenMemberAccessPanel}
+          />
         ) : (
           <NoWorkspaceSelected />
         )}
@@ -62,6 +75,12 @@ export default function Dashboard() {
         open={dialogOpen}
         handleDialogClose={handleDialogClose}
       />
+      {openMemberAccessPanel && (
+        <MemberAccessPanel
+          workspaceId={openedWorkspaceId}
+          setOpenMemberAccessPanel={setOpenMemberAccessPanel}
+        />
+      )}
     </StyledSection>
   );
 }

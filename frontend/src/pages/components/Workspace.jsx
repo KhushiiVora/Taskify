@@ -8,15 +8,21 @@ import AddTaskCategory from "./AddTaskCategory";
 import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
 import TaskList from "./TaskList";
+// import MemberAccessPanel from "./MemberAccessPanel";
+
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/workspace.styles";
 
 export default function Workspace(props) {
-  const { workspaceId } = props;
+  const { workspaceId, setOpenMemberAccessPanel } = props;
 
-  const [open, setOpen] = useState(false);
+  const [openAddTaskCategory, setOpenAddTaskCategory] = useState(false);
   const [expand, setExpand] = useState(false);
+
   const [taskCategories, setTaskCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const navigate = useNavigate();
@@ -27,7 +33,8 @@ export default function Workspace(props) {
       (workspace) => workspace._id === workspaceId
     )
   );
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
+  const { members } = useSelector((state) => state.members);
 
   useEffect(() => {
     axios
@@ -71,10 +78,10 @@ export default function Workspace(props) {
           transition: Slide,
         });
       });
-  }, []);
+  }, [workspaceId]);
 
   const handleClick = (event) => {
-    setOpen(!open);
+    setOpenAddTaskCategory(!openAddTaskCategory);
   };
 
   const handleExpand = (event, categoryId) => {
@@ -108,9 +115,9 @@ export default function Workspace(props) {
               onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
               text="Chat box"
             />
-            {open ? (
+            {openAddTaskCategory ? (
               <AddTaskCategory
-                setOpen={setOpen}
+                setOpenAddTaskCategory={setOpenAddTaskCategory}
                 workspaceId={workspaceId}
                 setTaskCategories={setTaskCategories}
               />
@@ -118,6 +125,29 @@ export default function Workspace(props) {
               <></>
             )}
           </section>
+          <div
+            className="avater-container"
+            onClick={() => {
+              // console.log("div");
+              setOpenMemberAccessPanel(true);
+            }}
+          >
+            <AvatarGroup total={members.length}>
+              {[
+                ...new Array(
+                  (members.length % 5) + (members.length >= 5 ? 3 : 0)
+                ),
+              ].map((_, index) => {
+                return (
+                  <Avatar
+                    alt={members[index].username}
+                    src={members[index].profilePic}
+                  />
+                );
+              })}
+            </AvatarGroup>
+            {/* {openMemberAccessPanel && <MemberAccessPanel />} */}
+          </div>
           {taskCategories.length ? (
             <section className="categories_container">
               <TaskCategoryList
