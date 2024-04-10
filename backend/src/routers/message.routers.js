@@ -4,12 +4,18 @@ const {
   postSaveMessage,
   getMessages,
 } = require("../controllers/message.controllers");
-
+const {
+  userPrivilegeMiddleware,
+} = require("../middlewares/userPrivilege.middlewares");
 const router = express.Router();
 
-router.get("/:workspaceId/members", getMembers);
-router.get("/:workspaceId/messages", getMessages);
+router.get("/:workspaceId/members", userPrivilegeMiddleware, getMembers);
+router.get("/:workspaceId/messages", userPrivilegeMiddleware, getMessages);
 
-router.post("/:workspaceId/messages/save", postSaveMessage);
+router.post(
+  "/:workspaceId/messages/save",
+  userPrivilegeMiddleware,
+  postSaveMessage
+);
 
 module.exports = router;

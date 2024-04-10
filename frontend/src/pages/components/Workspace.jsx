@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
 
 import AddTaskCategory from "./AddTaskCategory";
 import TaskCategoryList from "./TaskCategoryList";
@@ -44,7 +45,7 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => setTaskCategories(data))
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error.response);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,
@@ -65,7 +66,7 @@ export default function Workspace(props) {
         dispatch(membersRestored(data));
       })
       .catch((error) => {
-        console.log(error.response.data);
+        refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,

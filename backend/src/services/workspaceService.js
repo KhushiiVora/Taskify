@@ -110,6 +110,7 @@ class WorkspaceService {
       const updatedWorkspace = await (
         await workspace.save()
       ).populate("members");
+
       return { updatedWorkspace };
     } catch (error) {
       console.log("error in removeWorkspaceMember", error);

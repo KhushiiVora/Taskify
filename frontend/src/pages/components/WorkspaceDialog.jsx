@@ -75,7 +75,7 @@ export default function WorkspaceDialog(props) {
           });
         })
         .catch((error) => {
-          console.log(error.response.data);
+          console.log(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 5000,
