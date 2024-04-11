@@ -11,11 +11,20 @@ import Button from "../atoms/Button";
 import TaskList from "./TaskList";
 // import MemberAccessPanel from "./MemberAccessPanel";
 
+import MUIButton from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import { MdLock } from "react-icons/md";
+import { MdLockOpen } from "react-icons/md";
 import { StyledSection } from "../../styles/workspace.styles";
 
 export default function Workspace(props) {
@@ -23,6 +32,7 @@ export default function Workspace(props) {
 
   const [openAddTaskCategory, setOpenAddTaskCategory] = useState(false);
   const [expand, setExpand] = useState(false);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const [taskCategories, setTaskCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
@@ -83,6 +93,26 @@ export default function Workspace(props) {
       });
   }, [workspaceId]);
 
+  const handleWorkspaceLock = async () => {
+    await axios
+      .patch(
+        `/dashboard/workspace/${workspaceId}/edit/lock`,
+        {},
+        {
+          withCredentials: true,
+        }
+      )
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+        refreshPage(error.response.status);
+      });
+    handleConfirmDialogClose();
+  };
+
   const handleClick = (event) => {
     setOpenAddTaskCategory(!openAddTaskCategory);
   };
@@ -90,6 +120,10 @@ export default function Workspace(props) {
   const handleExpand = (event, categoryId) => {
     setExpand(!expand);
     if (event.target.tagName !== "BUTTON") setSelectedCategoryId(categoryId);
+  };
+
+  const handleConfirmDialogClose = () => {
+    setOpenConfirmDialog(false);
   };
 
   return (
@@ -128,6 +162,61 @@ export default function Workspace(props) {
               <></>
             )}
           </section>
+          {leaders.includes(user._id) ? (
+            <div>
+              <MUIButton onClick={() => setOpenConfirmDialog(true)}>
+                {workspaceData?.locked ? (
+                  <>
+                    <MdLock /> Locked
+                  </>
+                ) : (
+                  <>
+                    <MdLockOpen /> Lock
+                  </>
+                )}
+              </MUIButton>
+              <Dialog
+                open={openConfirmDialog}
+                onClose={handleConfirmDialogClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {!workspaceData?.locked
+                    ? "Workspace Lock Confirmation"
+                    : "Workspace Unlock Confirmation"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    {!workspaceData?.locked
+                      ? "Are you sure you want to lock the workspace? NOTE: This action will prevent other users from joining the workspace."
+                      : "Are you sure you want to unlock the workspace? NOTE: This action will allow other users to join the workspace and collaborate."}
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <MUIButton onClick={handleWorkspaceLock} autoFocus>
+                    {workspaceData?.locked ? "Unlock" : "Lock"}
+                  </MUIButton>
+                  <MUIButton onClick={handleConfirmDialogClose}>
+                    Cancel
+                  </MUIButton>
+                </DialogActions>
+              </Dialog>
+            </div>
+          ) : (
+            <div>
+              {workspaceData?.locked ? (
+                <span>
+                  <MdLock /> Locked
+                </span>
+              ) : (
+                <span>
+                  <MdLockOpen /> Open
+                </span>
+              )}
+            </div>
+          )}
+
           <div
             className="avater-container"
             onClick={() => {

@@ -7,6 +7,7 @@ const {
   getMembers,
   patchRemoveMember,
   patchEditLeader,
+  patchEditLock,
 } = require("../controllers/workspace.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
@@ -35,6 +36,11 @@ router.patch(
   "/:workspaceId/edit/leader",
   leaderPrivilegeMiddleware,
   patchEditLeader
+);
+router.patch(
+  "/:workspaceId/edit/lock",
+  leaderPrivilegeMiddleware,
+  patchEditLock
 );
 
 module.exports = router;

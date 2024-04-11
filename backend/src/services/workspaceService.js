@@ -47,10 +47,11 @@ class WorkspaceService {
     }
   };
   joinWorkspace = async (username, data) => {
-    const { user } = await userService.findByUsername(username);
     const { workspace, error } = await this.findWorkspace(data.code);
+    const { user } = await userService.findByUsername(username);
+
     if (workspace) {
-      if (data.name === workspace.name) {
+      if (!workspace.locked && data.name === workspace.name) {
         const member = workspace.members.find(
           (member) => user._id.valueOf() == member.valueOf()
         );
@@ -64,7 +65,14 @@ class WorkspaceService {
           return { error: new Error("You're a Member Already.") };
         }
       } else {
-        return { error: new Error("Workspace name or code did not matched.") };
+        if (workspace.locked)
+          return {
+            error: new Error("Opps! Workspace is locked."),
+          };
+        else
+          return {
+            error: new Error("Workspace name or code did not matched."),
+          };
       }
     } else {
       return { error: new Error("Workspace doesn't exist.") };
@@ -143,6 +151,27 @@ class WorkspaceService {
       }
     } catch (error) {
       console.log("error in edit leaders: ", error);
+      return { error };
+    }
+  };
+
+  editLock = async (workspaceId) => {
+    const { workspace, error: workspaceError } = await this.findWorkspaceById(
+      workspaceId,
+      "members"
+    );
+    if (workspaceError) {
+      return { error: workspaceError };
+    }
+
+    try {
+      if (workspace) {
+        workspace.locked = !workspace.locked;
+        const updatedWorkspace = await workspace.save();
+        return { updatedWorkspace };
+      }
+    } catch (error) {
+      console.log("error in edit lock: ", error);
       return { error };
     }
   };

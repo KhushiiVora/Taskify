@@ -5,11 +5,11 @@ export default function Button(props) {
   return (
     <>
       {onClick ? (
-        <button type={type} onClick={onClick} name={name}>
+        <button type={type} onClick={onClick} name={name} >
           {icon} {` `} {text}
         </button>
       ) : (
-        <button type={type} name={name}>
+        <button type={type} name={name} >
           {icon} {` `}
           {text}
         </button>
