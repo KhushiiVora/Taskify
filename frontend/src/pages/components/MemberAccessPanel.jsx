@@ -14,6 +14,7 @@ function MemberAccessPanel(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
   const [publicProfile, setPublicProfile] = useState(null);
   const { leaders, members } = useSelector((state) => state.members);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleClick = (event) => {
@@ -39,6 +40,24 @@ function MemberAccessPanel(props) {
       });
   };
 
+  const handleLeaderChange = async (memberId) => {
+    // leaders.includes(memberId);
+    await axios
+      .patch(
+        `/dashboard/members/${workspaceId}/edit/leader`,
+        { memberId, userId: user._id },
+        { withCredentials: true }
+      )
+      .then((response) => response.data)
+      .then((data) => {
+        console.log(data);
+        dispatch(membersRestored(data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <StyledSection onClick={(event) => handleClick(event)}>
       <div className="panel">
@@ -55,6 +74,7 @@ function MemberAccessPanel(props) {
                 <MemberAccessCard
                   key={member._id}
                   handleRemove={handleRemove}
+                  handleLeaderChange={handleLeaderChange}
                   member={member}
                   isLeader={leaders.includes(member._id)}
                   setPublicProfile={setPublicProfile}

@@ -7,18 +7,25 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 
-// import { StyledSection } from "../../styles/memberAccessPanel.styles";
+import { FaUserXmark } from "react-icons/fa6";
+import { RiShieldUserFill } from "react-icons/ri";
+import { RiShieldUserLine } from "react-icons/ri";
+import { FaUserCircle } from "react-icons/fa";
 
 function MemberAccessCard(props) {
-  const { member, isLeader, handleRemove, setPublicProfile } = props;
+  const {
+    member,
+    isLeader,
+    handleRemove,
+    handleLeaderChange,
+    setPublicProfile,
+  } = props;
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const { user } = useSelector((state) => state.user);
   const { leaders } = useSelector((state) => state.members);
-
-  // const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -46,7 +53,11 @@ function MemberAccessCard(props) {
           <span className="panel__member--username">{`${member.username} ${
             member._id === user._id ? "(You)" : ""
           }`}</span>
-          {isLeader && <span className="panel__member--leader">Leader</span>}
+          {isLeader && (
+            <span className="panel__member--leader">
+              <RiShieldUserFill /> Leader
+            </span>
+          )}
         </div>
       </Button>
       <Menu
@@ -58,14 +69,33 @@ function MemberAccessCard(props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => setPublicProfile(member)}>Profile</MenuItem>
+        <MenuItem onClick={() => setPublicProfile(member)}>
+          <FaUserCircle /> Profile
+        </MenuItem>
+
         {member._id !== user._id && leaders.includes(user._id) && (
-          <MenuItem onClick={handleClose}>{`${
-            isLeader ? "Remove Leader" : "Make Leader"
-          }`}</MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleClose();
+              handleLeaderChange(member._id);
+            }}
+          >
+            {isLeader ? (
+              <>
+                <RiShieldUserLine /> Remove Leader
+              </>
+            ) : (
+              <>
+                <RiShieldUserFill /> Make Leader
+              </>
+            )}
+          </MenuItem>
         )}
         {member._id !== user._id && leaders.includes(user._id) && (
-          <MenuItem onClick={() => handleRemove(member._id)}>Remove</MenuItem>
+          <MenuItem onClick={() => handleRemove(member._id)}>
+            <FaUserXmark />
+            Remove
+          </MenuItem>
         )}
       </Menu>
     </>

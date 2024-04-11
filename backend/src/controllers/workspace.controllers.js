@@ -59,9 +59,23 @@ const patchRemoveMember = async (req, res) => {
   }
 };
 
+const patchEditLeader = async (req, res) => {
+  const { workspaceId } = req.params;
+  const { memberId } = req.body;
+
+  const result = await workspaceService.editLeaders(workspaceId, memberId);
+
+  if (result.updatedWorkspace) {
+    res.status(200).send(result.updatedWorkspace);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
+
 module.exports = {
   postCreateWorkspace,
   postJoinWorkspace,
   getMembers,
   patchRemoveMember,
+  patchEditLeader,
 };

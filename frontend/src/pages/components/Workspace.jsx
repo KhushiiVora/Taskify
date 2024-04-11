@@ -35,7 +35,7 @@ export default function Workspace(props) {
     )
   );
   const { user } = useSelector((state) => state.user);
-  const { members } = useSelector((state) => state.members);
+  const { leaders, members } = useSelector((state) => state.members);
 
   useEffect(() => {
     axios
@@ -67,6 +67,7 @@ export default function Workspace(props) {
         dispatch(membersRestored(data));
       })
       .catch((error) => {
+        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
@@ -103,7 +104,7 @@ export default function Workspace(props) {
           <section>
             <h1>{workspaceData?.name}</h1>
             <h1>Workspace details</h1>
-            {workspaceData.leaders.includes(user._id) ? (
+            {leaders.includes(user._id) ? (
               <Button
                 type="button"
                 onClick={handleClick}

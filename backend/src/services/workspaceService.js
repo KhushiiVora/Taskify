@@ -117,6 +117,35 @@ class WorkspaceService {
       return { error };
     }
   };
+
+  editLeaders = async (workspaceId, memberId) => {
+    const { workspace, error: workspaceError } = await this.findWorkspaceById(
+      workspaceId,
+      ""
+    );
+    if (workspaceError) {
+      return { error: workspaceError };
+    }
+
+    try {
+      if (workspace) {
+        if (workspace.leaders.includes(memberId)) {
+          workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
+        } else {
+          workspace.leaders.push(memberId);
+        }
+
+        const updatedWorkspace = await (
+          await workspace.save()
+        ).populate("members");
+
+        return { updatedWorkspace };
+      }
+    } catch (error) {
+      console.log("error in edit leaders: ", error);
+      return { error };
+    }
+  };
 }
 
 module.exports = WorkspaceService;
