@@ -12,6 +12,7 @@ import PublicProfile from "./PublicProfile";
 
 function MemberAccessPanel(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
+
   const [publicProfile, setPublicProfile] = useState(null);
   const { leaders, members } = useSelector((state) => state.members);
   const { user } = useSelector((state) => state.user);
@@ -55,6 +56,7 @@ function MemberAccessPanel(props) {
       })
       .catch((error) => {
         console.log(error);
+        refreshPage(error.response.status);
       });
   };
 

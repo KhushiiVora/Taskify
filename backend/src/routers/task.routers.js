@@ -11,12 +11,19 @@ const {
 } = require("../controllers/task.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
+const {
+  leaderPrivilegeMiddleware,
+} = require("../middlewares/leaderPrivilege.middlewares");
 const { taskValidationSchema } = require("../validators/task.validators");
 const taskMiddleware = validateSchema(taskValidationSchema);
 
 router.get("/:categoryId/", getTasks);
 router.post("/:categoryId/create", taskMiddleware, postCreateTask);
-router.delete("/delete/:categoryId/:taskId", deleteTask);
+router.delete(
+  "/delete/:categoryId/:taskId",
+  leaderPrivilegeMiddleware,
+  deleteTask
+);
 
 router.patch("/edit/:categoryId/allStates", patchEditAllStates);
 router.post("/edit/:taskId/state", postEditState);

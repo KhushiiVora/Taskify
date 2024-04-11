@@ -10,6 +10,9 @@ const { validateSchema } = require("../middlewares/validate.middlewares");
 const {
   userPrivilegeMiddleware,
 } = require("../middlewares/userPrivilege.middlewares");
+const {
+  leaderPrivilegeMiddleware,
+} = require("../middlewares/leaderPrivilege.middlewares");
 
 const {
   taskCategoryValidationSchema,
@@ -19,7 +22,7 @@ const taskCategoryMiddleware = validateSchema(taskCategoryValidationSchema);
 router.get("/:workspaceId/", userPrivilegeMiddleware, getTaskCategories);
 router.post(
   "/:workspaceId/create",
-  userPrivilegeMiddleware,
+  leaderPrivilegeMiddleware,
   taskCategoryMiddleware,
   postCreateTaskCatogory
 );
