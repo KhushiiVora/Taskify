@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
 
 import { membersRestored } from "../../state/memberSlice";
 
@@ -32,7 +33,10 @@ function MemberAccessPanel(props) {
         console.log(data);
         dispatch(membersRestored(data));
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        refreshPage(error.response.status);
+        console.log(error);
+      });
   };
 
   return (

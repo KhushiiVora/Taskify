@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,7 @@ function AddTaskCategory({
       })
       .catch((error) => {
         console.log(error.response.data);
+        refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,

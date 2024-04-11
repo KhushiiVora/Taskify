@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
+
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 
@@ -113,6 +115,7 @@ export default function TaskDialog(props) {
         })
         .catch((error) => {
           console.log(error.response.data);
+          refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 5000,
@@ -151,6 +154,8 @@ export default function TaskDialog(props) {
         })
         .catch((error) => {
           console.log(error.response.data);
+          refreshPage(error.response.status);
+
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 5000,

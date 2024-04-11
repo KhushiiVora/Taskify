@@ -46,6 +46,7 @@ export default function Workspace(props) {
       .then((data) => setTaskCategories(data))
       .catch((error) => {
         console.log(error.response);
+        refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,

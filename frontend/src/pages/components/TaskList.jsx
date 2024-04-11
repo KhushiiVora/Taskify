@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
 
 import TaskDialog from "./TaskDialog";
 import TaskRowCard from "./TaskRowCard";
@@ -41,6 +42,8 @@ function TaskList(props) {
       })
       .catch((error) => {
         console.log(error.response.data);
+        refreshPage(error.response.status);
+
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,
@@ -118,6 +121,7 @@ function TaskList(props) {
         })
         .catch((error) => {
           console.log(error);
+          refreshPage(error.response.status);
         });
 
       return !prev;

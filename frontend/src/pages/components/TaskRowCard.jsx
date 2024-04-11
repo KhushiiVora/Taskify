@@ -1,4 +1,6 @@
 import axios from "../../axiosConfig";
+import { refreshPage } from "../../utils/refreshPage";
+
 import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
@@ -36,6 +38,7 @@ function TaskRowCard(props) {
         })
         .catch((error) => {
           console.log(error);
+          refreshPage(error.response.status);
         });
     }
   }, [isChecked]);
@@ -53,7 +56,10 @@ function TaskRowCard(props) {
         .then((data) => {
           setTasks(data);
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error);
+          refreshPage(error.response.status);
+        });
       console.log("delete");
     } else {
       console.log("edit");
