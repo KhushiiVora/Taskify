@@ -1,7 +1,11 @@
 const TaskCategory = require("../models/taskCategory");
 const Task = require("../models/task");
+const WorkspaceService = require("../services/workspaceService");
+
+const workspaceService = new WorkspaceService();
 
 class TaskService {
+  //--------------------- TASKCATEGORY RELATED FUNCTIONALITY --------------------------
   saveTaskCategory = async (data) => {
     const taskCategory = new TaskCategory(data);
     try {
@@ -47,6 +51,44 @@ class TaskService {
     }
   };
 
+  deleteTaskCategory = async (categoryId, workspaceId) => {
+    const { taskCategory, error: taskCategoryError } =
+      await this.findTaskCategoryById(categoryId, "");
+
+    const { workspace, error: workspaceError } =
+      await workspaceService.findWorkspaceById(workspaceId, "");
+
+    if (taskCategoryError || workspaceError)
+      return { error: taskCategoryError ?? workspaceError };
+    try {
+      if (taskCategory) {
+        const { acknowledged } = await Task.deleteMany({
+          taskCategoryId: categoryId,
+        });
+
+        if (acknowledged) {
+          const { acknowledged: taskCategoryDeleted } =
+            await TaskCategory.deleteOne({ _id: categoryId });
+
+          if (taskCategoryDeleted) {
+            workspace.taskCategories.splice(
+              workspace.taskCategories.indexOf(categoryId),
+              1
+            );
+            const { taskCategories } = await (
+              await workspace.save()
+            ).populate("taskCategories");
+
+            return { taskCategories };
+          }
+        }
+      }
+    } catch (error) {
+      console.log("error in  deleteTaskcategory", error);
+      return { error };
+    }
+  };
+  //--------------------- TASK RELATED FUNCTIONALITY --------------------------
   saveTask = async (data) => {
     const task = new Task(data);
     try {

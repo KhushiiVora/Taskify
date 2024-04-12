@@ -5,6 +5,7 @@ const {
   getTaskCategories,
   postCreateTaskCatogory,
   patchEditCategoryName,
+  deleteTaskCategory,
 } = require("../controllers/taskCategory.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
@@ -33,5 +34,9 @@ router.patch(
   taskCategoryMiddleware,
   patchEditCategoryName
 );
-
+router.delete(
+  "/:workspaceId/delete/:categoryId",
+  leaderPrivilegeMiddleware,
+  deleteTaskCategory
+);
 module.exports = router;

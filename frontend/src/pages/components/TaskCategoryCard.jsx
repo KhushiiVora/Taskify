@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import AddTaskCategory from "./AddTaskCategory";
+
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -12,8 +13,15 @@ import { MdDelete } from "react-icons/md";
 import { StyledDiv } from "../../styles/taskCategoryList.styles";
 
 function TaskCategoryCard(props) {
-  const { workspaceId, setTaskCategories, category, isLeader, handleExpand } =
-    props;
+  const {
+    workspaceId,
+    setTaskCategories,
+    category,
+    isLeader,
+    handleExpand,
+    setOpenConfirmDialog,
+    setCategoryToDelete,
+  } = props;
 
   const [categoryToEdit, setCategoryToEdit] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -76,7 +84,13 @@ function TaskCategoryCard(props) {
             >
               <AiFillEdit /> Edit
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                setCategoryToDelete(category);
+                setOpenConfirmDialog(true);
+                handleClose();
+              }}
+            >
               <MdDelete /> Delete
             </MenuItem>
           </Menu>

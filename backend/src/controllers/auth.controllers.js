@@ -39,7 +39,7 @@ const getLogout = (req, res) => {
     res.status(200).send("Logged out successfully");
   } catch (error) {
     console.log("error in logout", error);
-    // res.status(500).send("Internal Server Error");
+    res.status(500).send("Internal Server Error");
   }
 };
 module.exports = {

@@ -87,6 +87,7 @@ function AddTaskCategory(props) {
         })
         .catch((error) => {
           console.log(error);
+          refreshPage(error.response.status);
         });
       setCategoryToEdit(null);
     }

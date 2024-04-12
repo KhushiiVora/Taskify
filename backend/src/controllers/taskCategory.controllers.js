@@ -57,8 +57,20 @@ const patchEditCategoryName = async (req, res) => {
   }
 };
 
+const deleteTaskCategory = async (req, res) => {
+  const { categoryId, workspaceId } = req.params;
+
+  const result = await taskService.deleteTaskCategory(categoryId, workspaceId);
+
+  if (result.taskCategories) {
+    res.status(200).send(result.taskCategories);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
 module.exports = {
   getTaskCategories,
   postCreateTaskCatogory,
   patchEditCategoryName,
+  deleteTaskCategory,
 };

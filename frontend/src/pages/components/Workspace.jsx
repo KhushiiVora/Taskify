@@ -5,6 +5,7 @@ import { membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
 
+import ConfirmationDialog from "./ConfirmationDialog";
 import AddTaskCategory from "./AddTaskCategory";
 import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
@@ -14,11 +15,6 @@ import TaskList from "./TaskList";
 import MUIButton from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -176,33 +172,32 @@ export default function Workspace(props) {
                   </>
                 )}
               </MUIButton>
-              <Dialog
-                open={openConfirmDialog}
-                onClose={handleConfirmDialogClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {!workspaceData?.locked
+              <ConfirmationDialog
+                title={
+                  !workspaceData?.locked
                     ? "Workspace Lock Confirmation"
-                    : "Workspace Unlock Confirmation"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText id="alert-dialog-description">
-                    {!workspaceData?.locked
-                      ? "Are you sure you want to lock the workspace? NOTE: This action will prevent other users from joining the workspace."
-                      : "Are you sure you want to unlock the workspace? NOTE: This action will allow other users to join the workspace and collaborate."}
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <MUIButton onClick={handleWorkspaceLock} autoFocus>
-                    {workspaceData?.locked ? "Unlock" : "Lock"}
-                  </MUIButton>
-                  <MUIButton onClick={handleConfirmDialogClose}>
-                    Cancel
-                  </MUIButton>
-                </DialogActions>
-              </Dialog>
+                    : "Workspace Unlock Confirmation"
+                }
+                description={
+                  !workspaceData?.locked ? (
+                    <>
+                      Are you sure you want to lock the workspace? <br />
+                      NOTE: This action will prevent other users from joining
+                      the workspace.
+                    </>
+                  ) : (
+                    <>
+                      Are you sure you want to unlock the workspace? <br />
+                      NOTE: This action will allow other users to join the
+                      workspace and collaborate.
+                    </>
+                  )
+                }
+                confirmText={workspaceData?.locked ? "Unlock" : "Lock"}
+                openConfirmDialog={openConfirmDialog}
+                handleConfirmDialogClose={handleConfirmDialogClose}
+                handleConfirmAction={handleWorkspaceLock}
+              />
             </div>
           ) : (
             <div>
