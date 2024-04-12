@@ -1,64 +1,113 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function AddTaskCategory({
-  setOpenAddTaskCategory,
-  setTaskCategories,
-  workspaceId,
-}) {
+function AddTaskCategory(props) {
+  const {
+    isNewCategory,
+    categoryToEdit,
+    setCategoryToEdit,
+    setOpenTaskCategoryInput,
+    setTaskCategories,
+    workspaceId,
+  } = props;
   const [title, setTitle] = useState("");
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();
+    if (!isNewCategory) setTitle(categoryToEdit.name);
+  }, []);
 
   const handleChange = (event) => {
     setTitle(event.target.value);
   };
 
   const handleSubmit = async (event) => {
-    await axios
-      .post(
-        `/dashboard/taskCategories/${workspaceId}/create`,
-        { categoryName: event.target.value },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => response.data)
-      .then((taskCategory) => {
-        console.log("handleSubmit in taskcategory", taskCategory);
-        setTaskCategories((previousList) => [...previousList, taskCategory]);
-        setOpenAddTaskCategory(false);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        refreshPage(error.response.status);
-        toast.error(error.response.data, {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
+    if (isNewCategory) {
+      await axios
+        .post(
+          `/dashboard/taskCategories/${workspaceId}/create`,
+          { categoryName: event.target.value },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => response.data)
+        .then((taskCategory) => {
+          console.log("handleSubmit in taskcategory", taskCategory);
+          setTaskCategories((previousList) => [...previousList, taskCategory]);
+          setOpenTaskCategoryInput(false);
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          refreshPage(error.response.status);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
-      });
+    } else {
+      console.log("edit call", workspaceId);
+      if (title === categoryToEdit.name) {
+        console.log("Me to nahi gaya!!");
+        setCategoryToEdit(null);
+        return;
+      }
+      await axios
+        .patch(
+          `/dashboard/taskCategories/${workspaceId}/edit/${categoryToEdit._id}/name`,
+          { categoryName: title },
+          { withCredentials: true }
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          console.log(data);
+          setTaskCategories((previousList) => {
+            const newList = [...previousList];
+            newList.forEach((categoryData) => {
+              if (categoryData._id === data._id) {
+                categoryData.name = data.name;
+                categoryData.tasks = data.tasks;
+              }
+            });
+            return newList;
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setCategoryToEdit(null);
+    }
   };
 
   return (
     <>
-      <h3>Task Category</h3>
       <input
         name="categoryName"
         onChange={handleChange}
         value={title}
-        autoFocus
-        onBlur={() =>
-          !title ? setOpenAddTaskCategory(false) : setOpenAddTaskCategory(true)
-        }
+        ref={inputRef}
+        onBlur={() => {
+          if (isNewCategory) {
+            !title
+              ? setOpenTaskCategoryInput(false)
+              : setOpenTaskCategoryInput(true);
+          } else {
+            setCategoryToEdit(null);
+          }
+        }}
         onKeyDown={(event) => {
           if (event.key === "Enter" && title) handleSubmit(event);
         }}

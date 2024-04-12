@@ -44,7 +44,21 @@ const postCreateTaskCatogory = async (req, res) => {
   }
 };
 
+const patchEditCategoryName = async (req, res) => {
+  const { categoryId } = req.params;
+  const { categoryName } = req.body;
+
+  const result = await taskService.editCategoryName(categoryId, categoryName);
+
+  if (result.updateTaskCategory) {
+    res.status(200).send(result.updateTaskCategory);
+  } else {
+    res.status(500).send(result.error);
+  }
+};
+
 module.exports = {
   getTaskCategories,
   postCreateTaskCatogory,
+  patchEditCategoryName,
 };

@@ -28,6 +28,25 @@ class TaskService {
       return { error };
     }
   };
+
+  editCategoryName = async (categoryId, categoryName) => {
+    const { taskCategory, error: taskCategoryError } =
+      await this.findTaskCategoryById(categoryId, "");
+
+    if (taskCategoryError) return { error: taskCategoryError };
+
+    try {
+      if (taskCategory) {
+        taskCategory.name = categoryName;
+        const updateTaskCategory = await taskCategory.save();
+        return { updateTaskCategory };
+      }
+    } catch (error) {
+      console.log("error in categoryName", error);
+      return { error };
+    }
+  };
+
   saveTask = async (data) => {
     const task = new Task(data);
     try {

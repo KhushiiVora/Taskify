@@ -1,7 +1,15 @@
+import TaskCategoryCard from "./TaskCategoryCard";
+
 import { StyledDiv } from "../../styles/taskCategoryList.styles";
 
 function TaskCategoryList(props) {
-  const { taskCategories, handleExpand } = props;
+  const {
+    workspaceId,
+    taskCategories,
+    setTaskCategories,
+    isLeader,
+    handleExpand,
+  } = props;
 
   console.log(taskCategories);
 
@@ -9,13 +17,14 @@ function TaskCategoryList(props) {
     <>
       {taskCategories.map((category) => {
         return (
-          <StyledDiv
+          <TaskCategoryCard
+            isLeader={isLeader}
+            setTaskCategories={setTaskCategories}
+            handleExpand={handleExpand}
             key={category._id}
-            onClick={(event) => handleExpand(event, category._id)}
-          >
-            <h4>{category.name}</h4>
-            <div>{category.tasks.length} tasks</div>
-          </StyledDiv>
+            category={category}
+            workspaceId={workspaceId}
+          />
         );
       })}
     </>

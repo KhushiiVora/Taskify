@@ -30,7 +30,7 @@ import { StyledSection } from "../../styles/workspace.styles";
 export default function Workspace(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
 
-  const [openAddTaskCategory, setOpenAddTaskCategory] = useState(false);
+  const [openTaskCategoryInput, setOpenTaskCategoryInput] = useState(false);
   const [expand, setExpand] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
@@ -114,7 +114,7 @@ export default function Workspace(props) {
   };
 
   const handleClick = (event) => {
-    setOpenAddTaskCategory(!openAddTaskCategory);
+    setOpenTaskCategoryInput(!openTaskCategoryInput);
   };
 
   const handleExpand = (event, categoryId) => {
@@ -152,9 +152,10 @@ export default function Workspace(props) {
               onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
               text="Chat box"
             />
-            {openAddTaskCategory ? (
+            {openTaskCategoryInput ? (
               <AddTaskCategory
-                setOpenAddTaskCategory={setOpenAddTaskCategory}
+                isNewCategory={true}
+                setOpenTaskCategoryInput={setOpenTaskCategoryInput}
                 workspaceId={workspaceId}
                 setTaskCategories={setTaskCategories}
               />
@@ -243,6 +244,9 @@ export default function Workspace(props) {
           {taskCategories.length ? (
             <section className="categories_container">
               <TaskCategoryList
+                workspaceId={workspaceId}
+                setTaskCategories={setTaskCategories}
+                isLeader={leaders.includes(user._id)}
                 taskCategories={taskCategories}
                 handleExpand={handleExpand}
               />

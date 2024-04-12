@@ -6,7 +6,12 @@ const StyledDiv = styled.div`
   border: 1px solid #000;
   border-radius: 5px;
   box-shadow: 0 0 5px 5px grey;
-  cursor: pointer;
+
+  .span-button {
+    font-weight: bold;
+    color: skyblue;
+    cursor: pointer;
+  }
 `;
 
 export { StyledDiv };

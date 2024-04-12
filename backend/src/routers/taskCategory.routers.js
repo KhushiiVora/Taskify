@@ -4,6 +4,7 @@ const router = express.Router();
 const {
   getTaskCategories,
   postCreateTaskCatogory,
+  patchEditCategoryName,
 } = require("../controllers/taskCategory.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
@@ -25,6 +26,12 @@ router.post(
   leaderPrivilegeMiddleware,
   taskCategoryMiddleware,
   postCreateTaskCatogory
+);
+router.patch(
+  "/:workspaceId/edit/:categoryId/name",
+  leaderPrivilegeMiddleware,
+  taskCategoryMiddleware,
+  patchEditCategoryName
 );
 
 module.exports = router;
