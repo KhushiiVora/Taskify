@@ -1,30 +1,54 @@
 import { useState } from "react";
-// import { useAuthContext } from "../context/AuthContext";
-// import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
+import axios from "../axiosConfig";
+
+import { toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+  const navigate = useNavigate();
 
   const logout = async () => {
     setLoading(true);
-    try {
-      const res = await fetch("/api/auth/logout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+
+    await axios
+      .get("/auth/logout/", { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        // clear the user redux state
+        setTimeout(() => {
+          navigate("/login");
+        }, 5000);
+        toast.success(response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
-      const data = res.json();
-      // The error thrown here will be handled in the catch block written below
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      localStorage.removeItem("chat-user");
-      setAuthUser(null);
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
-    }
+
+    setLoading(true);
   };
   return { loading, logout };
 };

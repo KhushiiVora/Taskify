@@ -33,7 +33,17 @@ const postLogin = async (req, res) => {
   }
 };
 
+const getLogout = (req, res) => {
+  try {
+    res.cookie("token", "", { maxAge: 0, httpOnly: true });
+    res.status(200).send("Logged out successfully");
+  } catch (error) {
+    console.log("error in logout", error);
+    // res.status(500).send("Internal Server Error");
+  }
+};
 module.exports = {
   postSignup,
   postLogin,
+  getLogout,
 };

@@ -17,8 +17,12 @@ const useGetMembers = (workspaceId) => {
           .get(`/chat/${workspaceId}/members`, {
             withCredentials: true,
           })
-          .then((response) => {response.data})
-          .catch((error) => {console.log("Error in fetching members\n", error)});
+          .then((response) => {
+            response.data;
+          })
+          .catch((error) => {
+            console.log("Error in fetching members\n", error);
+          });
         // if (data.error) {
         //   throw new Error(data.error);
         // }

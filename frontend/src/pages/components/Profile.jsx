@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saved as userSaved } from "../../state/userSlice";
 import { useLocation } from "react-router-dom";
+import useLogout from "../../hooks/useLogout";
+
 import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
 import AvatarDialog from "./AvatarDialog";
@@ -20,6 +22,9 @@ import { PiUserListFill } from "react-icons/pi";
 import { PiTreeStructureFill } from "react-icons/pi";
 import { IoLogOut } from "react-icons/io5";
 
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function Profile() {
   const [openAvatarDialog, setOpenAvatarDialog] = useState(false);
   const [editUsername, setEditUsername] = useState(false);
@@ -30,6 +35,8 @@ export default function Profile() {
 
   const [username, setUsername] = useState(user.username);
   const [userBio, setUserBio] = useState(user.bio);
+
+  const { logout } = useLogout();
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -223,11 +230,17 @@ export default function Profile() {
             </tr>
             <tr>
               <td colSpan="3">
-                <Button type="button" icon={<IoLogOut />} text="Logout" />
+                <Button
+                  type="button"
+                  icon={<IoLogOut />}
+                  text="Logout"
+                  onClick={logout}
+                />
               </td>
             </tr>
           </tbody>
         </table>
+        <ToastContainer />
       </section>
       <AvatarDialog
         open={openAvatarDialog}

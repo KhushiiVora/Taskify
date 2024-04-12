@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useLogout from "../../hooks/useLogout";
+
 import Button from "../atoms/Button";
 import WorkspaceDialog from "./WorkspaceDialog";
 import WorkspaceList from "./WorkspaceList";
 import MemberAccessPanel from "./MemberAccessPanel";
 import Workspace from "./Workspace";
 
-import { useSelector } from "react-redux";
-
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dashboard.styles";
 
 import { TiMessages } from "react-icons/ti";
+import { IoLogOut } from "react-icons/io5";
 
 export default function Dashboard() {
   const { username } = useSelector((state) => state.user.user);
@@ -18,6 +22,8 @@ export default function Dashboard() {
   const [openMemberAccessPanel, setOpenMemberAccessPanel] = useState(false);
   // const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
+
+  const { logout } = useLogout();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +60,12 @@ export default function Dashboard() {
           <h1>Dashboard</h1>
         </div>
         <Button type="button" text="Add Workspace" onClick={handleDialogOpen} />
+        <Button
+          type="button"
+          icon={<IoLogOut />}
+          text="Logout"
+          onClick={logout}
+        />
       </header>
       <section
         className={`dashboard__workspace-container ${
@@ -81,6 +93,7 @@ export default function Dashboard() {
           setOpenMemberAccessPanel={setOpenMemberAccessPanel}
         />
       )}
+      <ToastContainer />
     </StyledSection>
   );
 }
