@@ -8,6 +8,7 @@ const {
   patchRemoveMember,
   patchEditLeader,
   patchEditLock,
+  deleteWorkspace,
 } = require("../controllers/workspace.controllers");
 
 const { validateSchema } = require("../middlewares/validate.middlewares");
@@ -33,6 +34,11 @@ router.patch(
   patchRemoveMember
 );
 router.patch(
+  "/:workspaceId/member/exit",
+  userPrivilegeMiddleware,
+  patchRemoveMember
+);
+router.patch(
   "/:workspaceId/edit/leader",
   leaderPrivilegeMiddleware,
   patchEditLeader
@@ -41,6 +47,11 @@ router.patch(
   "/:workspaceId/edit/lock",
   leaderPrivilegeMiddleware,
   patchEditLock
+);
+router.delete(
+  "/delete/:workspaceId",
+  leaderPrivilegeMiddleware,
+  deleteWorkspace
 );
 
 module.exports = router;

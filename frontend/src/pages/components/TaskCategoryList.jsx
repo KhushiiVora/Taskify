@@ -70,7 +70,7 @@ function TaskCategoryList(props) {
             and its progress.
           </>
         }
-        confirmText="Delete"
+        confirmText="Yes, Delete"
         openConfirmDialog={openConfirmDialog}
         handleConfirmDialogClose={handleConfirmDialogClose}
         handleConfirmAction={handleTaskCategoryDelete}

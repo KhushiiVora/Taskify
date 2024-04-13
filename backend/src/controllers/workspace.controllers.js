@@ -1,6 +1,5 @@
 const WorkspaceService = require("../services/workspaceService");
 const ErrorService = require("../services/errorService");
-const { updateMany } = require("../models/workspace");
 
 const workspaceService = new WorkspaceService();
 const errorService = new ErrorService();
@@ -31,6 +30,14 @@ const postJoinWorkspace = async (req, res) => {
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
+};
+
+const deleteWorkspace = async (req, res) => {
+  const { workspaceId } = req.params;
+  const workspace = req.user.workspaces.find({ _id: workspaceId });
+  console.log(workspace);
+  const result = await workspaceService.deleteWorkspace(workspace);
+  res.end();
 };
 
 const getMembers = async (req, res) => {
@@ -91,4 +98,5 @@ module.exports = {
   patchRemoveMember,
   patchEditLeader,
   patchEditLock,
+  deleteWorkspace,
 };

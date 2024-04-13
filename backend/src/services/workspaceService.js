@@ -1,6 +1,6 @@
 const Workspace = require("../models/workspace");
 
-const UserService = require("../services/userService");
+const UserService = require("./userService");
 const userService = new UserService();
 
 class WorkspaceService {
@@ -174,6 +174,9 @@ class WorkspaceService {
       console.log("error in edit lock: ", error);
       return { error };
     }
+  };
+  deleteWorkspace = async (workspaceId) => {
+    // const {workspace, error: workspaceError} = this.
   };
 }
 

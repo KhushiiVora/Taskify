@@ -1,6 +1,6 @@
 const TaskCategory = require("../models/taskCategory");
 const Task = require("../models/task");
-const WorkspaceService = require("../services/workspaceService");
+const WorkspaceService = require("./workspaceService");
 
 const workspaceService = new WorkspaceService();
 

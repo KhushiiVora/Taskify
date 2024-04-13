@@ -30,10 +30,14 @@ function ConfirmationDialog(props) {
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <MUIButton onClick={handleConfirmAction} autoFocus>
-          {confirmText}
+        {confirmText && (
+          <MUIButton onClick={handleConfirmAction} autoFocus>
+            {confirmText}
+          </MUIButton>
+        )}
+        <MUIButton onClick={handleConfirmDialogClose}>
+          {!confirmText ? "Ok" : "Cancel"}
         </MUIButton>
-        <MUIButton onClick={handleConfirmDialogClose}>Cancel</MUIButton>
       </DialogActions>
     </Dialog>
   );
