@@ -39,11 +39,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-// userSchema.virtual("workspaces", {
-//   ref: "Workspace",
-//   localField: "_id",
-//   foreignField: "members",
-// });
+
 
 const User = mongoose.model("User", userSchema);
 

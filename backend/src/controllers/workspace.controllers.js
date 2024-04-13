@@ -34,10 +34,13 @@ const postJoinWorkspace = async (req, res) => {
 
 const deleteWorkspace = async (req, res) => {
   const { workspaceId } = req.params;
-  const workspace = req.user.workspaces.find({ _id: workspaceId });
-  console.log(workspace);
-  const result = await workspaceService.deleteWorkspace(workspace);
-  res.end();
+  const result = await workspaceService.deleteWorkspace(workspaceId);
+
+  if (result.success) {
+    res.status(200).send("Workspace exited and deleted successfully");
+  } else {
+    res.status(500).send(result.error);
+  }
 };
 
 const getMembers = async (req, res) => {
@@ -59,7 +62,7 @@ const patchRemoveMember = async (req, res) => {
     workspaceId,
     memberId
   );
-  if (result.updatedWorkspace) {
+  if (result.updatedWorkspace ) {
     res.status(200).send(result.updatedWorkspace);
   } else {
     res.status(500).send(result.error);

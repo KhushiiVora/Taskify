@@ -9,24 +9,14 @@ const taskCategorySchema = new mongoose.Schema({
     validate: (value) =>
       validator.isAlphanumeric(validator.blacklist(value, "_. ")),
   },
-  // tasks: [
-  //   {
-  //     task: {
-  //       type: mongoose.Schema.Types.ObjectId,
-  //       ref: "Task",
-  //     },
-  //   },
-  // ],
   tasks: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: "Task",
   },
-});
-
-taskCategorySchema.virtual("workspace", {
-  ref: "Workspace",
-  localField: "_id",
-  foreignField: "taskCategories",
+  workspaceId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Workspace",
+  },
 });
 
 const TaskCategory = mongoose.model("TaskCategory", taskCategorySchema);

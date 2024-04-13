@@ -61,7 +61,6 @@ class TaskService {
     if (taskCategoryError || workspaceError)
       return { error: taskCategoryError ?? workspaceError };
     try {
-      if (taskCategory) {
         const { acknowledged } = await Task.deleteMany({
           taskCategoryId: categoryId,
         });
@@ -82,7 +81,6 @@ class TaskService {
             return { taskCategories };
           }
         }
-      }
     } catch (error) {
       console.log("error in  deleteTaskcategory", error);
       return { error };

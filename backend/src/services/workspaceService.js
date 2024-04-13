@@ -1,3 +1,5 @@
+const Task = require("../models/task");
+const TaskCategory = require("../models/taskCategory");
 const Workspace = require("../models/workspace");
 
 const UserService = require("./userService");
@@ -35,7 +37,8 @@ class WorkspaceService {
       if (populateWith) {
         workspace = await Workspace.findById(workspaceId).populate({
           path: populateWith,
-          select: "-password -workspaces",
+          select: "-password",
+          // select: "-password -workspaces",
         });
       } else {
         workspace = await Workspace.findById(workspaceId);
@@ -176,7 +179,51 @@ class WorkspaceService {
     }
   };
   deleteWorkspace = async (workspaceId) => {
-    // const {workspace, error: workspaceError} = this.
+    const { workspace, error: workspaceError } = await this.findWorkspaceById(
+      workspaceId,
+      "members"
+    );
+    if (workspaceError) {
+      return { error: workspaceError };
+    }
+
+    try {
+      const tasksDeleted = workspace.taskCategories.reduce(
+        async (result, taskCategoryId) => {
+          const { acknowledged } = await Task.deleteMany({ taskCategoryId });
+          return result && acknowledged;
+        },
+        true
+      );
+
+      if (tasksDeleted) {
+        const { acknowledged: taskCategoriesDeleted } =
+          await TaskCategory.deleteMany({
+            workspaceId,
+          });
+
+        if (taskCategoriesDeleted) {
+          const { acknowledged: workspaceDeleted } = await Workspace.deleteOne({
+            _id: workspaceId,
+          });
+
+          if (workspaceDeleted) {
+            workspace.members.forEach(async (member) => {
+              console.log(member, member.workspaces);
+              member.workspaces.splice(
+                member.workspaces.indexOf(workspaceId),
+                1
+              );
+              await member.save();
+            });
+            return { success: true };
+          }
+        }
+      }
+    } catch (error) {
+      console.log("error in  deleteWorkspace", error);
+      return { error };
+    }
   };
 }
 

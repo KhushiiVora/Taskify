@@ -141,7 +141,7 @@ export default function Workspace(props) {
     handleConfirmDialogClose();
   };
 
-  const handleWorspaceDelete = async () => {
+  const handleWorkspaceDelete = async () => {
     await axios
       .delete(`/dashboard/workspace/delete/${workspaceId}`, {
         withCredentials: true,
@@ -149,6 +149,7 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => {
         console.log(data);
+        refreshPage();
       })
       .catch((error) => {
         console.log(error);
@@ -308,30 +309,32 @@ export default function Workspace(props) {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem
-                onClick={() => {
-                  if (leaders.length === 1 && leaders.includes(user._id)) {
-                    setConfirmationDialogData({
-                      title: "",
-                      description:
-                        "Please designate at least one member as a leader before you exit, to ensure the continuity of leadership privileges.",
-                      confirmText: "",
-                      handleConfirmAction: null,
-                    });
-                  } else {
-                    setConfirmationDialogData({
-                      title: `Workspace Exit confirmation`,
-                      description: `Are you sure you want to exit from ${workspaceData.name}?`,
-                      confirmText: "Yes, Exit",
-                      handleConfirmAction: handleWorspaceExit,
-                    });
-                  }
-                  setOpenConfirmDialog(true);
-                  handleClose();
-                }}
-              >
-                <IoExit /> Exit
-              </MenuItem>
+              {members.length > 1 && (
+                <MenuItem
+                  onClick={() => {
+                    if (leaders.length === 1 && leaders.includes(user._id)) {
+                      setConfirmationDialogData({
+                        title: "",
+                        description:
+                          "Please designate at least one member as a leader before you exit, to ensure the continuity of leadership privileges.",
+                        confirmText: "",
+                        handleConfirmAction: null,
+                      });
+                    } else {
+                      setConfirmationDialogData({
+                        title: `Workspace Exit confirmation`,
+                        description: `Are you sure you want to exit from ${workspaceData.name}?`,
+                        confirmText: "Yes, Exit",
+                        handleConfirmAction: handleWorspaceExit,
+                      });
+                    }
+                    setOpenConfirmDialog(true);
+                    handleClose();
+                  }}
+                >
+                  <IoExit /> Exit
+                </MenuItem>
+              )}
               {leaders.includes(user._id) && (
                 <MenuItem
                   onClick={() => {
@@ -339,7 +342,7 @@ export default function Workspace(props) {
                       title: `Workspace Delete confirmation`,
                       description: (
                         <>
-                          Are you sure you want to delete ${workspaceData.name}?
+                          Are you sure you want to delete {workspaceData.name}?
                           <br />
                           NOTE: This action will delete {
                             workspaceData.name
@@ -348,7 +351,7 @@ export default function Workspace(props) {
                         </>
                       ),
                       confirmText: "Yes, Exit and Delete",
-                      handleConfirmAction: handleWorspaceDelete,
+                      handleConfirmAction: handleWorkspaceDelete,
                     });
                     setOpenConfirmDialog(true);
                     handleClose();
