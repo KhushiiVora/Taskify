@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
 
@@ -5,9 +6,13 @@ import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
-import { useEffect, useState } from "react";
+
 function TaskRowCard(props) {
   const {
     task,
@@ -23,6 +28,8 @@ function TaskRowCard(props) {
   } = props;
 
   const [isChecked, setIsChecked] = useState(task.state);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     if (isChecked !== task.state) {
@@ -68,6 +75,13 @@ function TaskRowCard(props) {
     }
   };
 
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <tr key={task._id}>
       <td>
@@ -90,20 +104,78 @@ function TaskRowCard(props) {
           <Chip label="Pending" color="primary" />
         )}
       </td>
-      <td>
-        <ul>
-          {task.assignedTo.map((member) => {
+      <td onClick={() => {}}>
+        <AvatarGroup total={task.assignedTo.length} onClick={handleMenuClick}>
+          {[
+            ...new Array(
+              (task.assignedTo.length % 3) +
+                (task.assignedTo.length >= 3 ? 1 : 0)
+            ),
+          ].map((_, index) => {
             return (
-              <li key={member._id}>
-                {
+              <Avatar
+                alt={
                   workspaceMembers.members.find(
-                    (stateMember) => stateMember._id === member
+                    (stateMember) => stateMember._id === task.assignedTo[index]
                   )?.username
                 }
-              </li>
+                src={
+                  workspaceMembers.members.find(
+                    (stateMember) => stateMember._id === task.assignedTo[index]
+                  )?.profilePic
+                }
+              />
             );
           })}
-        </ul>
+        </AvatarGroup>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            "aria-labelledby": "basic-button",
+          }}
+        >
+          <MenuItem
+            style={{
+              width: "15rem",
+              display: "flex",
+              justifyContent: "center",
+              flexWrap: "wrap",
+              gap: "1rem",
+            }}
+            onClick={handleClose}
+          >
+            {task.assignedTo.map((member) => {
+              return (
+                <Chip
+                  key={member}
+                  avatar={
+                    <Avatar
+                      alt={
+                        workspaceMembers.members.find(
+                          (stateMember) => stateMember._id === member
+                        )?.username
+                      }
+                      src={
+                        workspaceMembers.members.find(
+                          (stateMember) => stateMember._id === member
+                        )?.profilePic
+                      }
+                    />
+                  }
+                  label={
+                    workspaceMembers.members.find(
+                      (stateMember) => stateMember._id === member
+                    )?.username
+                  }
+                  variant="outlined"
+                />
+              );
+            })}
+          </MenuItem>
+        </Menu>
       </td>
       <td>{task.dueDate.split("T")[0]}</td>
       {workspaceMembers.leaders.includes(user._id) ? (

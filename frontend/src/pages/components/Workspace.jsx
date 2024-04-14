@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { membersRestored } from "../../state/memberSlice";
@@ -10,6 +10,7 @@ import AddTaskCategory from "./AddTaskCategory";
 import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
 import TaskList from "./TaskList";
+import ProgressBar from "./ProgressBar";
 // import MemberAccessPanel from "./MemberAccessPanel";
 
 import MUIButton from "@mui/material/Button";
@@ -56,6 +57,19 @@ export default function Workspace(props) {
   );
   const { user } = useSelector((state) => state.user);
   const { leaders, members } = useSelector((state) => state.members);
+
+  const workspaceProgress = useMemo(() => {
+    const result = taskCategories.reduce(
+      (result, category) => {
+        result.cumulativeProgress += category.progress;
+        result.cumulativeTasks += category.tasks.length;
+        return result;
+      },
+      { cumulativeProgress: 0, cumulativeTasks: 0 }
+    );
+    // console.log(result);
+    return result;
+  });
 
   useEffect(() => {
     axios
@@ -362,6 +376,10 @@ export default function Workspace(props) {
               )}
             </Menu>
           </div>
+          <ProgressBar
+            value={workspaceProgress.cumulativeProgress}
+            total={workspaceProgress.cumulativeTasks}
+          />
           {taskCategories.length ? (
             <section className="categories_container">
               <TaskCategoryList

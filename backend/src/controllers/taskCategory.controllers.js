@@ -13,7 +13,16 @@ const getTaskCategories = async (req, res) => {
     "taskCategories"
   );
   if (result.workspace) {
-    res.status(200).send(result.workspace.taskCategories);
+    // console.log("in controller progress: ", result.workspace.taskCategories);
+    const taskCategories = await Promise.all(
+      result.workspace.taskCategories.map(async (taskCategory) => {
+        const progress = await taskCategory.getTasksWithStateTrue();
+        // console.log("inside map", progress);
+        return { ...taskCategory.toObject(), progress };
+      })
+    );
+    // console.log("objects with progress------", taskCategories);
+    res.status(200).send(taskCategories);
   } else {
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);

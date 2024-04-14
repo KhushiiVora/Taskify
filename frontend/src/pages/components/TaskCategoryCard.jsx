@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import AddTaskCategory from "./AddTaskCategory";
+import ProgressBar from "./ProgressBar";
 
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -47,7 +48,9 @@ function TaskCategoryCard(props) {
         ) : (
           <h4>{category.name}</h4>
         )}
-        <div>{category.tasks.length} tasks</div>
+        <div>
+          {`${category.progress}/${category.tasks.length}`} tasks completed
+        </div>
         <span
           className="span-button"
           onClick={(event) => handleExpand(event, category._id)}
@@ -96,6 +99,7 @@ function TaskCategoryCard(props) {
           </Menu>
         </div>
       )}
+      <ProgressBar value={category.progress} total={category.tasks.length} />
     </StyledDiv>
   );
 }

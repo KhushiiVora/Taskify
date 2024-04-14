@@ -26,6 +26,7 @@ class TaskService {
       } else {
         taskCategory = await TaskCategory.findById(categoryId);
       }
+      // console.log("progress in service: ", taskCategory.progress);
       return { taskCategory };
     } catch (error) {
       console.log("error in findTaskCategoryById", error);
@@ -61,26 +62,26 @@ class TaskService {
     if (taskCategoryError || workspaceError)
       return { error: taskCategoryError ?? workspaceError };
     try {
-        const { acknowledged } = await Task.deleteMany({
-          taskCategoryId: categoryId,
-        });
+      const { acknowledged } = await Task.deleteMany({
+        taskCategoryId: categoryId,
+      });
 
-        if (acknowledged) {
-          const { acknowledged: taskCategoryDeleted } =
-            await TaskCategory.deleteOne({ _id: categoryId });
+      if (acknowledged) {
+        const { acknowledged: taskCategoryDeleted } =
+          await TaskCategory.deleteOne({ _id: categoryId });
 
-          if (taskCategoryDeleted) {
-            workspace.taskCategories.splice(
-              workspace.taskCategories.indexOf(categoryId),
-              1
-            );
-            const { taskCategories } = await (
-              await workspace.save()
-            ).populate("taskCategories");
+        if (taskCategoryDeleted) {
+          workspace.taskCategories.splice(
+            workspace.taskCategories.indexOf(categoryId),
+            1
+          );
+          const { taskCategories } = await (
+            await workspace.save()
+          ).populate("taskCategories");
 
-            return { taskCategories };
-          }
+          return { taskCategories };
         }
+      }
     } catch (error) {
       console.log("error in  deleteTaskcategory", error);
       return { error };
