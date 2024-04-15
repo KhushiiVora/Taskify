@@ -40,6 +40,7 @@ class AuthService {
       const isValidPassword = await bcrypt.compare(password, user.password);
 
       if (!isValidPassword) return { isLoggedIn: false };
+      
 
       const token = this.generateToken(user._id);
       if (token) {

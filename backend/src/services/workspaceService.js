@@ -7,9 +7,13 @@ const userService = new UserService();
 
 class WorkspaceService {
   saveWorkspace = async (username, data) => {
-    const { user } = await userService.findByUsername(username);
+    const { user, error: userError } = await userService.findByUsername(
+      username
+    );
+    if (userError) {
+      return { error: userError };
+    }
     const workspace = new Workspace(data);
-
     try {
       workspace.leaders.push(user._id);
       workspace.members.push(user._id);
@@ -18,16 +22,16 @@ class WorkspaceService {
       await user.save();
       return { savedWorkspace };
     } catch (error) {
-      console.log(error);
+      console.log("Error in saveWorkspace service: ", error);
       return { error };
     }
   };
-  findWorkspace = async (code) => {
+  findWorkspaceByCode = async (code) => {
     try {
       const workspace = await Workspace.findOne({ code });
       return { workspace };
     } catch (error) {
-      console.log(error);
+      console.log("Error in findWorkspaceByCode service: ", error);
       return { error };
     }
   };
@@ -50,8 +54,15 @@ class WorkspaceService {
     }
   };
   joinWorkspace = async (username, data) => {
-    const { workspace, error } = await this.findWorkspace(data.code);
-    const { user } = await userService.findByUsername(username);
+    const { workspace, error: workspaceError } = await this.findWorkspaceByCode(
+      data.code
+    );
+    const { user, error: userError } = await userService.findByUsername(
+      username
+    );
+    if (workspaceError || userError) {
+      return { error: workspaceError ?? userError };
+    }
 
     if (workspace) {
       if (!workspace.locked && data.name === workspace.name) {
@@ -81,6 +92,7 @@ class WorkspaceService {
       return { error: new Error("Workspace doesn't exist.") };
     }
   };
+
   getWorkspaceMembers = async (workspaceId) => {
     const result = await this.findWorkspaceById(workspaceId, "members");
     if (result.workspace) {
@@ -101,7 +113,7 @@ class WorkspaceService {
   removeWorkspaceMember = async (workspaceId, memberId) => {
     const { workspace, error: workspaceError } = await this.findWorkspaceById(
       workspaceId,
-      "members"
+      ""
     );
     const { user, error: userError } = await userService.findUserById(
       memberId,
@@ -110,22 +122,27 @@ class WorkspaceService {
     if (workspaceError || userError) {
       return { error: workspaceError ?? userError };
     }
+
+    console.log("MemberId: ", workspace.members.indexOf(memberId));
+
+    if (!workspace.members.includes(memberId)) {
+      return { error: new Error("User has already been removed!") };
+    }
+
     try {
       if (workspace.leaders.includes(memberId)) {
         workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
       }
       workspace.members.splice(workspace.members.indexOf(memberId), 1);
       user.workspaces.splice(user.workspaces.indexOf(workspaceId), 1);
-
       await user.save();
       const updatedWorkspace = await (
         await workspace.save()
       ).populate("members");
-
       return { updatedWorkspace };
     } catch (error) {
-      console.log("error in removeWorkspaceMember", error);
-      return { error };
+      console.log("error in removeWorkspaceMember service: ", error);
+      return { error: new Error("Unable to remove user!") };
     }
   };
 
@@ -139,21 +156,18 @@ class WorkspaceService {
     }
 
     try {
-      if (workspace) {
-        if (workspace.leaders.includes(memberId)) {
-          workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
-        } else {
-          workspace.leaders.push(memberId);
-        }
-
-        const updatedWorkspace = await (
-          await workspace.save()
-        ).populate("members");
-
-        return { updatedWorkspace };
+      if (workspace.leaders.includes(memberId)) {
+        workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
+      } else {
+        workspace.leaders.push(memberId);
       }
+      const updatedWorkspace = await (
+        await workspace.save()
+      ).populate("members");
+
+      return { updatedWorkspace };
     } catch (error) {
-      console.log("error in edit leaders: ", error);
+      console.log("Error in editLeaders service: ", error);
       return { error };
     }
   };
@@ -168,16 +182,15 @@ class WorkspaceService {
     }
 
     try {
-      if (workspace) {
-        workspace.locked = !workspace.locked;
-        const updatedWorkspace = await workspace.save();
-        return { updatedWorkspace };
-      }
+      workspace.locked = !workspace.locked;
+      const updatedWorkspace = await workspace.save();
+      return { updatedWorkspace };
     } catch (error) {
-      console.log("error in edit lock: ", error);
+      console.log("Error in editLock service: ", error);
       return { error };
     }
   };
+
   deleteWorkspace = async (workspaceId) => {
     const { workspace, error: workspaceError } = await this.findWorkspaceById(
       workspaceId,
@@ -188,12 +201,13 @@ class WorkspaceService {
     }
 
     try {
-      const tasksDeleted = workspace.taskCategories.reduce(
-        async (result, taskCategoryId) => {
+      const tasksDeleted = await workspace.taskCategories.reduce(
+        async (resultPromise, taskCategoryId) => {
+          const result = await resultPromise;
           const { acknowledged } = await Task.deleteMany({ taskCategoryId });
           return result && acknowledged;
         },
-        true
+        Promise.resolve(true)
       );
 
       if (tasksDeleted) {
@@ -209,7 +223,6 @@ class WorkspaceService {
 
           if (workspaceDeleted) {
             workspace.members.forEach(async (member) => {
-              console.log(member, member.workspaces);
               member.workspaces.splice(
                 member.workspaces.indexOf(workspaceId),
                 1
@@ -221,7 +234,7 @@ class WorkspaceService {
         }
       }
     } catch (error) {
-      console.log("error in  deleteWorkspace", error);
+      console.log("Error in  deleteWorkspace service: ", error);
       return { error };
     }
   };

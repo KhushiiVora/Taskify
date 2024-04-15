@@ -33,22 +33,14 @@ const postCreateTaskCatogory = async (req, res) => {
   const { workspaceId } = req.params;
   const { categoryName } = req.body;
 
-  const { workspace, error: workspaceError } =
-    await workspaceService.findWorkspaceById(workspaceId, "");
-  if (workspace) {
-    const result = await taskService.saveTaskCategory({
-      name: categoryName,
-    });
-    if (result.savedTaskCategory) {
-      workspace.taskCategories.push(result.savedTaskCategory._id);
-      await workspace.save();
-      res.status(200).send(result.savedTaskCategory);
-    } else {
-      const error = errorService.handleError(result.error);
-      res.status(error.status).send(error.message);
-    }
+  const result = await taskService.saveTaskCategory({
+    name: categoryName,
+    workspaceId,
+  });
+  if (result.savedTaskCategory) {
+    res.status(200).send(result.savedTaskCategory);
   } else {
-    const error = errorService.handleError(workspaceError);
+    const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
 };

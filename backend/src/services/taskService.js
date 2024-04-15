@@ -8,14 +8,25 @@ class TaskService {
   //--------------------- TASKCATEGORY RELATED FUNCTIONALITY --------------------------
   saveTaskCategory = async (data) => {
     const taskCategory = new TaskCategory(data);
+    const { workspace, error: workspaceError } =
+      await workspaceService.findWorkspaceById(data.workspaceId, "");
+
+    if (workspaceError) {
+      return { error: workspaceError };
+    }
     try {
       const savedTaskCategory = await taskCategory.save();
-      return { savedTaskCategory };
+      if (savedTaskCategory) {
+        workspace.taskCategories.push(savedTaskCategory._id);
+        await workspace.save();
+        return { savedTaskCategory };
+      }
     } catch (error) {
-      console.log("in taskService", error);
+      console.log("Error in savedTaskCategory taskService: ", error);
       return { error };
     }
   };
+
   findTaskCategoryById = async (categoryId, populateWith) => {
     try {
       let taskCategory = null;

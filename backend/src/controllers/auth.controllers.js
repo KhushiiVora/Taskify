@@ -7,7 +7,7 @@ const errorService = new ErrorService();
 const postSignup = async (req, res) => {
   const result = await authService.signup(req.body);
   if (result.error) {
-    console.log(result.error);
+    console.log("Error in postSignup: ", result.error);
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
@@ -39,7 +39,7 @@ const getLogout = (req, res) => {
     res.status(200).send("Logged out successfully");
   } catch (error) {
     console.log("error in logout", error);
-    res.status(500).send("Internal Server Error");
+    res.status(500).send("Unable to log out! Try again.");
   }
 };
 module.exports = {

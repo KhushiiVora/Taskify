@@ -12,14 +12,13 @@ const postCreateWorkspace = async (req, res) => {
   if (result.savedWorkspace) {
     res.status(200).send(result.savedWorkspace);
   } else {
-    console.log(result.error);
+    console.log("Error in postCreateWorkspace: ", result.error);
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
 };
 
 const postJoinWorkspace = async (req, res) => {
-  console.log(req.body, req.params);
   const result = await workspaceService.joinWorkspace(
     req.params.username,
     req.body
@@ -27,6 +26,7 @@ const postJoinWorkspace = async (req, res) => {
   if (result.updatedWorkspace) {
     res.status(200).send(result.updatedWorkspace);
   } else {
+    console.log("Error in postJoinWorkspace: ", result.error);
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
@@ -39,16 +39,20 @@ const deleteWorkspace = async (req, res) => {
   if (result.success) {
     res.status(200).send("Workspace exited and deleted successfully");
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in deleteWorkspace: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
 
 const getMembers = async (req, res) => {
   const { workspaceId } = req.params;
   const result = await workspaceService.getWorkspaceMembers(workspaceId);
+
   if (result.workspaceMembers) {
     res.status(200).send(result.workspaceMembers);
   } else {
+    console.log("Error in getMembers controller: ", result.error);
     const error = errorService.handleError(result.error);
     res.status(500).send(error.message);
   }
@@ -62,10 +66,12 @@ const patchRemoveMember = async (req, res) => {
     workspaceId,
     memberId
   );
-  if (result.updatedWorkspace ) {
+  if (result.updatedWorkspace) {
     res.status(200).send(result.updatedWorkspace);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in patchRemoveMember: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
 
@@ -78,7 +84,9 @@ const patchEditLeader = async (req, res) => {
   if (result.updatedWorkspace) {
     res.status(200).send(result.updatedWorkspace);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in patchEditLeader: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(500).send(error.message);
   }
 };
 
@@ -90,7 +98,9 @@ const patchEditLock = async (req, res) => {
   if (result.updatedWorkspace) {
     res.status(200).send(result.updatedWorkspace);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in patchEditLock: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(500).send(error.message);
   }
 };
 

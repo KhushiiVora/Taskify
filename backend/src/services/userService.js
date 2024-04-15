@@ -7,7 +7,7 @@ class UserService {
       const savedUser = await user.save();
       return { savedUser };
     } catch (error) {
-      console.log(error);
+      console.log("Error in register userService: ", error);
       return { error };
     }
   };
@@ -19,7 +19,7 @@ class UserService {
       });
       return { user };
     } catch (error) {
-      console.log(error);
+      console.log("Error in findByUsername service: ", error);
       return { error };
     }
   };
@@ -42,27 +42,19 @@ class UserService {
   };
 
   editUserData = async (userId, value, fieldToEdit) => {
-    const { user, error } = await this.findUserById(userId, "");
+    const { user, error: userError } = await this.findUserById(userId, "");
+    if (userError) {
+      return { error: userError };
+    }
     try {
-      if (user) {
-        user[fieldToEdit] = value;
-        const editedUser = await user.save();
-        return { editedUser };
-      }
+      user[fieldToEdit] = value;
+      const editedUser = await user.save();
+      return { editedUser };
     } catch (error) {
+      console.log("Error in editUserData service: ", error);
       return { error };
     }
   };
-  //----------------Below one functions need to be modify--------------------
-  findById = async (userId) => {
-    try {
-      const user = await User.findOne({ _id: userId });
-      return user;
-    } catch (error) {
-      throw error;
-    }
-  };
-  //---------------------------------------------
 }
 
 module.exports = UserService;
