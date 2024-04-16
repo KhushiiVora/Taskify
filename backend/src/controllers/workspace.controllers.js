@@ -92,11 +92,12 @@ const patchEditLeader = async (req, res) => {
 
 const patchEditLock = async (req, res) => {
   const { workspaceId } = req.params;
+  const { locked } = req.body;
 
-  const result = await workspaceService.editLock(workspaceId);
+  const result = await workspaceService.editLock(workspaceId, locked);
 
-  if (result.updatedWorkspace) {
-    res.status(200).send(result.updatedWorkspace);
+  if (result.workspace) {
+    res.status(200).send(result.workspace);
   } else {
     console.log("Error in patchEditLock: ", result.error);
     const error = errorService.handleError(result.error);

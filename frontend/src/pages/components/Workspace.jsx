@@ -121,7 +121,7 @@ export default function Workspace(props) {
     await axios
       .patch(
         `/dashboard/workspace/${workspaceId}/edit/lock`,
-        {},
+        { locked: !workspaceData.locked },
         {
           withCredentials: true,
         }

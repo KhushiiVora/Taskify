@@ -15,12 +15,12 @@ class TaskService {
       return { error: workspaceError };
     }
     try {
-      const savedTaskCategory = await taskCategory.save();
-      if (savedTaskCategory) {
-        workspace.taskCategories.push(savedTaskCategory._id);
-        await workspace.save();
-        return { savedTaskCategory };
-      }
+      let savedTaskCategory = await taskCategory.save();
+      workspace.taskCategories.push(savedTaskCategory._id);
+      const progress = await savedTaskCategory.getTasksWithStateTrue();
+      savedTaskCategory = { ...savedTaskCategory.toObject(), progress };
+      await workspace.save();
+      return { savedTaskCategory };
     } catch (error) {
       console.log("Error in savedTaskCategory taskService: ", error);
       return { error };
@@ -37,10 +37,9 @@ class TaskService {
       } else {
         taskCategory = await TaskCategory.findById(categoryId);
       }
-      // console.log("progress in service: ", taskCategory.progress);
       return { taskCategory };
     } catch (error) {
-      console.log("error in findTaskCategoryById", error);
+      console.log("Error in findTaskCategoryById", error);
       return { error };
     }
   };
@@ -52,32 +51,29 @@ class TaskService {
     if (taskCategoryError) return { error: taskCategoryError };
 
     try {
-      if (taskCategory) {
-        taskCategory.name = categoryName;
-        const updateTaskCategory = await taskCategory.save();
-        return { updateTaskCategory };
-      }
+      taskCategory.name = categoryName;
+      let updateTaskCategory = await taskCategory.save();
+      const progress = await updateTaskCategory.getTasksWithStateTrue();
+      updateTaskCategory = { ...updateTaskCategory.toObject(), progress };
+      return { updateTaskCategory };
     } catch (error) {
-      console.log("error in categoryName", error);
+      console.log("Error in categoryName service: ", error);
       return { error };
     }
   };
 
   deleteTaskCategory = async (categoryId, workspaceId) => {
-    const { taskCategory, error: taskCategoryError } =
-      await this.findTaskCategoryById(categoryId, "");
-
     const { workspace, error: workspaceError } =
       await workspaceService.findWorkspaceById(workspaceId, "");
 
-    if (taskCategoryError || workspaceError)
-      return { error: taskCategoryError ?? workspaceError };
+    if (workspaceError) return { error: workspaceError };
+
     try {
-      const { acknowledged } = await Task.deleteMany({
+      const { acknowledged: tasksDeleted } = await Task.deleteMany({
         taskCategoryId: categoryId,
       });
 
-      if (acknowledged) {
+      if (tasksDeleted) {
         const { acknowledged: taskCategoryDeleted } =
           await TaskCategory.deleteOne({ _id: categoryId });
 
@@ -86,6 +82,7 @@ class TaskService {
             workspace.taskCategories.indexOf(categoryId),
             1
           );
+
           const { taskCategories } = await (
             await workspace.save()
           ).populate("taskCategories");
@@ -99,60 +96,103 @@ class TaskService {
     }
   };
   //--------------------- TASK RELATED FUNCTIONALITY --------------------------
-  saveTask = async (data) => {
+  saveTask = async (data, categoryId) => {
     const task = new Task(data);
+    const { taskCategory, error: taskCategoryError } =
+      await this.findTaskCategoryById(categoryId, "");
+
+    if (taskCategoryError) {
+      return { error: taskCategoryError };
+    }
     try {
       const savedTask = await task.save();
+      taskCategory.tasks.push(savedTask._id);
+      await taskCategory.save();
       return { savedTask };
     } catch (error) {
-      console.log("error in saveTask", error);
+      console.log("Error in saveTask service: ", error);
       return { error };
     }
   };
+
   findTaskById = async (taskId) => {
     try {
       const task = await Task.findById(taskId);
 
       return { task };
     } catch (error) {
-      console.log("error in taskService find task", error);
+      console.log("Error in findTaskById: ", error);
       return { error };
     }
   };
-  deleteTask = async (categoryId, taskId) => {
-    try {
-      const { taskCategory, error } = await this.findTaskCategoryById(
-        categoryId,
-        ""
-      );
-      if (taskCategory) {
-        taskCategory.tasks.splice(taskCategory.tasks.indexOf(taskId), 1);
 
+  deleteTask = async (categoryId, taskId) => {
+    const { taskCategory, error: taskCategoryError } =
+      await this.findTaskCategoryById(categoryId, "");
+
+    if (taskCategoryError) {
+      return { error: taskCategoryError };
+    }
+
+    try {
+      const { acknowledged: taskDeleted } = await Task.deleteOne({
+        _id: taskId,
+      });
+
+      if (taskDeleted) {
+        taskCategory.tasks.splice(taskCategory.tasks.indexOf(taskId), 1);
         await taskCategory.save();
-        const task = await Task.deleteOne({ _id: taskId });
-        /*{ acknowledged: true, deletedCount: 1 } */
-        // console.log(task);
         const { tasks } = await taskCategory.populate("tasks");
-        // console.log(tasks);
-        return tasks;
+        return { tasks };
       }
     } catch (error) {
-      console.log("error in taskService delete task", error);
+      console.log("Error in deleteTask: ", error);
+      return { error };
+    }
+  };
+
+  editTaskData = async (taskId, data) => {
+    const { task, error: taskError } = await this.findTaskById(taskId);
+
+    if (taskError) {
+      return { error: taskError };
+    }
+    try {
+      let isModified = false;
+      Object.keys(data).forEach((field) => {
+        if (task[field] !== data[field]) {
+          isModified = true;
+          task[field] = data[field];
+        }
+      });
+
+      if (isModified) {
+        const editedTask = await task.save();
+        return { editedTask };
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.log("Error in editTaskData: ", error);
+      return { error };
     }
   };
 
   editState = async (taskId, state) => {
-    const { task } = await this.findTaskById(taskId);
+    const { task, error: taskError } = await this.findTaskById(taskId);
+    if (taskError) {
+      return { error: taskError };
+    }
     try {
       if (task.state !== state) {
         task.state = state;
         const editedTask = await task.save();
         return { task: editedTask };
-      } else {
-        return { task };
       }
+      return { task };
     } catch (error) {
-      console.log("error in taskService editState", error);
+      console.log("Error in editState: ", error);
+      return { error };
     }
   };
 
@@ -160,46 +200,18 @@ class TaskService {
     const { taskCategory, error: taskCategoryError } =
       await this.findTaskCategoryById(categoryId, "tasks");
 
-    try {
-      if (taskCategory) {
-        taskCategory.tasks.forEach(async (task) => {
-          task.state = state;
-          await task.save();
-        });
-
-        return { tasks: taskCategory.tasks };
-      } else {
-        return { error: taskCategoryError };
-      }
-    } catch (error) {
-      console.log("in edit all states true: ", error);
-      return { error };
+    if (taskCategoryError) {
+      return { error: taskCategoryError };
     }
-  };
 
-  editTaskData = async (taskId, data) => {
-    const { task, error } = await this.findTaskById(taskId);
     try {
-      if (task) {
-        let isModified = false;
-        Object.keys(data).forEach((field) => {
-          if (task[field] !== data[field]) {
-            isModified = true;
-            task[field] = data[field];
-          }
-        });
-
-        if (isModified) {
-          const editedTask = await task.save();
-          return { editedTask };
-        } else {
-          return null;
-        }
-      } else {
-        return { error };
-      }
+      taskCategory.tasks.forEach(async (task) => {
+        task.state = state;
+        await task.save();
+      });
+      return { tasks: taskCategory.tasks };
     } catch (error) {
-      console.log("error in edit Task data", error);
+      console.log("Error in editAllStates ", error);
       return { error };
     }
   };

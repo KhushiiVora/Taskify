@@ -41,7 +41,7 @@ function TaskCategoryList(props) {
       });
     handleConfirmDialogClose();
   };
-  console.log(taskCategories);
+  console.log(" Task Categories: ", taskCategories);
 
   return (
     <>

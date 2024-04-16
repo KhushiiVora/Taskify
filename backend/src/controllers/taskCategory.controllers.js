@@ -13,11 +13,9 @@ const getTaskCategories = async (req, res) => {
     "taskCategories"
   );
   if (result.workspace) {
-    // console.log("in controller progress: ", result.workspace.taskCategories);
     const taskCategories = await Promise.all(
       result.workspace.taskCategories.map(async (taskCategory) => {
         const progress = await taskCategory.getTasksWithStateTrue();
-        // console.log("inside map", progress);
         return { ...taskCategory.toObject(), progress };
       })
     );
@@ -40,6 +38,7 @@ const postCreateTaskCatogory = async (req, res) => {
   if (result.savedTaskCategory) {
     res.status(200).send(result.savedTaskCategory);
   } else {
+    console.log("Error in postCreateTaskCatogory: ", result.error);
     const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
@@ -54,7 +53,9 @@ const patchEditCategoryName = async (req, res) => {
   if (result.updateTaskCategory) {
     res.status(200).send(result.updateTaskCategory);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in patchEditCategoryName: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
 
@@ -66,9 +67,12 @@ const deleteTaskCategory = async (req, res) => {
   if (result.taskCategories) {
     res.status(200).send(result.taskCategories);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in deleteTaskCategory: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
+
 module.exports = {
   getTaskCategories,
   postCreateTaskCatogory,

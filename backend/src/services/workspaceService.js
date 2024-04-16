@@ -123,8 +123,6 @@ class WorkspaceService {
       return { error: workspaceError ?? userError };
     }
 
-    console.log("MemberId: ", workspace.members.indexOf(memberId));
-
     if (!workspace.members.includes(memberId)) {
       return { error: new Error("User has already been removed!") };
     }
@@ -172,7 +170,7 @@ class WorkspaceService {
     }
   };
 
-  editLock = async (workspaceId) => {
+  editLock = async (workspaceId, locked) => {
     const { workspace, error: workspaceError } = await this.findWorkspaceById(
       workspaceId,
       "members"
@@ -182,9 +180,12 @@ class WorkspaceService {
     }
 
     try {
-      workspace.locked = !workspace.locked;
-      const updatedWorkspace = await workspace.save();
-      return { updatedWorkspace };
+      if (workspace.locked !== locked) {
+        workspace.locked = locked;
+        const updatedWorkspace = await workspace.save();
+        return { workspace: updatedWorkspace };
+      }
+      return { workspace };
     } catch (error) {
       console.log("Error in editLock service: ", error);
       return { error };

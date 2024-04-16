@@ -11,7 +11,7 @@ const getTasks = async (req, res) => {
   if (result.taskCategory) {
     res.status(200).send(result.taskCategory.tasks);
   } else {
-    console.log("error in getTasks", result.error);
+    console.log("Error in getTasks: ", result.error);
     const error = errorService.handleError(
       new Error("Could not retrieve tasks!")
     );
@@ -24,43 +24,27 @@ const postCreateTask = async (req, res) => {
   const { categoryId } = req.params;
   data.dueDate = data.dueDate.split("T")[0];
   data.taskCategoryId = categoryId;
-  const { taskCategory, error: taskCategoryError } =
-    await taskService.findTaskCategoryById(categoryId, "");
 
-  if (taskCategory) {
-    const result = await taskService.saveTask(data);
-    if (result.savedTask) {
-      taskCategory.tasks.push(result.savedTask._id);
-      await taskCategory.save();
-      res.status(200).send(result.savedTask);
-    } else {
-      console.log("Error in postCreateTask: ", result.error);
-      const error = errorService.handleError(result.error);
-      res.status(error.status).send(error.message);
-    }
+  const result = await taskService.saveTask(data, categoryId);
+  if (result.savedTask) {
+    res.status(200).send(result.savedTask);
   } else {
-    const error = errorService.handleError(taskCategoryError);
+    console.log("Error in postCreateTask: ", result.error);
+    const error = errorService.handleError(result.error);
     res.status(error.status).send(error.message);
   }
 };
 
 const deleteTask = async (req, res) => {
   const { categoryId, taskId } = req.params;
-  // console.log(taskId);
-  const tasks = await taskService.deleteTask(categoryId, taskId);
-  if (tasks) {
-    res.status(200).send(tasks);
+  const result = await taskService.deleteTask(categoryId, taskId);
+  if (result.tasks) {
+    res.status(200).send(result.tasks);
   } else {
-    console.log("in task controller");
-    res.end();
+    console.log("Error in deleteTask: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
-};
-
-const postEditState = async (req, res) => {
-  const { taskId } = req.params;
-  const { state } = req.body;
-  const { task } = await taskService.editState(taskId, state);
-  res.status(200).send(task);
 };
 
 const patchEditTask = async (req, res) => {
@@ -69,13 +53,28 @@ const patchEditTask = async (req, res) => {
   data.dueDate = data.dueDate.split("T")[0];
   const result = await taskService.editTaskData(taskId, data);
   if (!result) {
-    res.status(200);
-    return;
+    return res.status(200);
   }
   if (result.editedTask) {
     res.status(200).send(result.editedTask);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in pacthEditTask: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
+  }
+};
+
+const postEditState = async (req, res) => {
+  const { taskId } = req.params;
+  const { state } = req.body;
+
+  const result = await taskService.editState(taskId, state);
+  if (result.task) {
+    res.status(200).send(result.task);
+  } else {
+    console.log("Error in postEditState: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
 
@@ -87,7 +86,9 @@ const patchEditAllStates = async (req, res) => {
   if (result.tasks) {
     res.status(200).send(result.tasks);
   } else {
-    res.status(500).send(result.error);
+    console.log("Error in patchEditAllStates: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
   }
 };
 

@@ -14,19 +14,40 @@ const { validateSchema } = require("../middlewares/validate.middlewares");
 const {
   leaderPrivilegeMiddleware,
 } = require("../middlewares/leaderPrivilege.middlewares");
+const {
+  userPrivilegeMiddleware,
+} = require("../middlewares/userPrivilege.middlewares");
 const { taskValidationSchema } = require("../validators/task.validators");
 const taskMiddleware = validateSchema(taskValidationSchema);
 
-router.get("/:categoryId/", getTasks);
-router.post("/:categoryId/create", taskMiddleware, postCreateTask);
+router.get("/:workspaceId/:categoryId/", userPrivilegeMiddleware, getTasks);
+router.post(
+  "/:workspaceId/:categoryId/create",
+  userPrivilegeMiddleware,
+  taskMiddleware,
+  postCreateTask
+);
 router.delete(
-  "/delete/:categoryId/:taskId",
+  "/:workspaceId/delete/:categoryId/:taskId",
   leaderPrivilegeMiddleware,
   deleteTask
 );
 
-router.patch("/edit/:categoryId/allStates", patchEditAllStates);
-router.post("/edit/:taskId/state", postEditState);
-router.patch("/edit/:taskId/", patchEditTask);
+router.patch(
+  "/:workspaceId/edit/:categoryId/allStates",
+  userPrivilegeMiddleware,
+  patchEditAllStates
+);
+router.post(
+  "/:workspaceId/edit/:taskId/state",
+  userPrivilegeMiddleware,
+  postEditState
+);
+router.patch(
+  "/:workspaceId/edit/:taskId/",
+  userPrivilegeMiddleware,
+  taskMiddleware,
+  patchEditTask
+);
 
 module.exports = router;
