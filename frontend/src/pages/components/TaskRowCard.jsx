@@ -139,7 +139,7 @@ function TaskRowCard(props) {
         >
           <MenuItem
             style={{
-              width: "15rem",
+              width: `${task.assignedTo.length < 3 ? "auto" : "15rem"}`,
               display: "flex",
               justifyContent: "center",
               flexWrap: "wrap",
