@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { restored as membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
+import { restored as membersRestored } from "../../state/memberSlice";
+import { lockStateSaved } from "../../state/workspaceSlice";
 
 import ConfirmationDialog from "./ConfirmationDialog";
 import AddTaskCategory from "./AddTaskCategory";
@@ -129,6 +130,7 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => {
         console.log(data);
+        dispatch(lockStateSaved(data));
       })
       .catch((error) => {
         console.log(error);

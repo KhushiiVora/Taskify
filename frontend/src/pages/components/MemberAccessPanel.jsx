@@ -8,6 +8,8 @@ import { restored as membersRestored } from "../../state/memberSlice";
 import MemberAccessCard from "./MemberAccessCard";
 import PublicProfile from "./PublicProfile";
 
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/memberAccessPanel.styles";
 
 function MemberAccessPanel(props) {
@@ -23,7 +25,6 @@ function MemberAccessPanel(props) {
   };
 
   const handleRemove = async (memberId) => {
-    // console.log(member);
     await axios
       .patch(
         `/dashboard/members/${workspaceId}/member/remove`,
@@ -36,13 +37,23 @@ function MemberAccessPanel(props) {
         dispatch(membersRestored(data));
       })
       .catch((error) => {
-        refreshPage(error.response.status);
         console.log(error);
+        refreshPage(error.response.status);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
   };
 
   const handleLeaderChange = async (memberId) => {
-    // leaders.includes(memberId);
     await axios
       .patch(
         `/dashboard/members/${workspaceId}/edit/leader`,
@@ -57,6 +68,17 @@ function MemberAccessPanel(props) {
       .catch((error) => {
         console.log(error);
         refreshPage(error.response.status);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
   };
 
@@ -86,6 +108,7 @@ function MemberAccessPanel(props) {
           </>
         )}
       </div>
+      <ToastContainer />
     </StyledSection>
   );
 }

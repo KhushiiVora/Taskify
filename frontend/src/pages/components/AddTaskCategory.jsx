@@ -48,7 +48,7 @@ function AddTaskCategory(props) {
           refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -59,9 +59,7 @@ function AddTaskCategory(props) {
           });
         });
     } else {
-      console.log("edit call", workspaceId);
       if (title === categoryToEdit.name) {
-        console.log("Me to nahi gaya!!");
         setCategoryToEdit(null);
         return;
       }
@@ -80,6 +78,7 @@ function AddTaskCategory(props) {
               if (categoryData._id === data._id) {
                 categoryData.name = data.name;
                 categoryData.tasks = data.tasks;
+                categoryData.progress = data.progress;
               }
             });
             return newList;
@@ -88,6 +87,17 @@ function AddTaskCategory(props) {
         .catch((error) => {
           console.log(error);
           refreshPage(error.response.status);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
       setCategoryToEdit(null);
     }

@@ -5,6 +5,8 @@ import {
   AVATARS_COUNT_PER_PAGE,
 } from "../../utils/constants";
 
+import { FaChevronLeft } from "react-icons/fa";
+import { FaChevronRight } from "react-icons/fa";
 import { StyledDiv } from "../../styles/avatarGrid.styles";
 
 function AvatarGrid(props) {
@@ -74,7 +76,7 @@ function AvatarGrid(props) {
                 className={`pagination--left ${page === 1 ? "disabled" : ""}`}
                 onClick={() => handlePageChange(page - 1)}
               >
-                ◀️
+                <FaChevronLeft />
               </span>
               {[...Array(TOTAL_PAGES)].map((_, index) => {
                 return (
@@ -95,7 +97,7 @@ function AvatarGrid(props) {
                 }`}
                 onClick={() => handlePageChange(page + 1)}
               >
-                ▶️
+                <FaChevronRight />
               </span>
             </>
           }

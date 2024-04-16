@@ -9,6 +9,8 @@ import Button from "../atoms/Button";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import { toast, Slide, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dialog.styles";
 
 export default function AvatarDialog(props) {
@@ -21,7 +23,6 @@ export default function AvatarDialog(props) {
   const handleChange = (event, value) => {
     setIsGirl(value);
     setSelectedImage("");
-    console.log(value);
   };
 
   const handleSelectAvatar = async (event) => {
@@ -38,8 +39,20 @@ export default function AvatarDialog(props) {
         console.log(data);
         dispatch(userSaved(data));
       })
-      .catch((error) => console.log(error));
-
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+      });
     handleDialogClose(event);
   };
 
@@ -82,6 +95,7 @@ export default function AvatarDialog(props) {
       ) : (
         <></>
       )}
+      <ToastContainer />
     </>
   );
 }
