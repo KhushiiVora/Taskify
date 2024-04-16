@@ -6,7 +6,7 @@ import Button from "../atoms/Button";
 import axios from "../../axiosConfig";
 
 import { saved as userSaved } from "../../state/userSlice";
-import { restored as workspaceRestored } from "../../state/workspaceSlice";
+import { restored as workspacesRestored } from "../../state/workspaceSlice";
 
 import TextField from "@mui/material/TextField";
 import { toast, Slide, ToastContainer } from "react-toastify";
@@ -63,7 +63,7 @@ export default function Login() {
       .post("/auth/login", data, { withCredentials: true })
       .then((response) => response.data)
       .then((user) => {
-        dispatch(workspaceRestored(user.workspaces));
+        dispatch(workspacesRestored(user.workspaces));
         delete user.workspaces;
         delete user.password;
         dispatch(userSaved(user));

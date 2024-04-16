@@ -8,14 +8,14 @@ const socketSlice = createSlice({
   name: "socket",
   initialState,
   reducers: {
-    socketSaved: (state, action) => {
+    saved: (state, action) => {
       state.socket = action.payload;
     },
-    socketCleared: (state) => {
+    cleared: (state) => {
       state.socket = null;
     },
   },
 });
 
 export default socketSlice.reducer;
-export const { socketSaved, socketCleared } = socketSlice.actions;
+export const { saved, cleared } = socketSlice.actions;

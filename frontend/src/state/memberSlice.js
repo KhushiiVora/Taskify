@@ -9,23 +9,23 @@ const memberSlice = createSlice({
   name: "members",
   initialState,
   reducers: {
-    membersSaved: (state, action) => {
+    memberSaved: (state, action) => {
       state.members.push(action.payload);
     },
-    leadersSaved: (state, action) => {
+    leaderSaved: (state, action) => {
       state.leaders.push(action.payload);
     },
-    membersRestored: (state, action) => {
+    restored: (state, action) => {
       state.leaders = action.payload.leaders;
       state.members = action.payload.members;
     },
-    membersCleared: (state) => {
-      state.leaders = null;
-      state.members = null;
+    cleared: (state) => {
+      state.leaders = [];
+      state.members = [];
     },
   },
 });
 
 export default memberSlice.reducer;
-export const { membersSaved, leadersSaved, membersRestored, membersCleared } =
+export const { memberSaved, leaderSaved, restored, cleared } =
   memberSlice.actions;

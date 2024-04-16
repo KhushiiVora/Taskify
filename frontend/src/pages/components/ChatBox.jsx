@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { workspaceIdSaved } from "../../state/chatSlice";
-import { socketSaved } from "../../state/socketSlice";
+import { saved as socketSaved } from "../../state/socketSlice";
 
 import MessageContainer from "./MessageContainer";
 import ChatBoxSidebar from "./ChatBoxSidebar";

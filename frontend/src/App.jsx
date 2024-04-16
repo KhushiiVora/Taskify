@@ -5,7 +5,7 @@ import axios from "./axiosConfig";
 import "./App.css";
 
 import { saved as userSaved } from "./state/userSlice";
-import { restored as workspaceRestored } from "./state/workspaceSlice";
+import { restored as workspacesRestored } from "./state/workspaceSlice";
 
 import Navbar from "./pages/components/Navbar";
 import Home from "./pages/components/Home";
@@ -19,7 +19,7 @@ import ChatBox from "./pages/components/ChatBox";
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
 
   useEffect(() => {
     axios
@@ -27,7 +27,7 @@ function App() {
       .then((response) => response.data)
       .then((user) => {
         console.log("user", user);
-        dispatch(workspaceRestored(user.workspaces));
+        dispatch(workspacesRestored(user.workspaces));
         delete user.workspaces;
         delete user.password;
         dispatch(userSaved(user));
@@ -43,7 +43,14 @@ function App() {
           element={user ? <Navbar username={user.username} /> : <MainNavbar />}
         >
           <Route index element={<Home />} />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="signup" element={<SignUp />} />
           <Route path="login" element={<Login />} />
         </Route>

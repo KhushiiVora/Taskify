@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { membersRestored } from "../../state/memberSlice";
+import { restored as membersRestored } from "../../state/memberSlice";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
 

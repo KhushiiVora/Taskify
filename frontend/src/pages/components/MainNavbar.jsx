@@ -6,8 +6,6 @@ export default function MainNavbar() {
       <nav>
         <NavLink to="/">Home</NavLink>
         {"      "}
-        <NavLink to="/profile">Profile</NavLink>
-        {"      "}
         <NavLink to="/signup">Sign Up</NavLink>
         {"  "}
         <NavLink to="/login">Login</NavLink>

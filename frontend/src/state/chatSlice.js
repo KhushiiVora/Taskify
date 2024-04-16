@@ -21,6 +21,10 @@ const chatSlice = createSlice({
     workspaceIdCleared: (state) => {
       state.workspaceId = null;
     },
+    cleared: (state) => {
+      state.workspaceId = null;
+      state.messages = [];
+    },
   },
 });
 
@@ -30,4 +34,5 @@ export const {
   messageSaved,
   messagesRestored,
   workspaceIdCleared,
+  cleared,
 } = chatSlice.actions;

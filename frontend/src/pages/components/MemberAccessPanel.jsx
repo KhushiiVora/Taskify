@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../../axiosConfig";
 import { refreshPage } from "../../utils/refreshPage";
 
-import { membersRestored } from "../../state/memberSlice";
+import { restored as membersRestored } from "../../state/memberSlice";
 
 import MemberAccessCard from "./MemberAccessCard";
+import PublicProfile from "./PublicProfile";
 
 import { StyledSection } from "../../styles/memberAccessPanel.styles";
-import PublicProfile from "./PublicProfile";
 
 function MemberAccessPanel(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
