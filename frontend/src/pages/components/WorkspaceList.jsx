@@ -1,15 +1,26 @@
 import { useSelector } from "react-redux";
 
-import { StyledSection } from "../../styles/workspaceList.styles";
+import Button from "../atoms/Button";
+import { RiAddCircleFill } from "react-icons/ri";
+import {
+  InnerStyledSection,
+  OuterStyledSection,
+} from "../../styles/workspaceList.styles";
 
 export default function WorkspaceList(props) {
-  const { handleWorkspaceOpen } = props;
+  const { handleWorkspaceOpen, handleDialogOpen } = props;
   const workspaces = useSelector((state) => state.workspaces.workspaces);
 
   return (
-    <>
+    <OuterStyledSection>
+      <Button
+        className="workspace--add_button"
+        type="button"
+        icon={<RiAddCircleFill />}
+        onClick={handleDialogOpen}
+      />
       {workspaces.length ? (
-        <StyledSection>
+        <InnerStyledSection>
           {workspaces.map((workspaceData) => {
             return (
               <div
@@ -24,10 +35,10 @@ export default function WorkspaceList(props) {
               </div>
             );
           })}
-        </StyledSection>
+        </InnerStyledSection>
       ) : (
-        <div>Please Join or Create workspaces</div>
+        <></>
       )}
-    </>
+    </OuterStyledSection>
   );
 }

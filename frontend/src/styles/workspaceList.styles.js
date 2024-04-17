@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-const StyledSection = styled.section`
-  width: 20%;
-  border: 1px solid #222;
-  overflow-y: scroll;
+const InnerStyledSection = styled.section`
+  width: 100%;
   height: 100%;
-  padding: 0.5rem;
   cursor: pointer;
+  overflow-y: scroll;
+  border: 1px solid #222;
 `;
 
-export { StyledSection };
+const OuterStyledSection = styled.section`
+  width: 20%;
+  height: 100%;
+  /* padding: 0.5rem; */
+`;
+
+export { InnerStyledSection, OuterStyledSection };

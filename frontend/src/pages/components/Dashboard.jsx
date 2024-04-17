@@ -11,10 +11,11 @@ import Workspace from "./Workspace";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection } from "../../styles/dashboard.styles";
-
+import { IoHome } from "react-icons/io5";
 import { TiMessages } from "react-icons/ti";
 import { IoLogOut } from "react-icons/io5";
+import noWorkspaceSelected from "/img/noWorkspaceSelected.svg";
+import { StyledSection } from "../../styles/dashboard.styles";
 
 export default function Dashboard() {
   const { username } = useSelector((state) => state.user.user);
@@ -56,10 +57,13 @@ export default function Dashboard() {
         }`}
       >
         <div>
-          <Button type="button" onClick={() => navigate("/")} text="🏠" />
+          <Button
+            type="button"
+            onClick={() => navigate("/")}
+            icon={<IoHome />}
+          />
           <h1>Dashboard</h1>
         </div>
-        <Button type="button" text="Add Workspace" onClick={handleDialogOpen} />
         <Button
           type="button"
           icon={<IoLogOut />}
@@ -72,7 +76,10 @@ export default function Dashboard() {
           openMemberAccessPanel ? "blur-background" : ""
         }`}
       >
-        <WorkspaceList handleWorkspaceOpen={handleWorkspaceOpen} />
+        <WorkspaceList
+          handleDialogOpen={handleDialogOpen}
+          handleWorkspaceOpen={handleWorkspaceOpen}
+        />
         {openedWorkspaceId ? (
           <Workspace
             workspaceId={openedWorkspaceId}
@@ -99,12 +106,20 @@ export default function Dashboard() {
 }
 
 const NoWorkspaceSelected = () => {
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
+  const { workspaces } = useSelector((state) => state.workspaces);
   return (
-    <div className="flex items-center justify-center w-full h-full">
+    <div className="dashboard__empty">
       <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
-        <p>Welcome 👋 {user.username} ❄</p>
-        <p>Select a workspace to start with</p>
+        <h2>Welcome {user.username}</h2>
+        <img
+          className="dashboard__empty--img"
+          src={noWorkspaceSelected}
+          alt="No Workspace Selected"
+        />
+        <p>
+          {workspaces.length ? "Select" : "Create"} a workspace to start with
+        </p>
         <TiMessages className="text-3xl md:text-6xl text-center" />
       </div>
     </div>

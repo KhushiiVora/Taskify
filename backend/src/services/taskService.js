@@ -83,9 +83,16 @@ class TaskService {
             1
           );
 
-          const { taskCategories } = await (
+          let { taskCategories } = await (
             await workspace.save()
           ).populate("taskCategories");
+
+          taskCategories = await Promise.all(
+            workspace.taskCategories.map(async (taskCategory) => {
+              const progress = await taskCategory.getTasksWithStateTrue();
+              return { ...taskCategory.toObject(), progress };
+            })
+          );
 
           return { taskCategories };
         }

@@ -1,5 +1,7 @@
 const UserService = require("../services/userService");
+const ErrorService = require("../services/errorService");
 const userService = new UserService();
+const errorService = new ErrorService();
 
 // Error handling remaining
 const patchEditProfilePic = async (req, res) => {

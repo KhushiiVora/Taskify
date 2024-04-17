@@ -24,6 +24,7 @@ import { IoLogOut } from "react-icons/io5";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { StyledSection } from "../../styles/profile.styles";
 
 export default function Profile() {
   const [openAvatarDialog, setOpenAvatarDialog] = useState(false);
@@ -59,7 +60,7 @@ export default function Profile() {
 
   const handleUsernameEdit = async (event) => {
     event.preventDefault();
-    if (username !== user.username) {
+    if (username && username !== user.username) {
       await axios
         .patch(
           `/profile/edit/${user._id}/username`,
@@ -90,7 +91,7 @@ export default function Profile() {
 
   const handleUserBioEdit = async (event) => {
     event.preventDefault();
-    if (userBio !== user.bio) {
+    if (userBio.trim() && userBio !== user.bio) {
       await axios
         .patch(
           `/profile/edit/${user._id}/bio`,
@@ -119,123 +120,145 @@ export default function Profile() {
     }
   };
   return (
-    <>
-      <div>Profile page</div>
-      <section>
-        <table>
-          <thead></thead>
-          <tbody>
-            <tr>
-              <td colSpan="2">
-                <Avatar
-                  alt={user.username}
-                  src={user.profilePic}
-                  sx={{ width: 150, height: 150 }}
-                />
-              </td>
-              <td onClick={handleDialogOpen}>
+    <StyledSection>
+      {/* <section> */}
+      <table className="profile_container">
+        <thead>
+          <tr>
+            <th>{user.username}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colSpan="2" className="profile_container--avatar">
+              <Avatar
+                className="avatar--img"
+                alt={user.username}
+                src={user.profilePic}
+                sx={{ width: 150, height: 150 }}
+              />
+              <div onClick={handleDialogOpen} className="avatar--icon">
                 <Tooltip title="Edit">
                   <IconButton>
                     <MdEdit />
                   </IconButton>
                 </Tooltip>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <FaUser />
-              </td>
-              <td>
-                {!editUsername ? (
-                  <div>
-                    <span>Username</span>
-                    <div>{user.username}</div>
-                    <hr />
-                  </div>
-                ) : (
-                  <TextField
-                    id="standard-read-only-input"
-                    label="Username"
-                    value={username}
-                    autoFocus={true}
-                    onChange={(event) => {
-                      setUsername(event?.target?.value);
-                    }}
-                    variant="standard"
-                  />
-                )}
-              </td>
-              <td onClick={() => setEditUsername(!editUsername)}>
-                <Tooltip title={`${editUsername ? "Save" : "Edit"}`}>
-                  {editUsername ? (
-                    <IconButton onClick={handleUsernameEdit}>
-                      <MdSaveAs />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <MdEdit />
-                    </IconButton>
-                  )}
-                </Tooltip>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <MdEmail />
-              </td>
-              <td>
+              </div>
+            </td>
+            {/* <td onClick={handleDialogOpen}>
+              <Tooltip title="Edit">
+                <IconButton>
+                  <MdEdit />
+                </IconButton>
+              </Tooltip>
+            </td> */}
+          </tr>
+          <tr>
+            <td className="profile_container--icons">
+              <FaUser />
+            </td>
+            <td className="profile_container__data divider">
+              {!editUsername ? (
                 <div>
-                  <span>Email</span>
-                  <div>{user.email}</div>
-                  <hr />
+                  <span className="profile_container__data--title">
+                    Username
+                  </span>
+                  <div>{user.username}</div>
+                  {/* <hr /> */}
                 </div>
-              </td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>
-                <PiUserListFill />
-              </td>
-              <td>
-                {!editBio ? (
-                  <div>
-                    <span>Bio</span>
-                    <div>{user.bio}</div>
-                    <hr />
-                  </div>
+              ) : (
+                <TextField
+                  id="standard-read-only-input"
+                  label="Username"
+                  value={username}
+                  autoFocus={true}
+                  onChange={(event) => {
+                    setUsername(event?.target?.value);
+                  }}
+                  variant="standard"
+                />
+              )}
+            </td>
+            <td
+              className="profile_container--icons divider"
+              onClick={() => setEditUsername(!editUsername)}
+            >
+              <Tooltip title={`${editUsername ? "Save" : "Edit"}`}>
+                {editUsername ? (
+                  <IconButton onClick={handleUsernameEdit}>
+                    <MdSaveAs />
+                  </IconButton>
                 ) : (
-                  <TextField
-                    id="standard-multiline-static"
-                    label="Bio"
-                    multiline
-                    rows={4}
-                    value={userBio}
-                    autoFocus={true}
-                    onChange={(event) => setUserBio(event?.target?.value)}
-                    variant="standard"
-                  />
+                  <IconButton>
+                    <MdEdit />
+                  </IconButton>
                 )}
-              </td>
-              <td onClick={() => setEditBio(!editBio)}>
-                <Tooltip title={`${editBio ? "Save" : "Edit"}`}>
-                  {editBio ? (
-                    <IconButton onClick={handleUserBioEdit}>
-                      <MdSaveAs />
-                    </IconButton>
-                  ) : (
-                    <IconButton>
-                      <MdEdit />
-                    </IconButton>
-                  )}
-                </Tooltip>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <PiTreeStructureFill />
-              </td>
-              <td colSpan="2">
-                <span>Workspaces</span>
+              </Tooltip>
+            </td>
+          </tr>
+          <tr>
+            <td className="profile_container--icons">
+              <MdEmail />
+            </td>
+            <td className="profile_container__data divider" colSpan="2">
+              <div>
+                <span className="profile_container__data--title">Email</span>
+                <div>{user.email}</div>
+                {/* <hr /> */}
+              </div>
+            </td>
+            {/* <td></td> */}
+          </tr>
+          <tr>
+            <td className="profile_container--icons">
+              <PiUserListFill />
+            </td>
+            <td className="profile_container__data divider">
+              {!editBio ? (
+                <div>
+                  <span className="profile_container__data--title">Bio</span>
+                  <div>{user.bio}</div>
+                  {/* <hr /> */}
+                </div>
+              ) : (
+                <TextField
+                  id="standard-multiline-static"
+                  label="Bio"
+                  multiline
+                  rows={4}
+                  value={userBio}
+                  autoFocus={true}
+                  onChange={(event) => setUserBio(event?.target?.value)}
+                  variant="standard"
+                />
+              )}
+            </td>
+            <td
+              className="profile_container--icons divider"
+              onClick={() => setEditBio(!editBio)}
+            >
+              <Tooltip title={`${editBio ? "Save" : "Edit"}`}>
+                {editBio ? (
+                  <IconButton onClick={handleUserBioEdit}>
+                    <MdSaveAs />
+                  </IconButton>
+                ) : (
+                  <IconButton>
+                    <MdEdit />
+                  </IconButton>
+                )}
+              </Tooltip>
+            </td>
+          </tr>
+          <tr>
+            <td className="profile_container--icons">
+              <PiTreeStructureFill />
+            </td>
+            <td colSpan="2" className="profile_container__data divider">
+              <div>
+                <span className="profile_container__data--title">
+                  Workspaces
+                </span>
                 <div>
                   {workspaces.map((workspace) => {
                     return (
@@ -247,26 +270,27 @@ export default function Profile() {
                     );
                   })}
                 </div>
-              </td>
-            </tr>
-            <tr>
-              <td colSpan="3">
-                <Button
-                  type="button"
-                  icon={<IoLogOut />}
-                  text="Logout"
-                  onClick={logout}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ToastContainer />
-      </section>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colSpan="3">
+              <Button
+                type="button"
+                icon={<IoLogOut />}
+                text="Logout"
+                onClick={logout}
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <ToastContainer />
+      {/* </section> */}
       <AvatarDialog
         open={openAvatarDialog}
         handleDialogClose={handleDialogClose}
       />
-    </>
+    </StyledSection>
   );
 }
