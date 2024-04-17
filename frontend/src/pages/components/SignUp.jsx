@@ -55,10 +55,10 @@ export default function SignUp() {
         navigate(`/profile`, { state: { isSignedUp: true } });
       })
       .catch((error) => {
-        console.log(error.response.data);
+        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

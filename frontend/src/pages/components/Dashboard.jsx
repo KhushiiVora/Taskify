@@ -9,7 +9,7 @@ import WorkspaceList from "./WorkspaceList";
 import MemberAccessPanel from "./MemberAccessPanel";
 import Workspace from "./Workspace";
 
-import { toast, Slide, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dashboard.styles";
 

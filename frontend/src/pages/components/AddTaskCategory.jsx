@@ -44,7 +44,7 @@ function AddTaskCategory(props) {
           setOpenTaskCategoryInput(false);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          console.log(error);
           refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",

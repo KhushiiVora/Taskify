@@ -10,8 +10,10 @@ import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { toast, Slide, ToastContainer } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import "react-toastify/dist/ReactToastify.css";
 
 function TaskRowCard(props) {
   const {
@@ -46,6 +48,17 @@ function TaskRowCard(props) {
         .catch((error) => {
           console.log(error);
           refreshPage(error.response.status);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
     }
   }, [isChecked]);
@@ -66,10 +79,19 @@ function TaskRowCard(props) {
         .catch((error) => {
           console.log(error);
           refreshPage(error.response.status);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
-      console.log("delete");
     } else {
-      console.log("edit");
       setTaskToEdit(task);
       handleDialogOpen(eventName);
     }
@@ -202,6 +224,7 @@ function TaskRowCard(props) {
           </IconButton>
         </Tooltip>
       </td>
+      <ToastContainer />
     </tr>
   );
 }

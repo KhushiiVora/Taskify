@@ -114,11 +114,11 @@ export default function TaskDialog(props) {
           handleDialogClose(event);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          console.log(error);
           refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -153,12 +153,11 @@ export default function TaskDialog(props) {
           handleDialogClose(event);
         })
         .catch((error) => {
-          console.log(error.response.data);
+          console.log(error);
           refreshPage(error.response.status);
-
           toast.error(error.response.data, {
             position: "bottom-center",
-            autoClose: 5000,
+            autoClose: 3000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,

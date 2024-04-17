@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import { refreshPage, quickRefresh } from "../../utils/refreshPage";
 import { restored as membersRestored } from "../../state/memberSlice";
 import { lockStateSaved } from "../../state/workspaceSlice";
 
@@ -12,7 +12,6 @@ import TaskCategoryList from "./TaskCategoryList";
 import Button from "../atoms/Button";
 import TaskList from "./TaskList";
 import ProgressBar from "./ProgressBar";
-// import MemberAccessPanel from "./MemberAccessPanel";
 
 import MUIButton from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -68,7 +67,6 @@ export default function Workspace(props) {
       },
       { cumulativeProgress: 0, cumulativeTasks: 0 }
     );
-    // console.log(result);
     return result;
   });
 
@@ -80,11 +78,11 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => setTaskCategories(data))
       .catch((error) => {
-        console.log(error.response);
+        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -106,7 +104,7 @@ export default function Workspace(props) {
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -135,6 +133,17 @@ export default function Workspace(props) {
       .catch((error) => {
         console.log(error);
         refreshPage(error.response.status);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
     handleConfirmDialogClose();
   };
@@ -149,10 +158,21 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => {
         console.log(data);
-        refreshPage();
+        quickRefresh();
       })
       .catch((error) => {
         console.log(error);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
     handleConfirmDialogClose();
   };
@@ -165,10 +185,21 @@ export default function Workspace(props) {
       .then((response) => response.data)
       .then((data) => {
         console.log(data);
-        refreshPage();
+        quickRefresh();
       })
       .catch((error) => {
         console.log(error);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
       });
     handleConfirmDialogClose();
   };

@@ -59,7 +59,6 @@ export default function Profile() {
 
   const handleUsernameEdit = async (event) => {
     event.preventDefault();
-    console.log("Call me...............");
     if (username !== user.username) {
       await axios
         .patch(
@@ -72,9 +71,20 @@ export default function Profile() {
           console.log("Updated user: ", data);
           dispatch(userSaved(data));
         })
-        .catch((error) => console.log(error));
-    } else {
-      console.log("ME to nahi gaya🤪😝");
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        });
     }
   };
 
@@ -92,9 +102,20 @@ export default function Profile() {
           console.log("Updated user: ", data);
           dispatch(userSaved(data));
         })
-        .catch((error) => console.log(error));
-    } else {
-      console.log("ME to nahi gaya🤪😝");
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        });
     }
   };
   return (

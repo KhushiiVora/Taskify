@@ -123,11 +123,11 @@ class WorkspaceService {
       return { error: workspaceError ?? userError };
     }
 
-    if (!workspace.members.includes(memberId)) {
-      return { error: new Error("User has already been removed!") };
-    }
-
     try {
+      if (!workspace.members.includes(memberId)) {
+        const updatedWorkspace = await workspace.populate("members");
+        return { updatedWorkspace };
+      }
       if (workspace.leaders.includes(memberId)) {
         workspace.leaders.splice(workspace.leaders.indexOf(memberId), 1);
       }
