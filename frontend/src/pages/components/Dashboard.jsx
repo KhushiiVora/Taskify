@@ -12,8 +12,8 @@ import Workspace from "./Workspace";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoHome } from "react-icons/io5";
-import { TiMessages } from "react-icons/ti";
 import { IoLogOut } from "react-icons/io5";
+import { RiAddCircleFill } from "react-icons/ri";
 import noWorkspaceSelected from "/img/noWorkspaceSelected.svg";
 import { StyledSection } from "../../styles/dashboard.styles";
 
@@ -59,14 +59,17 @@ export default function Dashboard() {
         <div>
           <Button
             type="button"
+            className="icon_button"
+            title="Home"
             onClick={() => navigate("/")}
-            icon={<IoHome />}
+            icon={<IoHome className="icons" />}
           />
           <h1>Dashboard</h1>
         </div>
         <Button
           type="button"
-          icon={<IoLogOut />}
+          className="text_button"
+          icon={<IoLogOut className="icons" />}
           text="Logout"
           onClick={logout}
         />
@@ -110,17 +113,18 @@ const NoWorkspaceSelected = () => {
   const { workspaces } = useSelector((state) => state.workspaces);
   return (
     <div className="dashboard__empty">
-      <div className="px-4 text-center sm:text-lg md:text-xl text-gray-200 font-semibold flex flex-col items-center gap-2">
-        <h2>Welcome {user.username}</h2>
+      <div>
+        <h2>Welcome {user.username}!</h2>
         <img
           className="dashboard__empty--img"
           src={noWorkspaceSelected}
           alt="No Workspace Selected"
         />
         <p>
-          {workspaces.length ? "Select" : "Create"} a workspace to start with
+          {/* {workspaces.length ? "Select" : "Create"} a workspace to start with */}
+          Ready to boost your productivity? Create your new workspace or join an
+          existing one by clicking the {<RiAddCircleFill />} button.
         </p>
-        <TiMessages className="text-3xl md:text-6xl text-center" />
       </div>
     </div>
   );

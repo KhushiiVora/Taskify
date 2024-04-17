@@ -33,6 +33,7 @@ const StyledSection = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
   }
   .dashboard__empty--img {
     width: 25rem;

@@ -14,9 +14,10 @@ export default function WorkspaceList(props) {
   return (
     <OuterStyledSection>
       <Button
-        className="workspace--add_button"
+        className="icon_button"
         type="button"
-        icon={<RiAddCircleFill />}
+        title="New Workspace"
+        icon={<RiAddCircleFill className="icons" />}
         onClick={handleDialogOpen}
       />
       {workspaces.length ? (

@@ -11,7 +11,6 @@ const InnerStyledSection = styled.section`
 const OuterStyledSection = styled.section`
   width: 20%;
   height: 100%;
-  /* padding: 0.5rem; */
 `;
 
 export { InnerStyledSection, OuterStyledSection };
