@@ -18,11 +18,12 @@ import noWorkspaceSelected from "/img/noWorkspaceSelected.svg";
 import { StyledSection } from "../../styles/dashboard.styles";
 
 export default function Dashboard() {
-  const { username } = useSelector((state) => state.user.user);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openMemberAccessPanel, setOpenMemberAccessPanel] = useState(false);
   // const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
+  const { username } = useSelector((state) => state.user.user);
+  const { members } = useSelector((state) => state.members);
 
   const { logout } = useLogout();
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function Dashboard() {
         <Button
           type="button"
           className="text_button"
-          icon={<IoLogOut className="icons" />}
+          icon={<IoLogOut className="text_icons" />}
           text="Logout"
           onClick={logout}
         />
@@ -80,6 +81,8 @@ export default function Dashboard() {
         }`}
       >
         <WorkspaceList
+          members={members}
+          openedWorkspaceId={openedWorkspaceId}
           handleDialogOpen={handleDialogOpen}
           handleWorkspaceOpen={handleWorkspaceOpen}
         />

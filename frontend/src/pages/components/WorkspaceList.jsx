@@ -8,7 +8,8 @@ import {
 } from "../../styles/workspaceList.styles";
 
 export default function WorkspaceList(props) {
-  const { handleWorkspaceOpen, handleDialogOpen } = props;
+  const { members, openedWorkspaceId, handleWorkspaceOpen, handleDialogOpen } =
+    props;
   const workspaces = useSelector((state) => state.workspaces.workspaces);
 
   return (
@@ -31,7 +32,12 @@ export default function WorkspaceList(props) {
                 }
               >
                 <h3>{workspaceData.name}</h3>
-                <p>{workspaceData.members.length} members</p>
+                <p>
+                  {openedWorkspaceId === workspaceData._id
+                    ? members.length
+                    : workspaceData.members.length}{" "}
+                  members
+                </p>
                 <hr />
               </div>
             );
