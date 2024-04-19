@@ -65,14 +65,38 @@ const ButtonDiv = styled.div`
     cursor: pointer;
     transition: all 0.3s ease;
   }
+
+  .filled_button {
+    background: ${(props) => props.theme.iconColor};
+    color: ${(props) => props.theme.color1};
+    font-size: 1rem;
+    padding: 0.7rem 2.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .filled_button:hover,
   .underlined_button:hover,
   .text_button:hover {
     transform: translateY(-1px);
   }
+  .filled_button:active,
   .underlined_button:active,
   .text_button:active {
     box-shadow: none;
     transform: translateY(0px);
+  }
+
+  .link_button {
+    border: none;
+    background: ${(props) => props.theme.color1};
+    color: ${(props) => props.theme.color3};
+    font-weight: bold;
+    font-size: 1rem;
+    font-style: italic;
+    cursor: pointer;
   }
 `;
 
