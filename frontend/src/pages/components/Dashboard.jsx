@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import useLogout from "../../hooks/useLogout";
 
@@ -26,9 +26,14 @@ export default function Dashboard() {
   const { members } = useSelector((state) => state.members);
 
   const { logout } = useLogout();
+
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (location.state?.workspaceId) {
+      setOpenedWorkspaceId(location.state.workspaceId);
+    }
     console.log(username);
   }, []);
 

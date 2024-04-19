@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function Input(props) {
-  const { name, type, value, onChange, required } = props;
+  const { name, type, value, onChange, required, autoFocus } = props;
   return (
     <>
       <input
@@ -10,6 +10,7 @@ export default function Input(props) {
         value={value}
         onChange={onChange}
         required={required}
+        autoFocus={autoFocus}
       />
     </>
   );

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { saved as userSaved } from "../../state/userSlice";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import useLogout from "../../hooks/useLogout";
 
 import Button from "../atoms/Button";
+import Input from "../atoms/Input";
 import axios from "../../axiosConfig";
 import AvatarDialog from "./AvatarDialog";
 
-import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Avatar from "@mui/material/Avatar";
@@ -40,6 +41,7 @@ export default function Profile() {
   const { logout } = useLogout();
 
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -158,26 +160,21 @@ export default function Profile() {
               <FaUser />
             </td>
             <td className="profile_container__data divider">
-              {!editUsername ? (
-                <div>
-                  <span className="profile_container__data--title">
-                    Username
-                  </span>
+              <div>
+                <span className="profile_container__data--title">Username</span>
+                {!editUsername ? (
                   <div>{user.username}</div>
-                  {/* <hr /> */}
-                </div>
-              ) : (
-                <TextField
-                  id="standard-read-only-input"
-                  label="Username"
-                  value={username}
-                  autoFocus={true}
-                  onChange={(event) => {
-                    setUsername(event?.target?.value);
-                  }}
-                  variant="standard"
-                />
-              )}
+                ) : (
+                  <Input
+                    name="username"
+                    value={username}
+                    onChange={(event) => {
+                      setUsername(event?.target?.value);
+                    }}
+                    autoFocus
+                  />
+                )}
+              </div>
             </td>
             <td
               className="profile_container--icons divider"
@@ -214,24 +211,22 @@ export default function Profile() {
               <PiUserListFill />
             </td>
             <td className="profile_container__data divider">
-              {!editBio ? (
-                <div>
-                  <span className="profile_container__data--title">Bio</span>
+              <div>
+                <span className="profile_container__data--title">Bio</span>
+                {!editBio ? (
                   <div>{user.bio}</div>
-                  {/* <hr /> */}
-                </div>
-              ) : (
-                <TextField
-                  id="standard-multiline-static"
-                  label="Bio"
-                  multiline
-                  rows={4}
-                  value={userBio}
-                  autoFocus={true}
-                  onChange={(event) => setUserBio(event?.target?.value)}
-                  variant="standard"
-                />
-              )}
+                ) : (
+                  <textarea
+                    name="bio"
+                    value={userBio}
+                    onChange={(event) => {
+                      setUserBio(event?.target?.value);
+                    }}
+                    rows={1}
+                    autoFocus
+                  />
+                )}
+              </div>
             </td>
             <td
               className="profile_container--icons divider"
@@ -265,7 +260,11 @@ export default function Profile() {
                       <Chip
                         key={workspace._id}
                         label={workspace.name}
-                        // onClick={handleClick}
+                        onClick={() =>
+                          navigate(`/dashboard/${username}`, {
+                            state: { workspaceId: workspace._id },
+                          })
+                        }
                       />
                     );
                   })}
@@ -294,3 +293,4 @@ export default function Profile() {
     </StyledSection>
   );
 }
+
