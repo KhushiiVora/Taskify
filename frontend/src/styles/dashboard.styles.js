@@ -13,7 +13,7 @@ const StyledSection = styled.section`
   }
 
   .dashboard__header {
-    padding: 1rem 1rem 0 1rem;
+    padding: 0rem 1rem 0 1rem;
     height: 10%;
     display: flex;
     justify-content: space-between;
@@ -27,7 +27,7 @@ const StyledSection = styled.section`
 
   .dashboard__workspace-container {
     position: relative;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     height: 90%;
     width: 100%;
     display: flex;

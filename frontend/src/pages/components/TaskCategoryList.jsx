@@ -6,7 +6,6 @@ import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskCategoryCard from "./TaskCategoryCard";
 import ConfirmationDialog from "./ConfirmationDialog";
-import { StyledDiv } from "../../styles/taskCategoryList.styles";
 
 function TaskCategoryList(props) {
   const {

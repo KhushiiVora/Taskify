@@ -11,7 +11,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
 
-import { StyledDiv } from "../../styles/taskCategoryList.styles";
+import {
+  StyledDiv,
+  menuItemEditStyling,
+  menuItemDeleteStyling,
+} from "../../styles/taskCategoryCard.styles";
+import Button from "../atoms/Button";
 
 function TaskCategoryCard(props) {
   const {
@@ -36,69 +41,72 @@ function TaskCategoryCard(props) {
 
   return (
     <StyledDiv>
-      <div>
-        {categoryToEdit && categoryToEdit._id === category._id ? (
-          <AddTaskCategory
-            isNewCategory={false}
-            workspaceId={workspaceId}
-            setTaskCategories={setTaskCategories}
-            categoryToEdit={categoryToEdit}
-            setCategoryToEdit={setCategoryToEdit}
+      <div className="category_content">
+        <div>
+          {categoryToEdit && categoryToEdit._id === category._id ? (
+            <AddTaskCategory
+              isNewCategory={false}
+              workspaceId={workspaceId}
+              setTaskCategories={setTaskCategories}
+              categoryToEdit={categoryToEdit}
+              setCategoryToEdit={setCategoryToEdit}
+            />
+          ) : (
+            <h4>{category.name}</h4>
+          )}
+          <div>
+            {`${category.progress}/${category.tasks.length}`} tasks completed
+          </div>
+          <Button
+            className="link_button"
+            text="Go to Tasks"
+            onClick={(event) => handleExpand(event, category._id)}
           />
-        ) : (
-          <h4>{category.name}</h4>
+        </div>
+        {isLeader && (
+          <div>
+            <IconButton
+              aria-label="more"
+              id="long-button"
+              aria-controls={open ? "menu" : undefined}
+              aria-expanded={open ? "true" : undefined}
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="menu"
+              MenuListProps={{
+                "aria-labelledby": "long-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem
+                sx={menuItemEditStyling}
+                onClick={() => {
+                  setCategoryToEdit(category);
+                  handleClose();
+                }}
+              >
+                <AiFillEdit className="icons" /> Edit
+              </MenuItem>
+              <MenuItem
+                sx={menuItemDeleteStyling}
+                onClick={() => {
+                  setCategoryToDelete(category);
+                  setOpenConfirmDialog(true);
+                  handleClose();
+                }}
+              >
+                <MdDelete className="icons" /> Delete
+              </MenuItem>
+            </Menu>
+          </div>
         )}
-        <div>
-          {`${category.progress}/${category.tasks.length}`} tasks completed
-        </div>
-        <span
-          className="span-button"
-          onClick={(event) => handleExpand(event, category._id)}
-        >
-          Go to Tasks
-        </span>
       </div>
-      {isLeader && (
-        <div>
-          <IconButton
-            aria-label="more"
-            id="long-button"
-            aria-controls={open ? "menu" : undefined}
-            aria-expanded={open ? "true" : undefined}
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="menu"
-            MenuListProps={{
-              "aria-labelledby": "long-button",
-            }}
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem
-              onClick={() => {
-                setCategoryToEdit(category);
-                handleClose();
-              }}
-            >
-              <AiFillEdit /> Edit
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                setCategoryToDelete(category);
-                setOpenConfirmDialog(true);
-                handleClose();
-              }}
-            >
-              <MdDelete /> Delete
-            </MenuItem>
-          </Menu>
-        </div>
-      )}
       <ProgressBar value={category.progress} total={category.tasks.length} />
     </StyledDiv>
   );

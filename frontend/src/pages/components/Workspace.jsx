@@ -29,6 +29,7 @@ import { MdLockOpen } from "react-icons/md";
 import { IoExit } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { RiAddCircleFill } from "react-icons/ri";
+import { IoChatbubblesSharp } from "react-icons/io5";
 import noTaskCategory from "/img/noTaskCategory.svg";
 import { StyledSection, menuItemStyling } from "../../styles/workspace.styles";
 
@@ -250,10 +251,11 @@ export default function Workspace(props) {
                 <></>
               )}
               <Button
-                type="button"
                 className="underlined_button full-height"
-                onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
+                type="button"
                 text="Chat box"
+                icon={<IoChatbubblesSharp className="text_icons" />}
+                onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
               />
               {openTaskCategoryInput ? (
                 <AddTaskCategory

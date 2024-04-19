@@ -29,7 +29,7 @@ const StyledSection = styled.section`
     margin: 0.5rem;
   }
   .no_task_category img {
-    width: 60%;
+    width: 50%;
   }
 
   .workspace__header {
@@ -88,6 +88,7 @@ const StyledSection = styled.section`
   .text_lock,
   .text_locked {
     color: ${(props) => props.theme.iconColor};
+    font-size: 1.1rem;
     display: flex;
     gap: 0.2rem;
     justify-content: center;
@@ -99,8 +100,8 @@ const StyledSection = styled.section`
   }
 
   .categories_container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   .avatar-container {
     cursor: pointer;

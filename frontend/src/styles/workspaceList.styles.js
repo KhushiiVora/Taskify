@@ -13,7 +13,7 @@ const InnerStyledSection = styled.section`
   .list_item {
     padding: 0.2rem;
     margin: 0 0.2rem 0 0;
-    border: 1px solid ${(props) => props.theme.borderColor};
+    /* border-bottom: 1px solid ${(props) => props.theme.borderColor}; */
     border-radius: 0.5rem;
   }
   .selected {
@@ -24,7 +24,6 @@ const InnerStyledSection = styled.section`
 const OuterStyledSection = styled.section`
   width: 20%;
   height: 100%;
-  background-color: ${(props) => props.theme.bgColor1};
   box-shadow: 0px 0px 8px 2px ${(props) => props.theme.bgColor1};
   border-radius: 1rem;
 `;
