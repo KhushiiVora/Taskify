@@ -10,25 +10,28 @@ const StyledSection = styled.section`
   }
   .taskify img {
     width: 40%;
-    position: absolute;
+  }
+  .bottom_img {
+    display: flex;
+    justify-content: center;
+  }
+  .top_img {
+    display: flex;
+    justify-content: center;
   }
 
   .taskify--img1 {
-    justify-self: flex-start;
-    z-index: -1;
-    border-radius: 50%;
-    bottom:0;
+    z-index: 1;
+    border-radius: 60%;
+    position: absolute;
+    top: 60%;
   }
   .taskify--img2 {
-    justify-self: center;
-    left: 30%;
     z-index: 1;
   }
   .taskify--img3 {
-    justify-self: flex-end;
     right: 0;
     z-index: -1;
-    background: transparent;
     border-radius: 80%;
   }
 `;

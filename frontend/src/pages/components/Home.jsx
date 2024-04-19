@@ -10,20 +10,19 @@ export default function Home() {
   return (
     <StyledSection>
       <div className="taskify">
-        <div>
+        <div className="top_img">
           <img
             src={taskCompletion}
             alt="Task Completion"
             className="taskify--img2"
           />
-          /
           <img
             src={progressIndicator}
             alt="Progress Indicator"
             className="taskify--img3"
           />
         </div>
-        <div>
+        <div className="bottom_img">
           <img src={workTime} alt="Work time" className="taskify--img1" />
         </div>
       </div>
