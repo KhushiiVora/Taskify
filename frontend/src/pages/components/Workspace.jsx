@@ -29,7 +29,8 @@ import { MdLockOpen } from "react-icons/md";
 import { IoExit } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { RiAddCircleFill } from "react-icons/ri";
-import { StyledSection } from "../../styles/workspace.styles";
+import noTaskCategory from "/img/noTaskCategory.svg";
+import { StyledSection, menuItemStyling } from "../../styles/workspace.styles";
 
 export default function Workspace(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
@@ -234,15 +235,15 @@ export default function Workspace(props) {
         </section>
       ) : (
         <section>
-          <section>
-            <div>
-              <h1>{workspaceData?.name}</h1>
+          {/* <h1>{workspaceData?.name}</h  1> */}
+          <section className="workspace__header">
+            <div className="workspace__header--actions">
               {leaders.includes(user._id) ? (
                 <Button
-                  className="underlined_button"
+                  className="underlined_button full-height"
                   type="button"
                   text="Task Category"
-                  icon={<RiAddCircleFill className="icons" />}
+                  icon={<RiAddCircleFill className="text_icons" />}
                   onClick={handleClick}
                 />
               ) : (
@@ -250,7 +251,7 @@ export default function Workspace(props) {
               )}
               <Button
                 type="button"
-                className="underlined_button"
+                className="underlined_button full-height"
                 onClick={() => navigate(`/chatbox/${workspaceData._id}`)}
                 text="Chat box"
               />
@@ -265,154 +266,173 @@ export default function Workspace(props) {
                 <></>
               )}
             </div>
-            {leaders.includes(user._id) ? (
-              <div>
-                <MUIButton
-                  onClick={() => {
-                    setConfirmationDialogData({
-                      title: !workspaceData?.locked
-                        ? "Workspace Lock Confirmation"
-                        : "Workspace Unlock Confirmation",
-                      description: !workspaceData?.locked ? (
-                        <>
-                          Are you sure you want to lock the workspace? <br />
-                          NOTE: This action will prevent other users from
-                          joining the workspace.
-                        </>
-                      ) : (
-                        <>
-                          Are you sure you want to unlock the workspace? <br />
-                          NOTE: This action will allow other users to join the
-                          workspace and collaborate.
-                        </>
-                      ),
-                      confirmText: workspaceData?.locked ? "Unlock" : "Lock",
-                      handleConfirmAction: handleWorkspaceLock,
-                    });
-                    setOpenConfirmDialog(true);
-                  }}
+            <div className="workspace__header--actions">
+              {leaders.includes(user._id) ? (
+                <div>
+                  <MUIButton
+                    className={`${
+                      workspaceData.locked ? "action_locked" : "action_lock"
+                    }`}
+                    onClick={() => {
+                      setConfirmationDialogData({
+                        title: !workspaceData?.locked
+                          ? "Workspace Lock Confirmation"
+                          : "Workspace Unlock Confirmation",
+                        description: !workspaceData?.locked ? (
+                          <>
+                            Are you sure you want to lock the workspace? <br />
+                            NOTE: This action will prevent other users from
+                            joining the workspace.
+                          </>
+                        ) : (
+                          <>
+                            Are you sure you want to unlock the workspace?{" "}
+                            <br />
+                            NOTE: This action will allow other users to join the
+                            workspace and collaborate.
+                          </>
+                        ),
+                        confirmText: workspaceData?.locked ? "Unlock" : "Lock",
+                        handleConfirmAction: handleWorkspaceLock,
+                      });
+                      setOpenConfirmDialog(true);
+                    }}
+                  >
+                    {workspaceData?.locked ? (
+                      <>
+                        <MdLock /> <span>Locked</span>
+                      </>
+                    ) : (
+                      <>
+                        <MdLockOpen /> <span>Lock</span>
+                      </>
+                    )}
+                  </MUIButton>
+                </div>
+              ) : (
+                <div
+                  className={`${
+                    workspaceData.locked ? "text_locked" : "text_lock"
+                  }`}
                 >
                   {workspaceData?.locked ? (
                     <>
-                      <MdLock /> Locked
+                      <MdLock />
+                      <span>Locked</span>
                     </>
                   ) : (
                     <>
-                      <MdLockOpen /> Lock
+                      <MdLockOpen />
+                      <span>Open</span>
                     </>
                   )}
-                </MUIButton>
-              </div>
-            ) : (
-              <div>
-                {workspaceData?.locked ? (
-                  <span>
-                    <MdLock /> Locked
-                  </span>
-                ) : (
-                  <span>
-                    <MdLockOpen /> Open
-                  </span>
-                )}
-              </div>
-            )}
+                </div>
+              )}
 
-            <div
-              className="avater-container"
-              onClick={() => {
-                // console.log("div");
-                setOpenMemberAccessPanel(true);
-              }}
-            >
-              <AvatarGroup total={members.length}>
-                {[
-                  ...new Array(
-                    (members.length % 5) + (members.length >= 5 ? 3 : 0)
-                  ),
-                ].map((_, index) => {
-                  return (
-                    <Avatar
-                      alt={members[index].username}
-                      src={members[index].profilePic}
-                    />
-                  );
-                })}
-              </AvatarGroup>
-              {/* {openMemberAccessPanel && <MemberAccessPanel />} */}
-            </div>
-            <div>
-              <IconButton
-                aria-label="more"
-                id="long-button"
-                aria-controls={open ? "menu" : undefined}
-                aria-expanded={open ? "true" : undefined}
-                aria-haspopup="true"
-                onClick={handleMenuClick}
-              >
-                <MoreVertIcon />
-              </IconButton>
-              <Menu
-                id="menu"
-                MenuListProps={{
-                  "aria-labelledby": "long-button",
+              <div
+                className="avatar-container"
+                onClick={() => {
+                  // console.log("div");
+                  setOpenMemberAccessPanel(true);
                 }}
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
               >
-                {members.length > 1 && (
-                  <MenuItem
-                    onClick={() => {
-                      if (leaders.length === 1 && leaders.includes(user._id)) {
+                <AvatarGroup total={members.length}>
+                  {[
+                    ...new Array(
+                      (members.length % 5) + (members.length >= 5 ? 3 : 0)
+                    ),
+                  ].map((_, index) => {
+                    return (
+                      <Avatar
+                        className="avatar-container--avatar"
+                        alt={members[index].username}
+                        src={members[index].profilePic}
+                      />
+                    );
+                  })}
+                </AvatarGroup>
+                {/* {openMemberAccessPanel && <MemberAccessPanel />} */}
+              </div>
+              <div>
+                <IconButton
+                  aria-label="more"
+                  id="long-button"
+                  aria-controls={open ? "menu" : undefined}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-haspopup="true"
+                  onClick={handleMenuClick}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                <Menu
+                  id="menu"
+                  MenuListProps={{
+                    "aria-labelledby": "long-button",
+                  }}
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleClose}
+                >
+                  {members.length > 1 && (
+                    <MenuItem
+                      sx={menuItemStyling}
+                      onClick={() => {
+                        if (
+                          leaders.length === 1 &&
+                          leaders.includes(user._id)
+                        ) {
+                          setConfirmationDialogData({
+                            title: "",
+                            description:
+                              "Please designate at least one member as a leader before you exit, to ensure the continuity of leadership privileges.",
+                            confirmText: "",
+                            handleConfirmAction: null,
+                          });
+                        } else {
+                          setConfirmationDialogData({
+                            title: `Workspace Exit confirmation`,
+                            description: `Are you sure you want to exit from ${workspaceData.name}?`,
+                            confirmText: "Yes, Exit",
+                            handleConfirmAction: handleWorspaceExit,
+                          });
+                        }
+                        setOpenConfirmDialog(true);
+                        handleClose();
+                      }}
+                    >
+                      <IoExit className="icons" /> Exit
+                    </MenuItem>
+                  )}
+                  {leaders.includes(user._id) && (
+                    <MenuItem
+                      sx={menuItemStyling}
+                      onClick={() => {
                         setConfirmationDialogData({
-                          title: "",
-                          description:
-                            "Please designate at least one member as a leader before you exit, to ensure the continuity of leadership privileges.",
-                          confirmText: "",
-                          handleConfirmAction: null,
+                          title: `Workspace Delete confirmation`,
+                          description: (
+                            <>
+                              Are you sure you want to delete{" "}
+                              {workspaceData.name}
+                              ?
+                              <br />
+                              NOTE: This action will delete {
+                                workspaceData.name
+                              }{" "}
+                              permanently and its progress.
+                            </>
+                          ),
+                          confirmText: "Yes, Exit and Delete",
+                          handleConfirmAction: handleWorkspaceDelete,
                         });
-                      } else {
-                        setConfirmationDialogData({
-                          title: `Workspace Exit confirmation`,
-                          description: `Are you sure you want to exit from ${workspaceData.name}?`,
-                          confirmText: "Yes, Exit",
-                          handleConfirmAction: handleWorspaceExit,
-                        });
-                      }
-                      setOpenConfirmDialog(true);
-                      handleClose();
-                    }}
-                  >
-                    <IoExit /> Exit
-                  </MenuItem>
-                )}
-                {leaders.includes(user._id) && (
-                  <MenuItem
-                    onClick={() => {
-                      setConfirmationDialogData({
-                        title: `Workspace Delete confirmation`,
-                        description: (
-                          <>
-                            Are you sure you want to delete {workspaceData.name}
-                            ?
-                            <br />
-                            NOTE: This action will delete {
-                              workspaceData.name
-                            }{" "}
-                            permanently and its progress.
-                          </>
-                        ),
-                        confirmText: "Yes, Exit and Delete",
-                        handleConfirmAction: handleWorkspaceDelete,
-                      });
-                      setOpenConfirmDialog(true);
-                      handleClose();
-                    }}
-                  >
-                    <MdDelete /> Exit and Delete
-                  </MenuItem>
-                )}
-              </Menu>
+                        setOpenConfirmDialog(true);
+                        handleClose();
+                      }}
+                    >
+                      <MdDelete className="icons" /> Exit and Delete
+                    </MenuItem>
+                  )}
+                </Menu>
+              </div>
             </div>
           </section>
           <ProgressBar
@@ -430,9 +450,10 @@ export default function Workspace(props) {
               />
             </section>
           ) : (
-            <>
-              <h2>You dont have any taskCategory so please create one</h2>
-            </>
+            <div className="no_task_category">
+              <img src={noTaskCategory} alt="No Task Category" />
+              <p>You don't have any Task Category, so please create one.</p>
+            </div>
           )}
         </section>
       )}

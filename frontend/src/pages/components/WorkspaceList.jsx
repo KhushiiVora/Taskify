@@ -26,6 +26,9 @@ export default function WorkspaceList(props) {
           {workspaces.map((workspaceData) => {
             return (
               <div
+                className={`list_item divider ${
+                  openedWorkspaceId === workspaceData._id ? "selected" : ""
+                }`}
                 key={workspaceData._id}
                 onClick={(event) =>
                   handleWorkspaceOpen(event, workspaceData._id)
@@ -38,7 +41,7 @@ export default function WorkspaceList(props) {
                     : workspaceData.members.length}{" "}
                   members
                 </p>
-                <hr />
+                {/* <hr /> */}
               </div>
             );
           })}

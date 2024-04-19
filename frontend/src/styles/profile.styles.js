@@ -31,7 +31,7 @@ const StyledSection = styled.section`
   }
 
   .avatar--img {
-    border: 1px solid #222;
+    border: 1px solid ${(props) => props.theme.borderColor};
   }
   .avatar--icon {
     background-color: #999999;
@@ -64,7 +64,7 @@ const StyledSection = styled.section`
   }
 
   .divider {
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid ${(props) => props.theme.borderColor};
   }
 `;
 

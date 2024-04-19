@@ -24,6 +24,7 @@ export default function Dashboard() {
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
   const { username } = useSelector((state) => state.user.user);
   const { members } = useSelector((state) => state.members);
+  const { workspaces } = useSelector((state) => state.workspaces);
 
   const { logout } = useLogout();
 
@@ -71,6 +72,15 @@ export default function Dashboard() {
             icon={<IoHome className="icons" />}
           />
           <h1>Dashboard</h1>
+        </div>
+        <div>
+          <h1>
+            {openedWorkspaceId
+              ? workspaces.filter(
+                  (Workspace) => Workspace._id === openedWorkspaceId
+                )[0]?.name
+              : ""}
+          </h1>
         </div>
         <Button
           type="button"

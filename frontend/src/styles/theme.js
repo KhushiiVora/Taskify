@@ -6,6 +6,7 @@ const theme = {
   bgColor2: "#CADFE9",
   iconColor: "#175676",
   successColor: "#00CC99",
+  borderColor: "#222",
 };
 
 export default theme;

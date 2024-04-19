@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 const ButtonDiv = styled.div`
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .icon_button {
     background: ${(props) => props.theme.bgColor2};
     border: none;
@@ -34,11 +40,16 @@ const ButtonDiv = styled.div`
     align-items: center;
     gap: 0.2rem;
     cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .full-height {
+    height: 100%;
   }
 
   .underlined_button {
     background: ${(props) => props.theme.color1};
-    padding: 0.3rem;
+    padding: 0.3rem 0.5rem;
     border: none;
     border-bottom: 2px solid ${(props) => props.theme.iconColor};
     border-radius: 0.5rem;
@@ -46,12 +57,22 @@ const ButtonDiv = styled.div`
     box-shadow: 0px 0px 10px 5px ${(props) => props.theme.bgColor2};
     color: ${(props) => props.theme.iconColor};
     font-size: 1rem;
-    margin: 0.2rem;
+    /* margin: 0.2rem; */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.2rem;
     cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .underlined_button:hover,
+  .text_button:hover {
+    transform: translateY(-1px);
+  }
+  .underlined_button:active,
+  .text_button:active {
+    box-shadow: none;
+    transform: translateY(0px);
   }
 `;
 
