@@ -109,7 +109,7 @@ const StyledSection = styled.section`
   .avatar-container .avatar-container--avatar {
     border: 1px solid ${(props) => props.theme.borderColor};
   }
-  .icons {
+  .menu_icons {
     color: ${(props) => props.theme.color2};
   }
 `;

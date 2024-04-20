@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import TextField from "@mui/material/TextField";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const StyledSection = styled.section`
   display: flex;
@@ -7,13 +9,15 @@ const StyledSection = styled.section`
   position: absolute;
   left: 0;
   top: 0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 
   .dialog_container {
-    padding: 3rem;
+    width: 30%;
+    padding: 3rem 2rem 4rem 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,15 +27,33 @@ const StyledSection = styled.section`
     z-index: 1;
   }
   .dialog_container__form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
 
     h1 {
-      font-size: 1.5rem;
+      justify-self: flex-start;
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
     }
+  }
+  .dialog_container__form--buttons {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+  .dialog_container__form--date {
+    width: 90%;
   }
 `;
 
-export { StyledSection };
+const StyledTextField = styled(TextField)`
+  width: 90%;
+`;
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+`;
+
+export { StyledSection, StyledTextField, StyledDatePicker };

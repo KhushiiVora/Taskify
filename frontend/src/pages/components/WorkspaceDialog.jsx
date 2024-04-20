@@ -5,10 +5,9 @@ import { useDispatch } from "react-redux";
 import { saved as workspaceSaved } from "../../state/workspaceSlice";
 
 import Button from "../atoms/Button";
-import TextField from "@mui/material/TextField";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection } from "../../styles/dialog.styles";
+import { StyledSection, StyledTextField } from "../../styles/dialog.styles";
 
 export default function WorkspaceDialog(props) {
   const { username, open, handleDialogClose } = props;
@@ -99,7 +98,7 @@ export default function WorkspaceDialog(props) {
             <div className="dialog_container">
               <form onSubmit={handleSubmit} className="dialog_container__form">
                 <h1>Workspace</h1>
-                <TextField
+                <StyledTextField
                   name="name"
                   id="outlined-basic"
                   label="Name"
@@ -108,7 +107,7 @@ export default function WorkspaceDialog(props) {
                   value={formData.name}
                   required
                 />
-                <TextField
+                <StyledTextField
                   name="code"
                   id="outlined-basic"
                   label="Secret Code"
@@ -117,8 +116,14 @@ export default function WorkspaceDialog(props) {
                   value={formData.code}
                   required
                 />
-                <Button type="submit" text="Create Workspace" />
-                <Button type="submit" text="Join Workspace" />
+                <div className="dialog_container__form--buttons">
+                  <Button
+                    className="filled_button"
+                    type="submit"
+                    text="Create"
+                  />
+                  <Button className="filled_button" type="submit" text="Join" />
+                </div>
               </form>
               <ToastContainer />
             </div>

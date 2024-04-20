@@ -6,11 +6,9 @@ import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 import Button from "../atoms/Button";
-import TextField from "@mui/material/TextField";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 import { useTheme } from "@mui/material/styles";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -20,7 +18,11 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection } from "../../styles/dialog.styles";
+import {
+  StyledSection,
+  StyledTextField,
+  StyledDatePicker,
+} from "../../styles/dialog.styles";
 
 export default function TaskDialog(props) {
   const theme = useTheme();
@@ -178,7 +180,7 @@ export default function TaskDialog(props) {
             <div className="dialog_container">
               <form onSubmit={handleSubmit} className="dialog_container__form">
                 <h1>Task</h1>
-                <TextField
+                <StyledTextField
                   name="name"
                   id="outlined-basic"
                   label="Name"
@@ -187,7 +189,7 @@ export default function TaskDialog(props) {
                   value={formData.name}
                   required
                 />
-                <FormControl sx={{ m: 1, width: 300 }}>
+                <FormControl sx={{ width: "90%" }}>
                   <InputLabel id="demo-multiple-name-label">
                     Assignees
                   </InputLabel>
@@ -213,19 +215,27 @@ export default function TaskDialog(props) {
                   </Select>
                 </FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={["DatePicker"]}>
-                    <DatePicker
-                      name="dueDate"
-                      label="Due date"
-                      value={dueDate}
-                      onChange={(newValue) => setDueDate(newValue)}
-                      format="LL"
-                      disablePast
-                      required
-                    />
-                  </DemoContainer>
+                  <div className="dialog_container__form--date">
+                    <DemoContainer components={["DatePicker"]}>
+                      <StyledDatePicker
+                        name="dueDate"
+                        label="Due date"
+                        value={dueDate}
+                        onChange={(newValue) => setDueDate(newValue)}
+                        format="LL"
+                        disablePast
+                        required
+                      />
+                    </DemoContainer>
+                  </div>
                 </LocalizationProvider>
-                <Button type="submit" text={isNewTask ? "Add" : "Edit"} />
+                <div className="dialog_container__form--buttons">
+                  <Button
+                    className="filled_button"
+                    type="submit"
+                    text={isNewTask ? "Add" : "Edit"}
+                  />
+                </div>
               </form>
             </div>
           </StyledSection>

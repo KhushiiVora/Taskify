@@ -8,11 +8,14 @@ import TaskRowCard from "./TaskRowCard";
 import Button from "../atoms/Button";
 import Checkbox from "@mui/material/Checkbox";
 
+import { IoArrowBackCircle } from "react-icons/io5";
+import { RiAddCircleFill } from "react-icons/ri";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { StyledSection, colorSuccess } from "../../styles/taskList.styles";
 
 function TaskList(props) {
-  const { categoryId, workspaceId } = props;
+  const { handleExpand, categoryId, workspaceId } = props;
 
   const [isNewTask, setIsNewTask] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
@@ -23,13 +26,6 @@ function TaskList(props) {
 
   const workspaceMembers = useSelector((state) => state.members);
   const user = useSelector((state) => state.user.user);
-
-  /* dbTasks-fetched from db
-  tasks.forEach(task=>{
-    task.state, assignned, dueDate,
-    .save()
-  })
-  tasks deleted */
 
   useEffect(() => {
     axios
@@ -129,23 +125,21 @@ function TaskList(props) {
   };
 
   return (
-    <div>
-      <section>
-        <h1>Do the following</h1>
+    <StyledSection>
+      <section className="tasklist__header">
         <Button
+          className="icon_button"
+          title="Back"
+          onClick={handleExpand}
+          type="button"
+          icon={<IoArrowBackCircle className="icons" />}
+        />
+        <Button
+          className="underlined_button"
           type="button"
           text="Add Task"
+          icon={<RiAddCircleFill className="text_icons" />}
           onClick={() => handleDialogOpen("add")}
-        />
-        <TaskDialog
-          task={taskToEdit}
-          workspaceId={workspaceId}
-          categoryId={categoryId}
-          isNewTask={isNewTask}
-          open={dialogOpen}
-          handleDialogClose={handleDialogClose}
-          setTasks={setTasks}
-          setIsMainChecked={setIsChecked}
         />
       </section>
       <section>
@@ -155,9 +149,10 @@ function TaskList(props) {
               <tr>
                 <th>
                   <Checkbox
+                    sx={colorSuccess}
                     checked={isChecked}
                     onClick={setAllTaskStates}
-                    color="success"
+                    // color="success"
                   />
                 </th>
                 <th>Name</th>
@@ -191,8 +186,18 @@ function TaskList(props) {
           <p>Please Create a task</p>
         )}
       </section>
+      <TaskDialog
+        task={taskToEdit}
+        workspaceId={workspaceId}
+        categoryId={categoryId}
+        isNewTask={isNewTask}
+        open={dialogOpen}
+        handleDialogClose={handleDialogClose}
+        setTasks={setTasks}
+        setIsMainChecked={setIsChecked}
+      />
       <ToastContainer />
-    </div>
+    </StyledSection>
   );
 }
 

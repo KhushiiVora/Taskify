@@ -9,6 +9,8 @@ const theme = {
 
   iconColor: "#175676",
   successColor: "#00CC99",
+  // successColorDark: "#00ae83",
+  successColorDark: "#009973",
   borderColor: "#222",
 };
 

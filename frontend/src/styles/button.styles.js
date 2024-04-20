@@ -67,11 +67,12 @@ const ButtonDiv = styled.div`
   }
 
   .filled_button {
+    width: 8rem;
     background: ${(props) => props.theme.iconColor};
     color: ${(props) => props.theme.color1};
     font-size: 1rem;
     padding: 0.7rem 2.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.7rem;
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -82,11 +83,14 @@ const ButtonDiv = styled.div`
   .text_button:hover {
     transform: translateY(-1px);
   }
-  .filled_button:active,
+
   .underlined_button:active,
   .text_button:active {
     box-shadow: none;
     transform: translateY(0px);
+  }
+  .filled_button:active {
+    transform: translateY(1px);
   }
 
   .link_button {

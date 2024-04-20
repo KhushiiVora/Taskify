@@ -26,7 +26,6 @@ const StyledSection = styled.section`
   }
 
   .dashboard__workspace-container {
-    position: relative;
     padding: 0.5rem 1rem;
     height: 90%;
     width: 100%;

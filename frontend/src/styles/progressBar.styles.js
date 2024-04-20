@@ -7,7 +7,7 @@ const StyledBar = styled.div`
   border-radius: 15px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #000;
+  /* border: 1px solid #000; */
   .progress--value {
     position: absolute;
     width: 100%;
@@ -18,7 +18,8 @@ const StyledBar = styled.div`
     z-index: 1;
   }
   .progress--bar {
-    background-color: #00c251;
+    /* background-color: #00c251; */
+    background-color: ${(props) => props.theme.successColorDark};
     height: 100%;
   }
 `;

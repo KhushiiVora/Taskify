@@ -231,8 +231,11 @@ export default function Workspace(props) {
     <StyledSection>
       {expand ? (
         <section>
-          <Button onClick={handleExpand} type="button" text="Back" />
-          <TaskList categoryId={selectedCategoryId} workspaceId={workspaceId} />
+          <TaskList
+            handleExpand={handleExpand}
+            categoryId={selectedCategoryId}
+            workspaceId={workspaceId}
+          />
         </section>
       ) : (
         <section>
@@ -402,7 +405,7 @@ export default function Workspace(props) {
                         handleClose();
                       }}
                     >
-                      <IoExit className="icons" /> Exit
+                      <IoExit className="menu_icons" /> Exit
                     </MenuItem>
                   )}
                   {leaders.includes(user._id) && (
@@ -430,7 +433,7 @@ export default function Workspace(props) {
                         handleClose();
                       }}
                     >
-                      <MdDelete className="icons" /> Exit and Delete
+                      <MdDelete className="menu_icons" /> Exit and Delete
                     </MenuItem>
                   )}
                 </Menu>

@@ -14,6 +14,7 @@ import { toast, Slide, ToastContainer } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
+import { colorSuccess } from "../../styles/taskList.styles";
 
 function TaskRowCard(props) {
   const {
@@ -106,10 +107,10 @@ function TaskRowCard(props) {
 
   return (
     <tr key={task._id}>
-      <td>
+      <td className="tasklist__checkboxes">
         <Checkbox
+          sx={colorSuccess}
           checked={isChecked}
-          color="success"
           onClick={() => {
             setIsChecked(!isChecked);
             setIsMainChecked(false);
@@ -119,7 +120,11 @@ function TaskRowCard(props) {
       <td>{task.name}</td>
       <td>
         {task.state ? (
-          <Chip label="Completed" color="success" />
+          <Chip
+            className="task_row--status_chip .success"
+            label="Completed"
+            // color="success"
+          />
         ) : overDueTaskIds.includes(task._id) ? (
           <Chip label="Over Due" color="error" />
         ) : (
@@ -127,7 +132,11 @@ function TaskRowCard(props) {
         )}
       </td>
       <td onClick={() => {}}>
-        <AvatarGroup total={task.assignedTo.length} onClick={handleMenuClick}>
+        <AvatarGroup
+          className="tasklist__assignee"
+          total={task.assignedTo.length}
+          onClick={handleMenuClick}
+        >
           {[
             ...new Array(
               (task.assignedTo.length % 3) +
@@ -136,6 +145,7 @@ function TaskRowCard(props) {
           ].map((_, index) => {
             return (
               <Avatar
+                className="tasklist__assignee--avatar"
                 alt={
                   workspaceMembers.members.find(
                     (stateMember) => stateMember._id === task.assignedTo[index]
@@ -201,15 +211,15 @@ function TaskRowCard(props) {
       </td>
       <td>{task.dueDate.split("T")[0]}</td>
       {workspaceMembers.leaders.includes(user._id) ? (
-        <td onClick={() => handleClick("delete")}>
+        <td className="tasklist__icons" onClick={() => handleClick("delete")}>
           <Tooltip title="Delete">
             <IconButton>
-              <MdDelete />
+              <MdDelete className="tasklist__icons--delete" />
             </IconButton>
           </Tooltip>
         </td>
       ) : (
-        <td>
+        <td className="tasklist__icons">
           <Tooltip title="Leaders Only">
             <IconButton style={{ cursor: "not-allowed" }}>
               <MdDelete />
@@ -217,10 +227,10 @@ function TaskRowCard(props) {
           </Tooltip>
         </td>
       )}
-      <td onClick={() => handleClick("edit")}>
+      <td className="tasklist__icons" onClick={() => handleClick("edit")}>
         <Tooltip title="Edit">
           <IconButton>
-            <MdEdit />
+            <MdEdit className="tasklist__icons--edit" />
           </IconButton>
         </Tooltip>
       </td>
