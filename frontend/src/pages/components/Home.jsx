@@ -9,21 +9,21 @@ import { StyledSection } from "../../styles/home.styles";
 export default function Home() {
   return (
     <StyledSection>
-      <div className="taskify">
-        <div className="top_img">
+      <div className="graphics_container">
+        <div className="graphics_container__top_img">
           <img
+            className="top_img--img1"
             src={taskCompletion}
             alt="Task Completion"
-            className="taskify--img2"
           />
           <img
+            className="top_img--img2"
             src={progressIndicator}
             alt="Progress Indicator"
-            className="taskify--img3"
           />
         </div>
-        <div className="bottom_img">
-          <img src={workTime} alt="Work time" className="taskify--img1" />
+        <div className="graphics_container__bottom_img">
+          <img src={workTime} alt="Work time" className="bottom_img--img3" />
         </div>
       </div>
     </StyledSection>

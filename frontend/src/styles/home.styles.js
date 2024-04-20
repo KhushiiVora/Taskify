@@ -1,38 +1,43 @@
 import styled from "styled-components";
 
 const StyledSection = styled.section`
-  .taskify {
+  .graphics_container {
     width: 50%;
     position: relative;
     display: flex;
     flex-direction: column;
-    /* background-image: url("/home/taskCompletion.svg"); */
   }
-  .taskify img {
+  .graphics_container img {
     width: 40%;
   }
-  .bottom_img {
+  .graphics_container__bottom_img {
     display: flex;
     justify-content: center;
   }
-  .top_img {
+  .graphics_container__top_img {
     display: flex;
     justify-content: center;
   }
 
-  .taskify--img1 {
+  .top_img--img1 {
+    z-index: 1;
+    position: relative;
+    left: 3%;
+    top: 10%;
+    transform: rotate(-20deg);
+  }
+  .top_img--img2 {
+    z-index: -1;
+    border-radius: 80%;
+    position: relative;
+    right: 7%;
+  }
+  .bottom_img--img3 {
     z-index: 1;
     border-radius: 60%;
     position: absolute;
-    top: 60%;
-  }
-  .taskify--img2 {
-    z-index: 1;
-  }
-  .taskify--img3 {
-    right: 0;
-    z-index: -1;
-    border-radius: 80%;
+    top: 55%;
+    right: 35%;
   }
 `;
 
