@@ -1,6 +1,40 @@
 import styled from "styled-components";
 
 const StyledSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  min-height: 90%;
+  width: 100%;
+
+  /**---------------- Main Section --------------*/
+  .main_section {
+    display: flex;
+    min-height: 100%;
+    width: 100%;
+  }
+  .main_section__content {
+    width: 50%;
+    padding: 6rem 8rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .main_section__content h1 {
+    font-size: 2.5rem;
+  }
+  .main_section__content p {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    text-align: justify;
+    color: ${(props) => props.theme.textColor1};
+  }
+
+  .main_section__content--start_btn {
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .graphics_container {
     width: 50%;
     position: relative;
@@ -8,7 +42,7 @@ const StyledSection = styled.section`
     flex-direction: column;
   }
   .graphics_container img {
-    width: 40%;
+    width: 50%;
   }
   .graphics_container__bottom_img {
     display: flex;
@@ -39,6 +73,8 @@ const StyledSection = styled.section`
     top: 55%;
     right: 35%;
   }
+
+  /**---------------- Section1: Workspace --------------*/
 `;
 
 export { StyledSection };

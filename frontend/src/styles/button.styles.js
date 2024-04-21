@@ -78,6 +78,21 @@ const ButtonDiv = styled.div`
     transition: all 0.3s ease;
   }
 
+  .start_button {
+    width: 12rem;
+    background: ${(props) => props.theme.iconColor};
+    box-shadow: 2px 2px 12px 8px ${(props) => props.theme.bgColor2};
+    color: ${(props) => props.theme.color1};
+    font-size: 1rem;
+    font-weight:bold;
+    padding: 1rem 2.5rem;
+    border-radius: 0.8rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .start_button:hover,
   .filled_button:hover,
   .underlined_button:hover,
   .text_button:hover {
@@ -89,6 +104,7 @@ const ButtonDiv = styled.div`
     box-shadow: none;
     transform: translateY(0px);
   }
+  .start_button:active,
   .filled_button:active {
     transform: translateY(1px);
   }

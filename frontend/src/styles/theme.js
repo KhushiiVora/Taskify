@@ -12,6 +12,9 @@ const theme = {
   // successColorDark: "#00ae83",
   successColorDark: "#009973",
   borderColor: "#222",
+
+  /**Home */
+  textColor1: "#5a5c5b",
 };
 
 export default theme;
