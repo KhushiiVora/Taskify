@@ -1,24 +1,28 @@
 import styled from "styled-components";
 
 const StyledBar = styled.div`
-  background-color: #ddd;
   width: 100%;
-  height: 1.5rem;
-  border-radius: 15px;
-  position: relative;
-  overflow: hidden;
-  /* border: 1px solid #000; */
+  height: 2.5rem;
+  margin: 1rem 0;
+
+  /* position: relative; */
+
   .progress--value {
-    position: absolute;
     width: 100%;
-    padding: 0.2rem;
+    padding: 0.3rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
   }
   .progress--bar {
     /* background-color: #00c251; */
+    /* background-color: #ddd; */
+    background-color: ${(props) => props.theme.bgColor2};
+    border-radius: 0.7rem;
+    height: 40%;
+    overflow: hidden;
+  }
+  .progress--status {
     background-color: ${(props) => props.theme.successColorDark};
     height: 100%;
   }

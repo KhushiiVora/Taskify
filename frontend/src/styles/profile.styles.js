@@ -17,6 +17,7 @@ const StyledSection = styled.section`
 
   .profile_container th {
     font-size: 1.7rem;
+    color: ${(props) => props.theme.iconColor};
   }
 
   .profile_container tr {

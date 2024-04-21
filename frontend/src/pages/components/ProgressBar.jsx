@@ -14,24 +14,22 @@ function ProgressBar(props) {
     <>
       {total ? (
         <StyledBar>
-          <span
-            className="progress--value"
-            style={{ color: percent > 49 ? "white" : "black" }}
-          >
-            {/* {Math.min(MAX, Math.max(MIN, percent))}% */}
-            <b>{percent}%</b>
+          <div className="progress--bar">
+            <div
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={value}
+              className="progress--status"
+              style={{
+                transform: `scaleX(${percent / 100})`,
+                transformOrigin: "left",
+              }}
+            ></div>
+          </div>
+          <span className="progress--value">
+            <b>Progress: {percent}%</b>
           </span>
-          <div
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={value}
-            className="progress--bar"
-            style={{
-              transform: `scaleX(${percent / 100})`,
-              transformOrigin: "left",
-            }}
-          ></div>
         </StyledBar>
       ) : (
         <></>

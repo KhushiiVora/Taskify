@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import theme from "./theme";
 
 const StyledSection = styled.section`
   position: absolute;
@@ -13,13 +14,14 @@ const StyledSection = styled.section`
   h2 {
     text-align: center;
     margin: 1rem;
+    color: ${(props) => props.theme.iconColor};
   }
   .panel {
     width: 25%;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
-    border: 1px solid #222;
+    background-color: ${(props) => props.theme.color1};
+    border: 1px solid ${(props) => props.theme.borderColor};
     overflow-y: scroll;
     height: 100%;
     padding: 0.5rem;
@@ -37,8 +39,11 @@ const StyledSection = styled.section`
     text-transform: none;
   }
   .panel__member--leader {
-    font-size: 0.5rem;
-    color: #555;
+    font-size: 0.6rem;
+    color: ${(props) => props.theme.successColorDark};
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
   }
   .panel__member div {
     display: flex;
@@ -46,41 +51,11 @@ const StyledSection = styled.section`
     align-items: flex-start;
   }
   .panel__member--avatar {
-    border: 1px solid #222;
+    border: 1px solid ${(props) => props.theme.borderColor};
   }
 
   .profile_container {
     cursor: default;
-  }
-
-  .profile_container,
-  .profile_container thead,
-  .profile_container tbody {
-    width: 100%;
-  }
-
-  .profile_container tr {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .profile_container--avatar {
-    border: 1px solid #222;
-  }
-
-  .profile_container--data {
-    width: 100%;
-    padding: 0.5rem;
-  }
-
-  .profile_container--icons {
-    width: 10%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0.2rem;
-    font-size: 1.2rem;
   }
 
   .back-button {
@@ -91,16 +66,23 @@ const StyledSection = styled.section`
   th {
     font-size: 1.4rem;
   }
-
-  .profile_container--data div {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-  }
-
-  .profile_container--data div span {
-    font-weight: bold;
-  }
 `;
 
-export { StyledSection };
+const menuItemIconStyling = {
+  display: "flex",
+  gap: "0.3rem",
+  "& .icons": {
+    color: `${theme.iconColor}`,
+    fontSize: "1.1rem",
+  },
+  "& .edit_icons": {
+    color: `${theme.color3}`,
+    fontSize: "1.1rem",
+  },
+  "& .delete_icons": {
+    color: `${theme.color2}`,
+    // fontSize: "1.1rem",
+  },
+};
+
+export { StyledSection, menuItemIconStyling };

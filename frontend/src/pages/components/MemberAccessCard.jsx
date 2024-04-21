@@ -10,6 +10,7 @@ import { FaUserXmark } from "react-icons/fa6";
 import { RiShieldUserFill } from "react-icons/ri";
 import { RiShieldUserLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
+import { menuItemIconStyling } from "../../styles/memberAccessPanel.styles";
 
 function MemberAccessCard(props) {
   const {
@@ -54,7 +55,7 @@ function MemberAccessCard(props) {
           }`}</span>
           {isLeader && (
             <span className="panel__member--leader">
-              <RiShieldUserFill /> Leader
+              <RiShieldUserFill /> <span>Leader</span>
             </span>
           )}
         </div>
@@ -68,12 +69,16 @@ function MemberAccessCard(props) {
           "aria-labelledby": "basic-button",
         }}
       >
-        <MenuItem onClick={() => setPublicProfile(member)}>
-          <FaUserCircle /> Profile
+        <MenuItem
+          sx={menuItemIconStyling}
+          onClick={() => setPublicProfile(member)}
+        >
+          <FaUserCircle className="icons" /> Profile
         </MenuItem>
 
         {member._id !== user._id && leaders.includes(user._id) && (
           <MenuItem
+            sx={menuItemIconStyling}
             onClick={() => {
               handleClose();
               handleLeaderChange(member._id);
@@ -81,19 +86,22 @@ function MemberAccessCard(props) {
           >
             {isLeader ? (
               <>
-                <RiShieldUserLine /> Remove Leader
+                <RiShieldUserLine className="delete_icons" /> Remove Leader
               </>
             ) : (
               <>
-                <RiShieldUserFill /> Make Leader
+                <RiShieldUserFill className="edit_icons" /> Make Leader
               </>
             )}
           </MenuItem>
         )}
         {member._id !== user._id && leaders.includes(user._id) && (
-          <MenuItem onClick={() => handleRemove(member._id)}>
-            <FaUserXmark />
-            Remove
+          <MenuItem
+            sx={menuItemIconStyling}
+            onClick={() => handleRemove(member._id)}
+          >
+            <FaUserXmark className="delete_icons" />
+            Remove Member
           </MenuItem>
         )}
       </Menu>
