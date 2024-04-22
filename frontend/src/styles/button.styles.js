@@ -81,7 +81,7 @@ const ButtonDiv = styled.div`
   .start_button {
     width: 12rem;
     background: ${(props) => props.theme.iconColor};
-    box-shadow: 2px 2px 12px 8px ${(props) => props.theme.bgColor2};
+    box-shadow: 0px 2px 12px 5px ${(props) => props.theme.bgColor2};
     color: ${(props) => props.theme.color1};
     font-size: 1rem;
     font-weight:bold;
