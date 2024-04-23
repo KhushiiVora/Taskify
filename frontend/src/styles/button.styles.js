@@ -67,7 +67,7 @@ const ButtonDiv = styled.div`
   }
 
   .filled_button {
-    width: 8rem;
+    width: 9rem;
     background: ${(props) => props.theme.iconColor};
     color: ${(props) => props.theme.color1};
     font-size: 1rem;
@@ -84,7 +84,7 @@ const ButtonDiv = styled.div`
     box-shadow: 0px 2px 12px 5px ${(props) => props.theme.bgColor2};
     color: ${(props) => props.theme.color1};
     font-size: 1rem;
-    font-weight:bold;
+    font-weight: bold;
     padding: 1rem 2.5rem;
     border-radius: 0.8rem;
     border: none;

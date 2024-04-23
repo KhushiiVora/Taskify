@@ -183,11 +183,11 @@ export default function Profile() {
               <Tooltip title={`${editUsername ? "Save" : "Edit"}`}>
                 {editUsername ? (
                   <IconButton onClick={handleUsernameEdit}>
-                    <MdSaveAs />
+                    <MdSaveAs className="icon-save" />
                   </IconButton>
                 ) : (
                   <IconButton>
-                    <MdEdit />
+                    <MdEdit className="icon-edit" />
                   </IconButton>
                 )}
               </Tooltip>
@@ -235,11 +235,11 @@ export default function Profile() {
               <Tooltip title={`${editBio ? "Save" : "Edit"}`}>
                 {editBio ? (
                   <IconButton onClick={handleUserBioEdit}>
-                    <MdSaveAs />
+                    <MdSaveAs className="icon-save" />
                   </IconButton>
                 ) : (
                   <IconButton>
-                    <MdEdit />
+                    <MdEdit className="icon-edit" />
                   </IconButton>
                 )}
               </Tooltip>
@@ -276,7 +276,8 @@ export default function Profile() {
             <td colSpan="3">
               <Button
                 type="button"
-                icon={<IoLogOut />}
+                className="text_button"
+                icon={<IoLogOut className="icons" />}
                 text="Logout"
                 onClick={logout}
               />

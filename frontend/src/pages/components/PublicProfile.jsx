@@ -22,11 +22,20 @@ export default function PublicProfile(props) {
       <table className="profile_container">
         <thead>
           <tr>
-            <th
+            {/* <th
               className="back-button profile_container--icons"
               onClick={() => setPublicProfile(null)}
             >
               <IoArrowBackCircle />
+            </th> */}
+            <th>
+              <Button
+                className="icon_button"
+                type="button"
+                icon={<IoArrowBackCircle className="icons" />}
+                title="Back"
+                onClick={() => setPublicProfile(null)}
+              />
             </th>
             <th className="profile_container__data">Profile</th>
           </tr>
@@ -82,9 +91,10 @@ export default function PublicProfile(props) {
             <tr>
               <td colSpan="2">
                 <Button
+                  className="text_button"
                   type="button"
                   text="Edit My Profile"
-                  icon={<FaUserEdit />}
+                  icon={<FaUserEdit className="text_icons" />}
                   onClick={() => navigate("/profile")}
                 />
               </td>

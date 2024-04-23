@@ -57,15 +57,6 @@ const StyledSection = styled.section`
   .profile_container {
     cursor: default;
   }
-
-  .back-button {
-    cursor: pointer;
-  }
-
-  .back-button,
-  th {
-    font-size: 1.4rem;
-  }
 `;
 
 const menuItemIconStyling = {

@@ -16,7 +16,9 @@ const StyledSection = styled.section`
   }
 
   .profile_container th {
-    font-size: 1.7rem;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
     color: ${(props) => props.theme.iconColor};
   }
 
@@ -47,6 +49,10 @@ const StyledSection = styled.section`
     padding: 0.5rem;
   }
 
+  .profile_container__data {
+    justify-self: center;
+  }
+
   .profile_container__data div {
     display: flex;
     flex-direction: column;
@@ -62,6 +68,13 @@ const StyledSection = styled.section`
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
+    color: ${(props) => props.theme.iconColor};
+  }
+  .icon-edit {
+    color: ${(props) => props.theme.color3};
+  }
+  .icon-save {
+    color: ${(props) => props.theme.successColorDark};
   }
 
   .divider {
