@@ -94,7 +94,6 @@ const StyledSection = styled.section`
   .section1_workspace__content {
     width: 50%;
     padding: 6rem 10rem 6rem 2rem;
-    text-align: justify;
     display: flex;
     flex-direction: column;
   }
@@ -103,6 +102,7 @@ const StyledSection = styled.section`
   }
   .section1_workspace__content hr {
     margin-top: 2rem;
+    width: 25%;
     border: 0.3rem solid ${(props) => props.theme.iconColor};
     border-radius: 0.5rem;
   }
