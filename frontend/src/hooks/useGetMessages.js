@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "../axiosConfig";
 
 import { messagesRestored } from "../state/chatSlice";
+import { toast, Slide } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const useGetMessages = () => {
   const [loading, setLoading] = useState(false);
@@ -14,20 +16,32 @@ const useGetMessages = () => {
   useEffect(() => {
     const getMessages = async () => {
       setLoading(true);
-      try {
-        const messages = await axios
-          .get(`/chat/${chatsData.workspaceId}/messages`, {
-            withCredentials: true,
-          })
-          .then((response) => response.data)
-          .catch((error) => console.log(error));
-        messages.length && dispatch(messagesRestored(messages));
-      } catch (error) {
-        // toast.error(error);
-        console.log("error in useGetMessages", error);
-      } finally {
-        setLoading(false);
-      }
+      await axios
+        .get(`/chat/${chatsData.workspaceId}/messages`, {
+          withCredentials: true,
+        })
+        .then((response) => response.data)
+        .then((data) => {
+          if (data.length) {
+            dispatch(messagesRestored(data));
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        });
+
+      setLoading(false);
     };
 
     if (chatsData.workspaceId) getMessages();

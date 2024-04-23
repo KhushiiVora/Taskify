@@ -7,7 +7,7 @@ class ConversationService {
       const savedConversation = await conversation.save();
       return { savedConversation };
     } catch (error) {
-      console.log("error in Conversation Service");
+      console.log("error in Conversation Service", error);
       return { error };
     }
   };
@@ -22,7 +22,8 @@ class ConversationService {
 
       return { conversation };
     } catch (error) {
-      console.log("error in find Conversation");
+      console.log("Error in find Conversation", error);
+      return { error };
     }
   };
 }

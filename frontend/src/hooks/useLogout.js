@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import axios from "../axiosConfig";
 
@@ -14,7 +13,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 const useLogout = () => {
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const logout = async () => {
@@ -35,7 +33,7 @@ const useLogout = () => {
         console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -46,7 +44,7 @@ const useLogout = () => {
         });
       });
 
-    setLoading(true);
+    setLoading(false);
   };
   return { loading, logout };
 };

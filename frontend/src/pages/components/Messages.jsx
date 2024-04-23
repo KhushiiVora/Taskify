@@ -1,9 +1,10 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import useGetMessages from "../../hooks/useGetMessages";
+import useListenMessages from "../../hooks/useListenMessages";
 import MessageSkeleton from "./MessageSkeleton";
 import MessageCard from "./MessageCard";
-import useListenMessages from "../../hooks/useListenMessages";
+import { ToastContainer } from "react-toastify";
 
 const Messages = () => {
   let { loading } = useGetMessages();
@@ -40,6 +41,7 @@ const Messages = () => {
             <MessageCard message={message} />
           </div>
         ))}
+      <ToastContainer />
     </div>
   );
 };

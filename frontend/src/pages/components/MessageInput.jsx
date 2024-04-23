@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
+import { ToastContainer } from "react-toastify";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
@@ -37,6 +38,7 @@ const MessageInput = () => {
           )}
         </button>
       </div>
+      <ToastContainer />
     </form>
   );
 };

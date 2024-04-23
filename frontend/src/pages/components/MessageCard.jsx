@@ -2,20 +2,20 @@ import { useSelector } from "react-redux";
 import { extractTime } from "../../utils/extractTime";
 
 const MessageCard = ({ message }) => {
-  /*-------------- */
-  const user = useSelector((state) => state.user.user);
+  const { user } = useSelector((state) => state.user);
+  const { members } = useSelector((state) => state.members);
+
   // const { workspaceId } = useSelector((state) => state.chats);
   const fromMe = message.senderId === user._id;
   const chatClassName = fromMe ? "chat-end" : "chat-start";
-  // const profilePic = fromMe
-  //   ? user.profilePic
-  //   : selectedConversation?.profilePic;
-  const profilePic = "https://avatar.iran.liara.run/public/boy?username=sam";
+
+  const profilePic = fromMe
+    ? user.profilePic
+    : members.filter((member) => member._id === message.senderId)[0]
+        ?.profilePic;
   // console.log(profilePic);
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
   const formattedTime = extractTime(message.createdAt);
-  /*-------------- */
-  /* NEED TO CHANGE  */
 
   return (
     <div className={`chat ${chatClassName}`}>

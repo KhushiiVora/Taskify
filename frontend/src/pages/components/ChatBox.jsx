@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 import { workspaceIdSaved } from "../../state/chatSlice";
 import { saved as socketSaved } from "../../state/socketSlice";
 
@@ -27,6 +27,7 @@ const ChatBox = () => {
   );
 
   useEffect(() => {
+    console.log("Socket: ", socket);
     dispatch(workspaceIdSaved(workspaceId));
     dispatch(socketSaved(socket));
 
