@@ -142,7 +142,7 @@ export default function Profile() {
               <div onClick={handleDialogOpen} className="avatar--icon">
                 <Tooltip title="Edit">
                   <IconButton>
-                    <MdEdit />
+                    <MdEdit className="icon_edit" />
                   </IconButton>
                 </Tooltip>
               </div>
@@ -183,11 +183,11 @@ export default function Profile() {
               <Tooltip title={`${editUsername ? "Save" : "Edit"}`}>
                 {editUsername ? (
                   <IconButton onClick={handleUsernameEdit}>
-                    <MdSaveAs className="icon-save" />
+                    <MdSaveAs className="icon_save" />
                   </IconButton>
                 ) : (
                   <IconButton>
-                    <MdEdit className="icon-edit" />
+                    <MdEdit className="icon_edit" />
                   </IconButton>
                 )}
               </Tooltip>
@@ -235,11 +235,11 @@ export default function Profile() {
               <Tooltip title={`${editBio ? "Save" : "Edit"}`}>
                 {editBio ? (
                   <IconButton onClick={handleUserBioEdit}>
-                    <MdSaveAs className="icon-save" />
+                    <MdSaveAs className="icon_save" />
                   </IconButton>
                 ) : (
                   <IconButton>
-                    <MdEdit className="icon-edit" />
+                    <MdEdit className="icon_edit" />
                   </IconButton>
                 )}
               </Tooltip>

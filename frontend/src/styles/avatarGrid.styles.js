@@ -18,7 +18,7 @@ const StyledDiv = styled.div`
     cursor: pointer;
   }
   img {
-    height: 12rem;
+    height: 10rem;
     width: 100%;
     object-fit: contain;
   }
@@ -28,24 +28,32 @@ const StyledDiv = styled.div`
     /* height: 1.5rem; */
     justify-content: center;
     align-items: center;
+    gap: 0.3rem;
     cursor: pointer;
   }
   .pagination--page_number {
-    font-size: 1.2rem;
-    padding: 1rem;
-    border: 1px solid black;
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+    border: 1px solid ${(props) => props.theme.iconColor};
+    border-radius: 0.7rem;
   }
   .pagination--left,
   .pagination--right {
-    padding: 1rem;
-    border: 1px solid black;
+    font-size: 1rem;
+    padding: 0.75rem 0.7rem;
+    border: 1px solid ${(props) => props.theme.iconColor};
+    border-radius: 0.7rem;
+    color: ${(props) => props.theme.iconColor};
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .selected {
-    background-color: #777;
+    background-color: ${(props) => props.theme.bgColor2};
   }
   .avatar--selected {
-    border: 2px solid black;
-    box-shadow: 0 0 10px 2px #777;
+    border: 2px solid ${(props) => props.theme.iconColor};
+    box-shadow: 0px 0px 15px 7px ${(props) => props.theme.bgColor2};
   }
   .disabled {
     opacity: 0;
