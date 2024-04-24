@@ -26,34 +26,37 @@ export default function AvatarDialog(props) {
   };
 
   const handleSelectAvatar = async (event) => {
-    await axios
-      .patch(
-        `/profile/edit/${user._id}/pic`,
-        { profilePic: selectedImage },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((response) => response.data)
-      .then((data) => {
-        console.log(data);
-        dispatch(userSaved(data));
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data, {
-          position: "bottom-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
+    if (selectedImage) {
+      await axios
+        .patch(
+          `/profile/edit/${user._id}/pic`,
+          { profilePic: selectedImage },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => response.data)
+        .then((data) => {
+          console.log(data);
+          dispatch(userSaved(data));
+          setSelectedImage("");
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
-      });
-    handleDialogClose(event);
+      handleDialogClose(event);
+    }
   };
 
   return (
@@ -61,7 +64,7 @@ export default function AvatarDialog(props) {
       {open ? (
         <>
           <StyledSection onClick={handleDialogClose}>
-            <div className="dialog_container">
+            <div className="dialog_container dialog_container__avatar">
               <h1>Select your favourite avatar</h1>
               <Box sx={{ width: "100%" }}>
                 <Tabs
@@ -83,6 +86,7 @@ export default function AvatarDialog(props) {
               />
               <div>
                 <Button
+                  className="filled_button"
                   type="button"
                   text="Select"
                   onClick={handleSelectAvatar}

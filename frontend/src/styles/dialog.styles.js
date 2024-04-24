@@ -26,18 +26,20 @@ const StyledSection = styled.section`
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
+  .dialog_container__avatar {
+    width: 55%;
+  }
   .dialog_container__form {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-
-    h1 {
-      justify-self: flex-start;
-      font-size: 1.7rem;
-      margin-bottom: 1rem;
-    }
+  }
+  .dialog_container h1 {
+    color: ${(props) => props.theme.iconColor};
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
   }
   .dialog_container__form--buttons {
     margin-top: 1rem;

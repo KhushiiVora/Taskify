@@ -37,7 +37,8 @@ const StyledSection = styled.section`
     border: 1px solid ${(props) => props.theme.borderColor};
   }
   .avatar--icon {
-    background-color: #999999;
+    background-color: ${(props) => props.theme.bgColor1};
+    box-shadow: 0px 0px 5px 3px ${(props) => props.theme.bgColor2} inset;
     border-radius: 50%;
     position: absolute;
     bottom: 1rem;
@@ -70,10 +71,10 @@ const StyledSection = styled.section`
     font-size: 1.2rem;
     color: ${(props) => props.theme.iconColor};
   }
-  .icon-edit {
+  .icon_edit {
     color: ${(props) => props.theme.color3};
   }
-  .icon-save {
+  .icon_save {
     color: ${(props) => props.theme.successColorDark};
   }
 
