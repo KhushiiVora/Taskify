@@ -5,13 +5,14 @@ const StyledSection = styled.section`
   flex-direction: column;
   min-height: 90%;
   width: 100%;
-  gap: 10rem;
+  gap: 2rem;
 
   /**---------------- Main Section --------------*/
   .main_section {
     display: flex;
     height: 100%;
     width: 100%;
+    margin-bottom: 5rem;
   }
   .main_section__content {
     width: 50%;
@@ -75,11 +76,41 @@ const StyledSection = styled.section`
     right: 35%;
   }
 
+  /* --------------- Common Section Content ------------- */
+  .section_content {
+    width: 50%;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .section_content--divider {
+    margin-top: 2rem;
+    width: 25%;
+    border-width: 0.3rem;
+    border-style: solid;
+    border-radius: 0.5rem;
+    align-self: first baseline;
+  }
+  .section_content--header {
+    font-size: 2.5rem;
+    align-self: first baseline;
+  }
+  .section_content--description {
+    padding-top: 3rem;
+    font-size: 1.5rem;
+    text-align: justify;
+    line-height: 2rem;
+    color: ${(props) => props.theme.textColor1};
+  }
   /**---------------- Section1: Workspace --------------*/
   .section1_workspace {
     display: flex;
     height: 100%;
     width: 100%;
+    padding: 10rem 10rem 4rem 4rem;
+    background: ${(props) => props.theme.iconColor};
   }
   .section1_workspace__img {
     width: 50%;
@@ -91,33 +122,13 @@ const StyledSection = styled.section`
     width: 80%;
     padding: 2rem 0rem;
   }
-  .section1_workspace__content {
-    width: 50%;
-    padding: 6rem 10rem 6rem 2rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .section1_workspace__content h1 {
-    font-size: 2.5rem;
-  }
-  .section1_workspace__content hr {
-    margin-top: 2rem;
-    width: 25%;
-    border: 0.3rem solid ${(props) => props.theme.iconColor};
-    border-radius: 0.5rem;
-  }
-  .section1_workspace__content p {
-    padding-top: 3rem;
-    font-size: 1.5rem;
-    text-align: justify;
-    line-height: 2rem;
-    color: ${(props) => props.theme.textColor1};
-  }
+
   /**---------------- Section2: Task --------------*/
   .section2_task {
     display: flex;
     height: 100%;
     width: 100%;
+    padding: 2rem 8rem 6rem 10rem;
   }
   .section2_task__img {
     width: 50%;
@@ -125,17 +136,7 @@ const StyledSection = styled.section`
     justify-content: center;
   }
   .section2_task__img img {
-    width: 80%;
-  }
-  .section2_task__content {
-    width: 50%;
-    padding: 6rem;
-    display: flex;
-    flex-direction: column;
-  }
-  .section2_task__content h1 {
-  }
-  .section2_task__content p {
+    width: 100%;
   }
 
   /**---------------- Section3: Group Chat --------------*/
@@ -143,6 +144,7 @@ const StyledSection = styled.section`
     display: flex;
     height: 100%;
     width: 100%;
+    padding: 4rem 10rem 4rem 4rem;
   }
   .section3_chat__img {
     width: 50%;
@@ -150,12 +152,7 @@ const StyledSection = styled.section`
     justify-content: center;
   }
   .section3_chat__img img {
-  }
-  .section3_chat__content {
-    width: 50%;
-    padding: 6rem;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
   }
 
   /**---------------- Section4: SubFeature Cards --------------*/

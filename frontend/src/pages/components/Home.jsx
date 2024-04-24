@@ -14,6 +14,7 @@ import userProfile from "/home/userProfile.svg";
 import workspaceLock from "/home/workspaceLock.svg";
 import taskCheckList from "/home/taskCheckList.svg";
 import { StyledSection } from "../../styles/home.styles";
+import theme from "../../styles/theme";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -63,13 +64,16 @@ export default function Home() {
         <div className="section1_workspace__img">
           <img src={addWorkspace} alt="Add Workspace" />
         </div>
-        <div className="section1_workspace__content">
-          <h1>
+        <div className="section_content">
+          <h1 className="section_content--header">
             Craft your space, join the place, in Taskify's workspace, find your
             pace.
           </h1>
-          <hr/>
-          <p>
+          <div
+            className="section_content--divider"
+            style={{ "border-color": theme.iconColor }}
+          ></div>
+          <p className="section_content--description">
             You can create your own workspace, join existing ones to collaborate
             with different teams, and effectively manage tasks within a team
             environment.
@@ -78,9 +82,15 @@ export default function Home() {
       </section>
       {/* --------Section 2: Task Organization --------------*/}
       <section className="section2_task">
-        <div className="section2_task__content">
-          <h1>Organize your tasks to access it fast</h1>
-          <p>
+        <div className="section_content">
+          <h1 className="section_content--header">
+            Organize your tasks to access it fast
+          </h1>
+          <div
+            className="section_content--divider"
+            style={{ "border-color": theme.color3 }}
+          ></div>
+          <p className="section_content--description">
             With Taskify, you can easily group your tasks into different
             categories based on your own criteria to efficiently manage your
             workload.
@@ -96,9 +106,15 @@ export default function Home() {
         <div className="section3_chat__img">
           <img src={groupChat} alt="Group Chat" />
         </div>
-        <div className="section3_chat__content">
-          <h1>Real-time chatting, building strong connections</h1>
-          <p>
+        <div className="section_content">
+          <h1 className="section_content--header">
+            Real-time chatting, building strong connections
+          </h1>
+          <div
+            className="section_content--divider"
+            style={{ "border-color": theme.color2 }}
+          ></div>
+          <p className="section_content--description">
             Engage in live chatting with your team members to foster stronger
             bonds and enhance collaboration, vital for building a cohesive and
             effective team.
