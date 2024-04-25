@@ -23,6 +23,7 @@ const theme = {
   color2Shadow: "#ffe4eb6e",
   // color3Shadow: "#ffe6b792",
   color3Shadow: "#fcf0d86e",
+  successColorShadow: "#b4ffeb6e",
 };
 
 export default theme;

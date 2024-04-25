@@ -36,6 +36,22 @@ const StyledSection = styled.section`
   .task_row--status_chip {
     border-radius: 0.7rem;
     font-size: 0.9rem;
+    width: 6rem;
+  }
+  .success {
+    border: 1px solid ${(props) => props.theme.successColorDark};
+    background-color: ${(props) => props.theme.successColorShadow};
+    color: ${(props) => props.theme.successColorDark};
+  }
+  .overdue {
+    border: 1px solid ${(props) => props.theme.color2};
+    background-color: ${(props) => props.theme.color2Shadow};
+    color: ${(props) => props.theme.color2};
+  }
+  .pending {
+    border: 1px solid ${(props) => props.theme.color3};
+    background-color: ${(props) => props.theme.color3Shadow};
+    color: ${(props) => props.theme.color3};
   }
   .tasklist__assignee .tasklist__assignee--avatar {
     border: 1px solid ${(props) => props.theme.borderColor};

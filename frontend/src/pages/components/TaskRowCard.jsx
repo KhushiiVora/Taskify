@@ -121,14 +121,22 @@ function TaskRowCard(props) {
       <td>
         {task.state ? (
           <Chip
-            className="task_row--status_chip .success"
+            className="task_row--status_chip success"
             label="Completed"
             // color="success"
           />
         ) : overDueTaskIds.includes(task._id) ? (
-          <Chip label="Over Due" color="error" />
+          <Chip
+            className="task_row--status_chip overdue"
+            label="Over Due"
+            // color="error"
+          />
         ) : (
-          <Chip label="Pending" color="primary" />
+          <Chip
+            className="task_row--status_chip pending"
+            label="Pending"
+            // color="primary"
+          />
         )}
       </td>
       <td onClick={() => {}}>
