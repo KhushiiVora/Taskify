@@ -1,17 +1,26 @@
-import React from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { StyledNav } from "../../styles/navbar.styles";
 
-export default function Navbar({ username }) {
+export default function Navbar(props) {
+  const { username } = props;
+  const location = useLocation();
   return (
     <>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        {"      "}
-        <NavLink to={"/profile"}>Profile</NavLink>
-        {"      "}
+      <StyledNav>
+        <NavLink
+          className={`${location.pathname === "/" ? "active" : ""}`}
+          to="/"
+        >
+          Home
+        </NavLink>
+        <NavLink
+          className={`${location.pathname === "/profile" ? "active" : ""}`}
+          to={"/profile"}
+        >
+          Profile
+        </NavLink>
         <NavLink to={`/dashboard/${username}`}>Dashboard</NavLink>
-        {/* Add logout over here */}
-      </nav>
+      </StyledNav>
       <Outlet />
     </>
   );
