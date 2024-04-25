@@ -77,6 +77,11 @@ const ButtonDiv = styled.div`
     cursor: pointer;
     transition: all 0.3s ease;
   }
+  .send_button {
+    width: auto;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+  }
 
   .start_button {
     width: 12rem;

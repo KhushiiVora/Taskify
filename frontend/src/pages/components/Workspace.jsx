@@ -117,6 +117,7 @@ export default function Workspace(props) {
           transition: Slide,
         });
       });
+    setExpand(false);
   }, [workspaceId]);
 
   const handleWorkspaceLock = async () => {

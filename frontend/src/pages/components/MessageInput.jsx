@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { BsSend } from "react-icons/bs";
 import useSendMessage from "../../hooks/useSendMessage";
+import Button from "../atoms/Button";
+import { IoIosSend } from "react-icons/io";
 import { ToastContainer } from "react-toastify";
+import SpinnerIcon from "../atoms/SpinnerIcon";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");
@@ -18,26 +20,19 @@ const MessageInput = () => {
     setMessage("");
   }
   return (
-    <form className="px-4 my-3" onSubmit={handleSubmit}>
-      <div className="w-full relative">
-        <input
-          type="text"
-          className="border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white"
-          placeholder="Send a message"
-          value={message}
-          onChange={handleChange}
-        />
-        <button
-          type="submit"
-          className="absolute inset-y-0 end-0 flex items-center pe-3"
-        >
-          {loading ? (
-            <span className="loading loading-spinner"> </span>
-          ) : (
-            <BsSend />
-          )}
-        </button>
-      </div>
+    <form className="chatbox__message_container--form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white"
+        placeholder="Send a message"
+        value={message}
+        onChange={handleChange}
+      />
+      <Button
+        type="submit"
+        className="filled_button send_button"
+        icon={loading ? <SpinnerIcon /> : <IoIosSend />}
+      />
       <ToastContainer />
     </form>
   );

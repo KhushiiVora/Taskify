@@ -4,7 +4,7 @@ import MessageInput from "./MessageInput";
 const MessageContainer = () => {
   return (
     /* need to change the whole layout */
-    <div className="md:min-w-[450px] flex flex-col">
+    <div className="chatbox__message_container">
       <Messages />
       <MessageInput />
     </div>

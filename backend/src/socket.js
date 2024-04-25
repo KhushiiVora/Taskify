@@ -26,7 +26,6 @@ io.on("connection", (socket) => {
     console.log("room joined with id ", room);
 
     onlineUsers[userID] = socket.id;
-    // console.log(onlineUsers);
 
     const users = Object.keys(onlineUsers);
     io.to(room).emit("online-users", users);

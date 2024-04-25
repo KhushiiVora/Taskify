@@ -21,7 +21,7 @@ const Messages = () => {
 
   return (
     // overflow-auto gives scrollbar
-    <div className="px-4 flex-1 overflow-auto">
+    <div className="chatbox__message_container--messages">
       {/* Case 1: Show skeleton when it is loading i.e. still fetching the data */}
       {loading &&
         [...Array(4)].map((_, index) => {
@@ -37,9 +37,11 @@ const Messages = () => {
       {!loading &&
         messages.length > 0 &&
         messages.map((message) => (
-          <div key={message?._id} ref={lastMessageRef}>
-            <MessageCard message={message} />
-          </div>
+          <MessageCard
+            key={message?._id}
+            message={message}
+            ref={lastMessageRef}
+          />
         ))}
       <ToastContainer />
     </div>
