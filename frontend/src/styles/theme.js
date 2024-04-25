@@ -15,6 +15,9 @@ const theme = {
 
   /**Home */
   textColor1: "#5a5c5b",
+  iconColorShadow: "#dceff7a6",
+  color2Shadow: "#ffd3dea4",
+  color3Shadow: "#ffe6b792",
 };
 
 export default theme;

@@ -5,14 +5,14 @@ const StyledSection = styled.section`
   flex-direction: column;
   min-height: 90%;
   width: 100%;
-  gap: 2rem;
+  /* gap: 2rem; */
 
   /**---------------- Main Section --------------*/
   .main_section {
     display: flex;
     height: 100%;
     width: 100%;
-    margin-bottom: 5rem;
+    margin-bottom: 6rem;
   }
   .main_section__content {
     width: 50%;
@@ -76,10 +76,17 @@ const StyledSection = styled.section`
     right: 35%;
   }
 
-  /* --------------- Common Section Content ------------- */
+  /* -------------- Common Styling 1: Section Conatiner ------------ */
+  .section_container {
+    height: 100%;
+    width: 100%;
+    padding: 8rem 5rem 4rem 5rem;
+  }
+
+  /* --------------- Common Styling 2: Section Content ------------- */
   .section_content {
-    width: 50%;
-    padding: 2.5rem;
+    width: 40%;
+    padding: 3.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,7 +94,7 @@ const StyledSection = styled.section`
   }
   .section_content--divider {
     margin-top: 2rem;
-    width: 25%;
+    width: 20%;
     border-width: 0.3rem;
     border-style: solid;
     border-radius: 0.5rem;
@@ -104,54 +111,61 @@ const StyledSection = styled.section`
     line-height: 2rem;
     color: ${(props) => props.theme.textColor1};
   }
+
   /**---------------- Section1: Workspace --------------*/
-  .section1_workspace {
+  .workspace_container {
     display: flex;
     height: 100%;
     width: 100%;
-    padding: 10rem 10rem 4rem 4rem;
-    background: ${(props) => props.theme.iconColor};
+    border-radius: 2rem;
+    background: ${(props) => props.theme.iconColorShadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.iconColorShadow};
   }
   .section1_workspace__img {
-    width: 50%;
+    width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   .section1_workspace__img img {
-    width: 80%;
+    width: 70%;
     padding: 2rem 0rem;
   }
 
   /**---------------- Section2: Task --------------*/
-  .section2_task {
+
+  .task_container {
     display: flex;
     height: 100%;
     width: 100%;
-    padding: 2rem 8rem 6rem 10rem;
+    border-radius: 2rem;
+    background: ${(props) => props.theme.color3Shadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color3Shadow};
   }
   .section2_task__img {
-    width: 50%;
+    width: 60%;
     display: flex;
     justify-content: center;
   }
   .section2_task__img img {
-    width: 100%;
+    width: 80%;
   }
 
   /**---------------- Section3: Group Chat --------------*/
-  .section3_chat {
+  .chat_container {
     display: flex;
     height: 100%;
     width: 100%;
-    padding: 4rem 10rem 4rem 4rem;
+    border-radius: 2rem;
+    background: ${(props) => props.theme.color2Shadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color2Shadow};
   }
-  .section3_chat__img {
-    width: 50%;
+  .chat_container__img {
+    width: 60%;
     display: flex;
     justify-content: center;
   }
-  .section3_chat__img img {
+  .chat_container__img img {
     width: 100%;
   }
 
