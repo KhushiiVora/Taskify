@@ -8,6 +8,8 @@ const theme = {
   bgColor4: "#f5efe5", //signup: light grey color
 
   iconColor: "#175676",
+  msgBgColor: "#fcf4e2aa",
+  msgColor: "#9aecd7",
   successColor: "#00CC99",
   // successColorDark: "#00ae83",
   successColorDark: "#009973",
@@ -15,9 +17,12 @@ const theme = {
 
   /**Home */
   textColor1: "#5a5c5b",
-  iconColorShadow: "#dceff7a6",
-  color2Shadow: "#ffd3dea4",
-  color3Shadow: "#ffe6b792",
+  // iconColorShadow: "#dceff7a6",
+  iconColorShadow: "#dff2fb6e",
+  // color2Shadow: "#ffd3dea4",
+  color2Shadow: "#ffe4eb6e",
+  // color3Shadow: "#ffe6b792",
+  color3Shadow: "#fcf0d86e",
 };
 
 export default theme;

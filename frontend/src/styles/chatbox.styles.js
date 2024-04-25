@@ -34,7 +34,7 @@ const StyledSection = styled.section`
     flex-direction: column;
     flex-grow: 1;
     padding: 1rem;
-    background-color: ${(props) => props.theme.bgColor1};
+    background-color: ${(props) => props.theme.msgBgColor};
   }
   .chatbox__message_container--messages {
     flex-grow: 1;

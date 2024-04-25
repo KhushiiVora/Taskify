@@ -38,13 +38,15 @@ const StyledSection = styled.section`
   }
 
   .graphics_container {
+    margin-top: 3rem;
+    justify-self: center;
     width: 50%;
     position: relative;
     display: flex;
     flex-direction: column;
   }
   .graphics_container img {
-    width: 50%;
+    width: 45%;
   }
   .graphics_container__bottom_img {
     display: flex;
@@ -72,8 +74,8 @@ const StyledSection = styled.section`
     z-index: 1;
     border-radius: 60%;
     position: absolute;
-    top: 55%;
-    right: 35%;
+    top: 47%;
+    right: 27%;
   }
 
   /* -------------- Common Styling 1: Section Conatiner ------------ */
