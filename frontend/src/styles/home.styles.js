@@ -163,13 +163,18 @@ const StyledSection = styled.section`
     padding: 8rem 5rem 4rem 5rem;
   }
   .section_container__sections--card {
-    width: 50%;
+    width: 35%;
     height: 100%;
     margin: 1rem;
+    border-radius: 1rem;
+    background: ${(props) => props.theme.successColorShadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.successColorShadow};
   }
   .sections--card_img {
     width: 100%;
     height: 70%;
+    display: flex;
+    justify-content: center;
   }
   .task_check_img {
     height: 20rem;
@@ -183,6 +188,12 @@ const StyledSection = styled.section`
   .sections--card_content {
     width: 100%;
     height: 30%;
+  }
+  .sections--card_content p {
+    padding: 2rem 4rem;
+    color: ${(props) => props.theme.textColor1};
+    text-align: justify;
+    font-size: 1.3rem;
   }
 `;
 
