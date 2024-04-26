@@ -31,7 +31,7 @@ export default function WorkspaceDialog(props) {
   async function handleSubmit(event) {
     event.preventDefault();
     const btnText = event.nativeEvent.submitter.innerText;
-    if (btnText === "Create Workspace") {
+    if (btnText === "Create") {
       await axios
         .post(`/dashboard/workspace/${username}/create`, formData, {
           withCredentials: true,

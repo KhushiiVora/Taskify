@@ -7,7 +7,7 @@ function ProgressBar(props) {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
-    if (total) setPercent((value / total) * 100);
+    if (total) setPercent(Math.round((value / total) * 100));
   }, [value]);
 
   return (
