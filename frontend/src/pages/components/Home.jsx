@@ -59,22 +59,24 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* --------Section 1: workspace --------------*/}
       <section className="section_container">
-        <div className="workspace_container">
-          <div className="section1_workspace__img">
-            <img src={addWorkspace} alt="Add Workspace" />
+        <div className="section_container__sections workspace">
+          <div className="section_container__sections--img">
+            <img
+              src={addWorkspace}
+              alt="Add Workspace"
+              className="workspace_img"
+            />
           </div>
-          <div className="section_content">
-            <h1 className="section_content--header">
+          <div className="section_container__sections--content">
+            <h1>
               Craft your space, join the place, in Taskify's workspace, find
               your pace.
             </h1>
-            <div
-              className="section_content--divider"
-              style={{ borderColor: theme.iconColor }}
-            ></div>
-            <p className="section_content--description">
+            <div style={{ borderColor: theme.iconColor }}></div>
+            <p>
               You can create your own workspace, join existing ones to
               collaborate with different teams, and effectively manage tasks
               within a team environment.
@@ -82,48 +84,80 @@ export default function Home() {
           </div>
         </div>
       </section>
+
       {/* --------Section 2: Task Organization --------------*/}
       <section className="section_container">
-        <div className="task_container">
-          <div className="section_content">
-            <h1 className="section_content--header">
-              Organize your tasks to access it fast
-            </h1>
-            <div
-              className="section_content--divider"
-              style={{ borderColor: theme.color3 }}
-            ></div>
-            <p className="section_content--description">
+        <div className="section_container__sections task">
+          <div className="section_container__sections--content">
+            <h1>Organize your tasks to access it fast</h1>
+            <div style={{ borderColor: theme.color3 }}></div>
+            <p>
               With Taskify, you can easily group your tasks into different
               categories based on your own criteria to efficiently manage your
               workload.
             </p>
           </div>
-          <div className="section2_task__img">
-            <img src={addTask} alt="Task Organization" />
+          <div className="section_container__sections--img">
+            <img src={addTask} alt="Task Organization" className="task_img" />
           </div>
         </div>
       </section>
 
       {/* --------Section 3: Group Chatting --------------*/}
       <section className="section_container">
-        <div className="chat_container">
-          <div className="chat_container__img">
-            <img src={groupChat} alt="Group Chat" />
+        <div className="section_container__sections chat">
+          <div className="section_container__sections--img">
+            <img src={groupChat} alt="Group Chat" className="chat_img" />
           </div>
-          <div className="section_content">
-            <h1 className="section_content--header">
-              Real-time chatting, building strong connections
-            </h1>
-            <div
-              className="section_content--divider"
-              style={{ borderColor: theme.color2 }}
-            ></div>
-            <p className="section_content--description">
+          <div className="section_container__sections--content">
+            <h1>Real-time chatting, building strong connections</h1>
+            <div style={{ borderColor: theme.color2 }}></div>
+            <p>
               Engage in live chatting with your team members to foster stronger
               bonds and enhance collaboration, vital for building a cohesive and
               effective team.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* --------Section 4: Sub Features --------------*/}
+      <section className="section_conatiner">
+        <div className="section_container__sections">
+          <div className="section_container__sections--cards">
+            <div className="section_container__sections--card">
+              <div className="sections--card_img">
+                <img src={taskCheckList} alt="Task Checklist" className="task_check_img"/>
+              </div>
+              <div className="sections--card_content">
+                <p>
+                  You can mark tasks as completed or uncompleted to track their
+                  status and progress effectively.
+                </p>
+              </div>
+            </div>
+            <div className="section_container__sections--card">
+              <div className="sections--card_img">
+                <img src={workspaceLock} alt="Workspace Lock" className="workspace_lock_img"/>
+              </div>
+              <div className="sections--card_content">
+                <p>
+                  Leaders hold the privilege of locking or unlocking the
+                  workspace, managing who joins to enhance workspace security.
+                </p>
+              </div>
+            </div>
+            <div className="section_container__sections--card">
+              <div className="sections--card_img">
+                <img src={userProfile} alt="User Profile" className="profile_img"/>
+              </div>
+              <div className="sections--card_content">
+                <p>
+                  You can manage your public profile to control how others see
+                  you online, helping you make a positive impression.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

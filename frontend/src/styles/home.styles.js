@@ -85,8 +85,30 @@ const StyledSection = styled.section`
     padding: 8rem 5rem 4rem 5rem;
   }
 
+  .section_container__sections {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-radius: 2rem;
+  }
+  .workspace {
+    background: ${(props) => props.theme.iconColorShadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.iconColorShadow};
+  }
+  .task {
+    background: ${(props) => props.theme.color3Shadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color3Shadow};
+  }
+  .chat {
+    background: ${(props) => props.theme.color2Shadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color2Shadow};
+  }
+  /* .cards {
+    background: ${(props) => props.theme.successColorShadow};
+    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.successColorShadow};
+  } */
   /* --------------- Common Styling 2: Section Content ------------- */
-  .section_content {
+  .section_container__sections--content {
     width: 40%;
     padding: 3.5rem;
     display: flex;
@@ -94,7 +116,11 @@ const StyledSection = styled.section`
     justify-content: center;
     align-items: center;
   }
-  .section_content--divider {
+  .section_container__sections--content h1 {
+    font-size: 2.5rem;
+    align-self: first baseline;
+  }
+  .section_container__sections--content div {
     margin-top: 2rem;
     width: 20%;
     border-width: 0.3rem;
@@ -102,11 +128,8 @@ const StyledSection = styled.section`
     border-radius: 0.5rem;
     align-self: first baseline;
   }
-  .section_content--header {
-    font-size: 2.5rem;
-    align-self: first baseline;
-  }
-  .section_content--description {
+
+  .section_container__sections--content p {
     padding-top: 3rem;
     font-size: 1.5rem;
     text-align: justify;
@@ -114,64 +137,53 @@ const StyledSection = styled.section`
     color: ${(props) => props.theme.textColor1};
   }
 
-  /**---------------- Section1: Workspace --------------*/
-  .workspace_container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    border-radius: 2rem;
-    background: ${(props) => props.theme.iconColorShadow};
-    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.iconColorShadow};
-  }
-  .section1_workspace__img {
+  /* --------------- Common Styling 3: Section Image ------------- */
+  .section_container__sections--img {
     width: 60%;
     display: flex;
     justify-content: center;
-    align-items: center;
   }
-  .section1_workspace__img img {
+  .workspace_img {
     width: 70%;
-    padding: 2rem 0rem;
+    /* padding: 2rem 0rem; */
   }
-
-  /**---------------- Section2: Task --------------*/
-
-  .task_container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    border-radius: 2rem;
-    background: ${(props) => props.theme.color3Shadow};
-    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color3Shadow};
-  }
-  .section2_task__img {
-    width: 60%;
-    display: flex;
-    justify-content: center;
-  }
-  .section2_task__img img {
+  .task_img {
     width: 80%;
   }
-
-  /**---------------- Section3: Group Chat --------------*/
-  .chat_container {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    border-radius: 2rem;
-    background: ${(props) => props.theme.color2Shadow};
-    box-shadow: 0px 0px 6px 3px ${(props) => props.theme.color2Shadow};
-  }
-  .chat_container__img {
-    width: 60%;
-    display: flex;
-    justify-content: center;
-  }
-  .chat_container__img img {
+  .chat_img {
     width: 100%;
   }
 
   /**---------------- Section4: SubFeature Cards --------------*/
+  .section_container__sections--cards {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 8rem 5rem 4rem 5rem;
+  }
+  .section_container__sections--card {
+    width: 50%;
+    height: 100%;
+    margin: 1rem;
+  }
+  .sections--card_img {
+    width: 100%;
+    height: 70%;
+  }
+  .task_check_img {
+    height: 20rem;
+  }
+  .workspace_lock_img {
+    height: 20rem;
+  }
+  .profile_img {
+    height: 20rem;
+  }
+  .sections--card_content {
+    width: 100%;
+    height: 30%;
+  }
 `;
 
 export { StyledSection };
