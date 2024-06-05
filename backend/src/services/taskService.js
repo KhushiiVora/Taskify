@@ -69,34 +69,31 @@ class TaskService {
     if (workspaceError) return { error: workspaceError };
 
     try {
-      const { acknowledged: tasksDeleted } = await Task.deleteMany({
+      await Task.deleteMany({
         taskCategoryId: categoryId,
       });
 
-      if (tasksDeleted) {
-        const { acknowledged: taskCategoryDeleted } =
-          await TaskCategory.deleteOne({ _id: categoryId });
+      const { deletedCount: taskCategoryDeleted } =
+        await TaskCategory.deleteOne({ _id: categoryId });
 
-        if (taskCategoryDeleted) {
-          workspace.taskCategories.splice(
-            workspace.taskCategories.indexOf(categoryId),
-            1
-          );
-
-          let { taskCategories } = await (
-            await workspace.save()
-          ).populate("taskCategories");
-
-          taskCategories = await Promise.all(
-            workspace.taskCategories.map(async (taskCategory) => {
-              const progress = await taskCategory.getTasksWithStateTrue();
-              return { ...taskCategory.toObject(), progress };
-            })
-          );
-
-          return { taskCategories };
-        }
+      if (taskCategoryDeleted) {
+        workspace.taskCategories.splice(
+          workspace.taskCategories.indexOf(categoryId),
+          1
+        );
       }
+      let { taskCategories } = await (
+        await workspace.save()
+      ).populate("taskCategories");
+
+      taskCategories = await Promise.all(
+        workspace.taskCategories.map(async (taskCategory) => {
+          const progress = await taskCategory.getTasksWithStateTrue();
+          return { ...taskCategory.toObject(), progress };
+        })
+      );
+
+      return { taskCategories };
     } catch (error) {
       console.log("error in  deleteTaskcategory", error);
       return { error };
