@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import axios from "../../../axiosConfig";
+import { refreshPage } from "../../../utils/refreshPage";
 
 import Chip from "@mui/material/Chip";
 import Checkbox from "@mui/material/Checkbox";
@@ -14,7 +14,7 @@ import { toast, Slide, ToastContainer } from "react-toastify";
 import { MdDelete } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
-import { colorSuccess } from "../../styles/taskList.styles";
+import { colorSuccess } from "../../../styles/taskList.styles";
 
 function TaskRowCard(props) {
   const {

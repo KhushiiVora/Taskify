@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Footer from "./Footer";
 
-import Button from "../atoms/Button";
+import Button from "../components/atoms/Button";
 import workTime from "/home/workTime.gif";
 import progressIndicator from "/home/progressIndicator.gif";
 import taskCompletion from "/home/taskCompletion.svg";
@@ -13,8 +13,8 @@ import groupChat from "/home/groupChat.svg";
 import userProfile from "/home/userProfile.svg";
 import workspaceLock from "/home/workspaceLock.svg";
 import taskCheckList from "/home/taskCheckList.svg";
-import { StyledSection } from "../../styles/home.styles";
-import theme from "../../styles/theme";
+import { StyledSection } from "../styles/home.styles";
+import theme from "../styles/theme";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -127,7 +127,11 @@ export default function Home() {
           <div className="section_container__sections--cards">
             <div className="section_container__sections--card">
               <div className="sections--card_img">
-                <img src={taskCheckList} alt="Task Checklist" className="task_check_img"/>
+                <img
+                  src={taskCheckList}
+                  alt="Task Checklist"
+                  className="task_check_img"
+                />
               </div>
               <div className="sections--card_content">
                 <p>
@@ -138,7 +142,11 @@ export default function Home() {
             </div>
             <div className="section_container__sections--card">
               <div className="sections--card_img">
-                <img src={workspaceLock} alt="Workspace Lock" className="workspace_lock_img"/>
+                <img
+                  src={workspaceLock}
+                  alt="Workspace Lock"
+                  className="workspace_lock_img"
+                />
               </div>
               <div className="sections--card_content">
                 <p>
@@ -149,7 +157,11 @@ export default function Home() {
             </div>
             <div className="section_container__sections--card">
               <div className="sections--card_img">
-                <img src={userProfile} alt="User Profile" className="profile_img"/>
+                <img
+                  src={userProfile}
+                  alt="User Profile"
+                  className="profile_img"
+                />
               </div>
               <div className="sections--card_content">
                 <p>

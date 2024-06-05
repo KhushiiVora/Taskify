@@ -2,12 +2,12 @@ import { useEffect, useState, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
-import { workspaceIdSaved } from "../../state/chatSlice";
-import { saved as socketSaved } from "../../state/socketSlice";
+import { workspaceIdSaved } from "../state/chatSlice";
+import { saved as socketSaved } from "../state/socketSlice";
 
-import MessageContainer from "./MessageContainer";
-import ChatBoxSidebar from "./ChatBoxSidebar";
-import { StyledSection } from "../../styles/chatbox.styles";
+import MessageContainer from "../components/chat/messages/MessageContainer";
+import ChatBoxSidebar from "../components/chat/members/ChatBoxSidebar";
+import { StyledSection } from "../styles/chatbox.styles";
 
 const ChatBox = () => {
   const [socketId, setSocketId] = useState("");

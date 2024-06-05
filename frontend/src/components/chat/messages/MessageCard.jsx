@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { extractTime } from "../../utils/extractTime";
+import { extractTime } from "../../../utils/extractTime";
 import React from "react";
 
 const MessageCard = React.forwardRef((props, ref) => {

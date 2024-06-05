@@ -1,13 +1,13 @@
 import { useState } from "react";
-import axios from "../../axiosConfig";
+import axios from "../../../axiosConfig";
 import { useDispatch } from "react-redux";
 
-import { saved as workspaceSaved } from "../../state/workspaceSlice";
+import { saved as workspaceSaved } from "../../../state/workspaceSlice";
 
-import Button from "../atoms/Button";
+import Button from "../../atoms/Button";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection, StyledTextField } from "../../styles/dialog.styles";
+import { StyledSection, StyledTextField } from "../../../styles/dialog.styles";
 
 export default function WorkspaceDialog(props) {
   const { username, open, handleDialogClose } = props;

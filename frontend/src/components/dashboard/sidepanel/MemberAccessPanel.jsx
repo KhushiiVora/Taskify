@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import axios from "../../../axiosConfig";
+import { refreshPage } from "../../../utils/refreshPage";
 
-import { restored as membersRestored } from "../../state/memberSlice";
+import { restored as membersRestored } from "../../../state/memberSlice";
 
 import MemberAccessCard from "./MemberAccessCard";
 import PublicProfile from "./PublicProfile";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection } from "../../styles/memberAccessPanel.styles";
+import { StyledSection } from "../../../styles/memberAccessPanel.styles";
 
 function MemberAccessPanel(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;

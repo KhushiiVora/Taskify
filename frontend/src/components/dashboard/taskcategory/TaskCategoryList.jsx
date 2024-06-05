@@ -1,11 +1,11 @@
 import { useState } from "react";
-import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import axios from "../../../axiosConfig";
+import { refreshPage } from "../../../utils/refreshPage";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TaskCategoryCard from "./TaskCategoryCard";
-import ConfirmationDialog from "./ConfirmationDialog";
+import ConfirmationDialog from "../../ConfirmationDialog";
 
 function TaskCategoryList(props) {
   const {

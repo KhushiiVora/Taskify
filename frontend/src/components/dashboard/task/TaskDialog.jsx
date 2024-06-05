@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import axios from "../../../axiosConfig";
+import { refreshPage } from "../../../utils/refreshPage";
 
 import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 
-import Button from "../atoms/Button";
+import Button from "../../atoms/Button";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -22,7 +22,7 @@ import {
   StyledSection,
   StyledTextField,
   StyledDatePicker,
-} from "../../styles/dialog.styles";
+} from "../../../styles/dialog.styles";
 
 export default function TaskDialog(props) {
   const theme = useTheme();

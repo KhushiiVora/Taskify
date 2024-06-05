@@ -1,18 +1,18 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import axios from "../../axiosConfig";
-import { refreshPage } from "../../utils/refreshPage";
+import axios from "../../../axiosConfig";
+import { refreshPage } from "../../../utils/refreshPage";
 
 import TaskDialog from "./TaskDialog";
 import TaskRowCard from "./TaskRowCard";
-import Button from "../atoms/Button";
+import Button from "../../atoms/Button";
 import Checkbox from "@mui/material/Checkbox";
 
 import { IoArrowBackCircle } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection, colorSuccess } from "../../styles/taskList.styles";
+import { StyledSection, colorSuccess } from "../../../styles/taskList.styles";
 
 function TaskList(props) {
   const { handleExpand, categoryId, workspaceId } = props;

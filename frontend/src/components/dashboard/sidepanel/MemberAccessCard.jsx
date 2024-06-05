@@ -10,7 +10,7 @@ import { FaUserXmark } from "react-icons/fa6";
 import { RiShieldUserFill } from "react-icons/ri";
 import { RiShieldUserLine } from "react-icons/ri";
 import { FaUserCircle } from "react-icons/fa";
-import { menuItemIconStyling } from "../../styles/memberAccessPanel.styles";
+import { menuItemIconStyling } from "../../../styles/memberAccessPanel.styles";
 
 function MemberAccessCard(props) {
   const {

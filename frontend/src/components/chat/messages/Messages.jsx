@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
-import useGetMessages from "../../hooks/useGetMessages";
-import useListenMessages from "../../hooks/useListenMessages";
+import useGetMessages from "../../../hooks/useGetMessages";
+import useListenMessages from "../../../hooks/useListenMessages";
 import MessageSkeleton from "./MessageSkeleton";
 import MessageCard from "./MessageCard";
 import { ToastContainer } from "react-toastify";

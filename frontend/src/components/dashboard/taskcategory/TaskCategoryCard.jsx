@@ -1,7 +1,8 @@
 import { useState } from "react";
 
 import AddTaskCategory from "./AddTaskCategory";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../ProgressBar";
+import Button from "../../atoms/Button";
 
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -15,8 +16,7 @@ import {
   StyledDiv,
   menuItemEditStyling,
   menuItemDeleteStyling,
-} from "../../styles/taskCategoryCard.styles";
-import Button from "../atoms/Button";
+} from "../../../styles/taskCategoryCard.styles";
 
 function TaskCategoryCard(props) {
   const {

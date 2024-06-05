@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 
-import { StyledBadge } from "../../styles/chatbox.styles";
+import { StyledBadge } from "../../../styles/chatbox.styles";
 
 const MemberCard = ({ member }) => {
   const { workspaceId } = useParams();

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { saved as userSaved } from "../../state/userSlice";
+import { saved as userSaved } from "../state/userSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import useLogout from "../../hooks/useLogout";
+import useLogout from "../hooks/useLogout";
 
-import Button from "../atoms/Button";
-import Input from "../atoms/Input";
-import axios from "../../axiosConfig";
-import AvatarDialog from "./AvatarDialog";
+import Button from "../components/atoms/Button";
+import Input from "../components/atoms/Input";
+import axios from "../axiosConfig";
+import AvatarDialog from "../components/avatar/AvatarDialog";
 
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -25,7 +25,7 @@ import { IoLogOut } from "react-icons/io5";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { StyledSection } from "../../styles/profile.styles";
+import { StyledSection } from "../styles/profile.styles";
 
 export default function Profile() {
   const [openAvatarDialog, setOpenAvatarDialog] = useState(false);

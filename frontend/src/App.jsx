@@ -7,15 +7,15 @@ import "./App.css";
 import { saved as userSaved } from "./state/userSlice";
 import { restored as workspacesRestored } from "./state/workspaceSlice";
 
-import Navbar from "./pages/components/Navbar";
-import Home from "./pages/components/Home";
-import Profile from "./pages/components/Profile";
-import SignUp from "./pages/components/SignUp";
-import Login from "./pages/components/Login";
-import ProtectedRoute from "./pages/components/ProtectedRoute";
-import Dashboard from "./pages/components/Dashboard";
-import MainNavbar from "./pages/components/MainNavbar";
-import ChatBox from "./pages/components/ChatBox";
+import Navbar from "./components/navbar/Navbar";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Dashboard from "./pages/Dashboard";
+import MainNavbar from "./components/navbar/MainNavbar";
+import ChatBox from "./pages/ChatBox";
 
 function App() {
   const dispatch = useDispatch();

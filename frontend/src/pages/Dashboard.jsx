@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useLogout from "../../hooks/useLogout";
+import useLogout from "../hooks/useLogout";
 
-import Button from "../atoms/Button";
-import WorkspaceDialog from "./WorkspaceDialog";
-import WorkspaceList from "./WorkspaceList";
-import MemberAccessPanel from "./MemberAccessPanel";
-import Workspace from "./Workspace";
+import Button from "../components/atoms/Button";
+import WorkspaceDialog from "../components/dashboard/workspace/WorkspaceDialog";
+import WorkspaceList from "../components/dashboard/workspace/WorkspaceList";
+import MemberAccessPanel from "../components/dashboard/sidepanel/MemberAccessPanel";
+import Workspace from "../components/dashboard/workspace/Workspace";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,7 @@ import { IoHome } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
 import noWorkspaceSelected from "/img/noWorkspaceSelected.svg";
-import { StyledSection } from "../../styles/dashboard.styles";
+import { StyledSection } from "../styles/dashboard.styles";
 
 export default function Dashboard() {
   const [dialogOpen, setDialogOpen] = useState(false);

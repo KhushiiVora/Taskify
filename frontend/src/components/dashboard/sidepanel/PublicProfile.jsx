@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import Button from "../atoms/Button";
+import Button from "../../atoms/Button";
 import Avatar from "@mui/material/Avatar";
 
 import { FaUser } from "react-icons/fa";
@@ -9,7 +9,7 @@ import { MdEmail } from "react-icons/md";
 import { PiUserListFill } from "react-icons/pi";
 import { FaUserEdit } from "react-icons/fa";
 import { IoArrowBackCircle } from "react-icons/io5";
-import { StyledSection } from "../../styles/profile.styles";
+import { StyledSection } from "../../../styles/profile.styles";
 
 export default function PublicProfile(props) {
   const { member, setPublicProfile } = props;

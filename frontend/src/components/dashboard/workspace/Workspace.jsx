@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "../../axiosConfig";
-import { refreshPage, quickRefresh } from "../../utils/refreshPage";
-import { restored as membersRestored } from "../../state/memberSlice";
-import { lockStateSaved } from "../../state/workspaceSlice";
+import axios from "../../../axiosConfig";
+import { refreshPage, quickRefresh } from "../../../utils/refreshPage";
+import { restored as membersRestored } from "../../../state/memberSlice";
+import { lockStateSaved } from "../../../state/workspaceSlice";
 
-import ConfirmationDialog from "./ConfirmationDialog";
-import AddTaskCategory from "./AddTaskCategory";
-import TaskCategoryList from "./TaskCategoryList";
-import Button from "../atoms/Button";
-import TaskList from "./TaskList";
-import ProgressBar from "./ProgressBar";
+import ConfirmationDialog from "../../ConfirmationDialog";
+import AddTaskCategory from "../taskcategory/AddTaskCategory";
+import TaskCategoryList from "../taskcategory/TaskCategoryList";
+import Button from "../../atoms/Button";
+import TaskList from "../task/TaskList";
+import ProgressBar from "../ProgressBar";
 
 import MUIButton from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -31,7 +31,10 @@ import { MdDelete } from "react-icons/md";
 import { RiAddCircleFill } from "react-icons/ri";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import noTaskCategory from "/img/noTaskCategory.svg";
-import { StyledSection, menuItemStyling } from "../../styles/workspace.styles";
+import {
+  StyledSection,
+  menuItemStyling,
+} from "../../../styles/workspace.styles";
 
 export default function Workspace(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;

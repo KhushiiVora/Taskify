@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import Button from "../atoms/Button";
-import axios from "../../axiosConfig";
+import Button from "../components/atoms/Button";
+import axios from "../axiosConfig";
 
-import { saved as userSaved } from "../../state/userSlice";
+import { saved as userSaved } from "../state/userSlice";
 
 import { FormControl } from "@mui/material";
 import { toast, Slide, ToastContainer } from "react-toastify";
@@ -17,7 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import signup from "/img/signup.svg";
-import { StyledSection, StyledTextField } from "../../styles/auth.styles";
+import { StyledSection, StyledTextField } from "../styles/auth.styles";
 
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);

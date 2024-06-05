@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import useGetMembers from "../../hooks/useGetMembers";
-import Button from "../atoms/Button";
+import useGetMembers from "../../../hooks/useGetMembers";
+import Button from "../../atoms/Button";
 import MemberCard from "./MemberCard";
 import { ToastContainer } from "react-toastify";
 import { IoArrowBackCircle } from "react-icons/io5";

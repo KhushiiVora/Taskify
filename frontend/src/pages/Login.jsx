@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import validator from "validator";
-import Button from "../atoms/Button";
-import axios from "../../axiosConfig";
+import Button from "../components/atoms/Button";
+import axios from "../axiosConfig";
 
-import { saved as userSaved } from "../../state/userSlice";
-import { restored as workspacesRestored } from "../../state/workspaceSlice";
+import { saved as userSaved } from "../state/userSlice";
+import { restored as workspacesRestored } from "../state/workspaceSlice";
 
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import login from "/img/login.svg";
-import { StyledSection, StyledTextField } from "../../styles/auth.styles";
+import { StyledSection, StyledTextField } from "../styles/auth.styles";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);

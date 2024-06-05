@@ -1,9 +1,9 @@
 import { useState } from "react";
-import useSendMessage from "../../hooks/useSendMessage";
-import Button from "../atoms/Button";
+import useSendMessage from "../../../hooks/useSendMessage";
+import Button from "../../atoms/Button";
 import { IoIosSend } from "react-icons/io";
 import { ToastContainer } from "react-toastify";
-import SpinnerIcon from "../atoms/SpinnerIcon";
+import SpinnerIcon from "../../atoms/SpinnerIcon";
 
 const MessageInput = () => {
   const [message, setMessage] = useState("");

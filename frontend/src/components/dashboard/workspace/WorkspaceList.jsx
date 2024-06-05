@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 
-import Button from "../atoms/Button";
+import Button from "../../atoms/Button";
 import { RiAddCircleFill } from "react-icons/ri";
 import {
   InnerStyledSection,
   OuterStyledSection,
-} from "../../styles/workspaceList.styles";
+} from "../../../styles/workspaceList.styles";
 
 export default function WorkspaceList(props) {
   const { members, openedWorkspaceId, handleWorkspaceOpen, handleDialogOpen } =
