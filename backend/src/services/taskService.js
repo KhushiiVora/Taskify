@@ -78,7 +78,7 @@ class TaskService {
 
       if (taskCategoryDeleted) {
         workspace.taskCategories.splice(
-          workspace.taskCategories.indexOf(categoryId),
+          // workspace.taskCategories.indexOf(categoryId),
           1
         );
       }
@@ -139,16 +139,16 @@ class TaskService {
     }
 
     try {
-      const { acknowledged: taskDeleted } = await Task.deleteOne({
+      const { deletedCount: taskDeleted } = await Task.deleteOne({
         _id: taskId,
       });
 
       if (taskDeleted) {
         taskCategory.tasks.splice(taskCategory.tasks.indexOf(taskId), 1);
         await taskCategory.save();
-        const { tasks } = await taskCategory.populate("tasks");
-        return { tasks };
       }
+      const { tasks } = await taskCategory.populate("tasks");
+      return { tasks };
     } catch (error) {
       console.log("Error in deleteTask: ", error);
       return { error };
@@ -166,7 +166,7 @@ class TaskService {
       Object.keys(data).forEach((field) => {
         if (task[field] !== data[field]) {
           isModified = true;
-          task[field] = data[field];
+          // task[field] = data[field];
         }
       });
 
