@@ -59,9 +59,17 @@ function TaskList(props) {
 
     setOverDueTaskIds(
       pendingTasks
-        .filter(
-          (task) => new Date(task.dueDate).getDate() < new Date().getDate()
-        )
+        .filter((task) => {
+          const currentDate = new Date();
+          const taskDueDate = new Date(task.dueDate);
+          if (
+            currentDate.getDate() <= taskDueDate.getDate() &&
+            currentDate.getMonth() <= taskDueDate.getMonth() &&
+            currentDate.getFullYear() <= taskDueDate.getFullYear()
+          )
+            return false;
+          else return true;
+        })
         .map((task) => task._id)
     );
   }, [isChecked, tasks]);

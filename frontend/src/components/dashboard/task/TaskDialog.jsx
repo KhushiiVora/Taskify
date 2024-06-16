@@ -64,9 +64,19 @@ export default function TaskDialog(props) {
     } else {
       setFormData({ name: task.name });
       setAssignees(task.assignedTo);
-      if (new Date().getDate() <= new Date(task.dueDate).getDate()) {
+      const currentDate = new Date();
+      const taskDueDate = new Date(task.dueDate);
+      if (
+        currentDate.getDate() <= taskDueDate.getDate() &&
+        currentDate.getMonth() <= taskDueDate.getMonth() &&
+        currentDate.getFullYear() <= taskDueDate.getFullYear()
+      ) {
         setDueDate(dayjs(task.dueDate));
       }
+
+      // if (new Date().getDate() <= new Date(task.dueDate).getDate()) {
+      //   setDueDate(dayjs(task.dueDate));
+      // }
     }
   }, [isNewTask]);
 

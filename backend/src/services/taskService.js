@@ -34,6 +34,10 @@ class TaskService {
         taskCategory = await TaskCategory.findById(categoryId).populate(
           populateWith
         );
+        await this.filterAssigneeList(
+          taskCategory.tasks,
+          taskCategory.workspaceId
+        );
       } else {
         taskCategory = await TaskCategory.findById(categoryId);
       }
@@ -42,6 +46,31 @@ class TaskService {
       console.log("Error in findTaskCategoryById", error);
       return { error };
     }
+  };
+
+  filterAssigneeList = async (tasks, workspaceId) => {
+    const { workspace, error: workspaceError } =
+      await workspaceService.findWorkspaceById(workspaceId, "");
+
+    if (workspaceError) {
+      throw new Error(workspaceError);
+    }
+
+    let isModified = false;
+    tasks?.forEach(async (task) => {
+      const length = task.assignedTo.length;
+
+      task.assignedTo = task.assignedTo.filter((assignee) => {
+        if (!workspace.members.includes(assignee)) {
+          isModified = true;
+          return false;
+        } else return true;
+      });
+
+      if (isModified) {
+        await task.save();
+      }
+    });
   };
 
   editCategoryName = async (categoryId, categoryName) => {
@@ -166,7 +195,7 @@ class TaskService {
       Object.keys(data).forEach((field) => {
         if (task[field] !== data[field]) {
           isModified = true;
-          // task[field] = data[field];
+          task[field] = data[field];
         }
       });
 
