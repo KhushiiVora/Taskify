@@ -26,13 +26,29 @@ const StyledSection = styled.section`
 
   .tasklist__header {
     display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
+    align-items: center;
+    gap: 1rem;
     margin-bottom: 1.2rem;
   }
   .tasklist__header .underlined_button {
     height: 2.7rem;
   }
+
+  .tasklist__header--search {
+    height: 100%;
+    padding: 0.5rem;
+    background-color: ${(props) => props.theme.bgColor1};
+    border-radius: 0.7rem;
+  }
+  .tasklist__header--search input {
+    height: 100%;
+    padding: 0.3rem;
+    font-size: 1.1rem;
+    outline: none;
+    border: none;
+    background-color: ${(props) => props.theme.bgColor1};
+  }
+
   .task_row--status_chip {
     border-radius: 0.7rem;
     font-size: 0.9rem;

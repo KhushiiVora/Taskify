@@ -28,6 +28,8 @@ function TaskRowCard(props) {
     updateTaskState,
     handleDialogOpen,
     setTaskToEdit,
+    setFilteredTasks,
+    searchInput,
   } = props;
 
   const [isChecked, setIsChecked] = useState(task.state);

@@ -21,8 +21,10 @@ function TaskList(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [taskToEdit, setTaskToEdit] = useState({});
   const [overDueTaskIds, setOverDueTaskIds] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
   const workspaceMembers = useSelector((state) => state.members);
   const user = useSelector((state) => state.user.user);
@@ -74,7 +76,15 @@ function TaskList(props) {
     );
   }, [isChecked, tasks]);
 
-  useEffect(computeMainCheckedValueOnTasksChange, [tasks]);
+  useEffect(() => {
+    computeMainCheckedValueOnTasksChange();
+
+    if (filteredTasks.length && searchInput) {
+      setFilteredTasks(
+        tasks.filter((task) => task.name.toLowerCase().includes(searchInput))
+      );
+    }
+  }, [tasks]);
 
   function computeMainCheckedValueOnTasksChange() {
     const mainCheckedValue = tasks.reduce((result, currentTask) => {
@@ -132,6 +142,22 @@ function TaskList(props) {
     });
   };
 
+  const displayTasks = filteredTasks.length ? filteredTasks : tasks;
+
+  const handleChange = (event) => {
+    setSearchInput(event.target.value);
+
+    if (event.target.value) {
+      setFilteredTasks(
+        tasks.filter((task) =>
+          task.name.toLowerCase().includes(event.target.value)
+        )
+      );
+    } else {
+      setFilteredTasks([]);
+    }
+  };
+
   return (
     <StyledSection>
       <section className="tasklist__header">
@@ -149,6 +175,15 @@ function TaskList(props) {
           icon={<RiAddCircleFill className="text_icons" />}
           onClick={() => handleDialogOpen("add")}
         />
+        <div className="tasklist__header--search">
+          <input
+            name="searchTask"
+            type="text"
+            onChange={handleChange}
+            value={searchInput}
+            placeholder="Search Task by name"
+          />
+        </div>
       </section>
       <section>
         {tasks.length ? (
@@ -171,7 +206,7 @@ function TaskList(props) {
               </tr>
             </thead>
             <tbody>
-              {tasks.map((task) => {
+              {displayTasks.map((task) => {
                 return (
                   <TaskRowCard
                     setIsMainChecked={setIsChecked}
@@ -185,6 +220,8 @@ function TaskList(props) {
                     updateTaskState={updateTaskState}
                     handleDialogOpen={handleDialogOpen}
                     setTaskToEdit={setTaskToEdit}
+                    setFilteredTasks={setFilteredTasks}
+                    searchInput={searchInput}
                   />
                 );
               })}
