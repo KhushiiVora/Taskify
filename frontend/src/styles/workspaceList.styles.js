@@ -26,6 +26,12 @@ const OuterStyledSection = styled.section`
   height: 100%;
   box-shadow: 0px 0px 8px 2px ${(props) => props.theme.bgColor1};
   border-radius: 1rem;
+
+  .workspace_list__header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
 `;
 
 export { InnerStyledSection, OuterStyledSection };

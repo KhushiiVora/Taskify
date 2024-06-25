@@ -1,6 +1,8 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { extractTime } from "../../../utils/extractTime";
-import React from "react";
+
+import { FaUserCircle } from "react-icons/fa";
 
 const MessageCard = React.forwardRef((props, ref) => {
   const { message } = props;
@@ -25,7 +27,12 @@ const MessageCard = React.forwardRef((props, ref) => {
         fromMe ? "sender" : ""
       }`}
     >
-      {!fromMe && <img alt="image" src={profilePic} />}
+      {!fromMe &&
+        (profilePic ? (
+          <img src={profilePic} />
+        ) : (
+          <FaUserCircle className="message_card--profile_pic" />
+        ))}
       <div className="message_card__message">
         <div className={`message_card__message--content`}>
           {message.message}

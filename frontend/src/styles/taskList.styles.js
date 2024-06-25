@@ -34,19 +34,8 @@ const StyledSection = styled.section`
     height: 2.7rem;
   }
 
-  .tasklist__header--search {
-    height: 100%;
-    padding: 0.5rem;
-    background-color: ${(props) => props.theme.bgColor1};
-    border-radius: 0.7rem;
-  }
-  .tasklist__header--search input {
-    height: 100%;
-    padding: 0.3rem;
-    font-size: 1.1rem;
-    outline: none;
-    border: none;
-    background-color: ${(props) => props.theme.bgColor1};
+  .tasklist__table {
+    margin-top: 1rem;
   }
 
   .task_row--status_chip {
@@ -92,6 +81,22 @@ const StyledSection = styled.section`
   }
   .tasklist__icons--edit {
     color: ${(props) => props.theme.color3};
+  }
+
+  .no_task {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .no_task p {
+    text-align: center;
+  }
+  .no_task img {
+    width: 50%;
   }
 `;
 

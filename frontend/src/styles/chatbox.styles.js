@@ -34,7 +34,7 @@ const StyledSection = styled.section`
     flex-direction: column;
     flex-grow: 1;
     padding: 1rem;
-    background-color: ${(props) => props.theme.msgBgColor};
+    background-color: ${(props) => props.theme.color2Shadow};
   }
   .chatbox__message_container--messages {
     flex-grow: 1;
@@ -52,6 +52,10 @@ const StyledSection = styled.section`
   .chatbox__message_container--message_card img {
     height: 1.5rem;
   }
+  .message_card--profile_pic {
+    font-size: 1.4rem;
+    color: ${(props) => props.theme.textColor1};
+  }
   .sender {
     align-self: flex-end;
   }
@@ -59,8 +63,8 @@ const StyledSection = styled.section`
     border-radius: 0.7rem 0.2rem 0.7rem 0.7rem;
   }
   .message_card__message {
-    background-color: ${(props) => props.theme.successColor};
-    border: 1px solid ${(props) => props.theme.successColorDark};
+    background-color: ${(props) => props.theme.color1};
+    border: 1px solid ${(props) => props.theme.borderColor};
     border-radius: 0.2rem 0.7rem 0.7rem 0.7rem;
     display: flex;
     flex-direction: column;
@@ -79,11 +83,18 @@ const StyledSection = styled.section`
     position: sticky;
     bottom: 1rem;
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
     padding-top: 0.7rem;
   }
   .chatbox__message_container--form input {
+    padding: 0.5rem;
     flex-grow: 1;
+    outline: none;
+    border: 1px solid ${(props) => props.theme.iconColor};
+    border-radius: 0.7rem;
+  }
+  .chatbox__message_container--form input:focus {
+    border: 2px solid ${(props) => props.theme.iconColor};
   }
 `;
 

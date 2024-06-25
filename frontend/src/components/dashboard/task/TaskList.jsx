@@ -10,9 +10,12 @@ import Checkbox from "@mui/material/Checkbox";
 
 import { IoArrowBackCircle } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
+import { IoSearch } from "react-icons/io5";
 import { toast, Slide, ToastContainer } from "react-toastify";
+import noTask from "/img/noTask.svg";
 import "react-toastify/dist/ReactToastify.css";
 import { StyledSection, colorSuccess } from "../../../styles/taskList.styles";
+import { StyledSearchBar } from "../../../styles/searchbar.styles";
 
 function TaskList(props) {
   const { handleExpand, categoryId, workspaceId } = props;
@@ -25,6 +28,7 @@ function TaskList(props) {
   const [overDueTaskIds, setOverDueTaskIds] = useState([]);
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [searchFocus, setSearchFocus] = useState(false);
 
   const workspaceMembers = useSelector((state) => state.members);
   const user = useSelector((state) => state.user.user);
@@ -175,17 +179,42 @@ function TaskList(props) {
           icon={<RiAddCircleFill className="text_icons" />}
           onClick={() => handleDialogOpen("add")}
         />
-        <div className="tasklist__header--search">
-          <input
-            name="searchTask"
-            type="text"
-            onChange={handleChange}
-            value={searchInput}
-            placeholder="Search Task by name"
-          />
-        </div>
       </section>
-      <section>
+      {tasks.length ? (
+        <StyledSearchBar>
+          <div
+            className={`searchbar__container tasklist_search ${
+              searchFocus ? "searchbar__container--focused" : ""
+            } ${
+              searchInput.length && !filteredTasks.length
+                ? "searchbar__container--error"
+                : ""
+            }`}
+            onFocus={() => setSearchFocus(true)}
+            onBlur={() => setSearchFocus(false)}
+          >
+            <input
+              type="text"
+              onChange={handleChange}
+              value={searchInput}
+              placeholder="Search Task by name"
+              autoComplete="off"
+            />
+            <IoSearch className="searchbar--icon" />
+          </div>
+          <span
+            className={`searchbar--error ${
+              searchInput.length && !filteredTasks.length ? "display" : ""
+            }`}
+          >
+            No Result Found
+          </span>
+        </StyledSearchBar>
+      ) : (
+        <></>
+      )}
+
+      <section className="tasklist__table">
         {tasks.length ? (
           <table>
             <thead>
@@ -228,7 +257,10 @@ function TaskList(props) {
             </tbody>
           </table>
         ) : (
-          <p>Please Create a task</p>
+          <div className="no_task">
+            <img src={noTask} alt="Please Create a Task" />
+            <p>You don't have any Task Category, so please create one.</p>
+          </div>
         )}
       </section>
       <TaskDialog

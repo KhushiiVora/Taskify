@@ -30,11 +30,13 @@ import { IoExit } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { RiAddCircleFill } from "react-icons/ri";
 import { IoChatbubblesSharp } from "react-icons/io5";
+import { IoSearch } from "react-icons/io5";
 import noTaskCategory from "/img/noTaskCategory.svg";
 import {
   StyledSection,
   menuItemStyling,
 } from "../../../styles/workspace.styles";
+import { StyledSearchBar } from "../../../styles/searchbar.styles";
 
 export default function Workspace(props) {
   const { workspaceId, setOpenMemberAccessPanel } = props;
@@ -54,6 +56,7 @@ export default function Workspace(props) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [filteredTaskCategories, setFilteredTaskCategories] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [searchFocus, setSearchFocus] = useState(false);
 
   const open = Boolean(anchorEl);
 
@@ -480,16 +483,41 @@ export default function Workspace(props) {
             total={workspaceProgress.cumulativeTasks}
           />
 
-          <div className="task_category--search">
-            <input
-              name="searchTaskCategory"
-              type="text"
-              onChange={handleChange}
-              value={searchInput}
-              placeholder="Search Category by name"
-              autoComplete="off"
-            />
-          </div>
+          {taskCategories.length ? (
+            <StyledSearchBar>
+              <div
+                className={`searchbar__container category_search ${
+                  searchFocus ? "searchbar__container--focused" : ""
+                } ${
+                  searchInput.length && !filteredTaskCategories.length
+                    ? "searchbar__container--error"
+                    : ""
+                }`}
+                onFocus={() => setSearchFocus(true)}
+                onBlur={() => setSearchFocus(false)}
+              >
+                <input
+                  type="text"
+                  onChange={handleChange}
+                  value={searchInput}
+                  placeholder="Search Category by name"
+                  autoComplete="off"
+                />
+                <IoSearch className="searchbar--icon" />
+              </div>
+              <span
+                className={`searchbar--error ${
+                  searchInput.length && !filteredTaskCategories.length
+                    ? "display"
+                    : ""
+                }`}
+              >
+                No Result Found
+              </span>
+            </StyledSearchBar>
+          ) : (
+            <></>
+          )}
 
           {taskCategories.length ? (
             <section className="categories_container">
