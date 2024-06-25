@@ -21,9 +21,9 @@ function TaskList(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
-  const [filteredTasks, setFilteredTasks] = useState([]);
   const [taskToEdit, setTaskToEdit] = useState({});
   const [overDueTaskIds, setOverDueTaskIds] = useState([]);
+  const [filteredTasks, setFilteredTasks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   const workspaceMembers = useSelector((state) => state.members);

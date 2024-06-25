@@ -98,11 +98,28 @@ const StyledSection = styled.section`
   .text_locked {
     font-weight: bold;
   }
+  .task_category--search {
+    margin: 0.5rem;
+    padding: 0rem 1rem;
+  }
+  .task_category--search input:focus {
+    border: 1px solid black;
+
+  }
+  .task_category--search input {
+    height: 100%;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    border: 1px solid ${(props) => props.theme.borderColor};
+    background-color: ${(props) => props.theme.color1};
+    border-radius: 2rem;
+  }
 
   .categories_container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
   }
+
   .avatar-container {
     cursor: pointer;
   }

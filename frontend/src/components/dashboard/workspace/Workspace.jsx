@@ -52,6 +52,9 @@ export default function Workspace(props) {
     handleConfirmAction: () => {},
   });
   const [anchorEl, setAnchorEl] = useState(null);
+  const [filteredTaskCategories, setFilteredTaskCategories] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+
   const open = Boolean(anchorEl);
 
   const navigate = useNavigate();
@@ -229,6 +232,34 @@ export default function Workspace(props) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  useEffect(() => {
+    if (filteredTaskCategories.length && searchInput) {
+      setFilteredTaskCategories(
+        taskCategories.filter((taskCategory) =>
+          taskCategory.name.toLowerCase().includes(searchInput)
+        )
+      );
+    }
+  }, [taskCategories]);
+
+  const displayTaskCategories = filteredTaskCategories.length
+    ? filteredTaskCategories
+    : taskCategories;
+
+  const handleChange = (event) => {
+    setSearchInput(event.target.value);
+
+    if (event.target.value) {
+      setFilteredTaskCategories(
+        taskCategories.filter((taskCategory) =>
+          taskCategory.name.toLowerCase().includes(event.target.value)
+        )
+      );
+    } else {
+      setFilteredTaskCategories([]);
+    }
   };
 
   return (
@@ -448,13 +479,25 @@ export default function Workspace(props) {
             value={workspaceProgress.cumulativeProgress}
             total={workspaceProgress.cumulativeTasks}
           />
+
+          <div className="task_category--search">
+            <input
+              name="searchTaskCategory"
+              type="text"
+              onChange={handleChange}
+              value={searchInput}
+              placeholder="Search Category by name"
+              autoComplete="off"
+            />
+          </div>
+
           {taskCategories.length ? (
             <section className="categories_container">
               <TaskCategoryList
                 workspaceId={workspaceId}
                 setTaskCategories={setTaskCategories}
                 isLeader={leaders.includes(user._id)}
-                taskCategories={taskCategories}
+                taskCategories={displayTaskCategories}
                 handleExpand={handleExpand}
               />
             </section>

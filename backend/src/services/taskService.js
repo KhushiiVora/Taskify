@@ -107,7 +107,7 @@ class TaskService {
 
       if (taskCategoryDeleted) {
         workspace.taskCategories.splice(
-          // workspace.taskCategories.indexOf(categoryId),
+          workspace.taskCategories.indexOf(categoryId),
           1
         );
       }
