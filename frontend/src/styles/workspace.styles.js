@@ -112,6 +112,32 @@ const StyledSection = styled.section`
   .menu_icons {
     color: ${(props) => props.theme.color2};
   }
+
+  .task_category_skeleton {
+    display: flex;
+    flex-direction: column;
+  }
+  .skeleton__search,
+  .skeleton__cards--card,
+  .skeleton__progress {
+    border-radius: 0.7rem;
+  }
+  .skeleton__search {
+    margin: 1rem;
+  }
+  .skeleton__cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+  }
+  .skeleton__cards--card {
+    border: 3px solid ${(props) => props.theme.bgColor4};
+    padding: 1rem;
+    border-radius: 0.7rem;
+  }
+  .skeleton__progress {
+    margin: 1rem 0;
+  }
 `;
 const menuItemStyling = {
   color: `${theme.color2}`,

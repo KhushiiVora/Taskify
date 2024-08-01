@@ -19,6 +19,7 @@ const StyledSection = styled.section`
     font-size: 1.4rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: ${(props) => props.theme.iconColor};
   }
 
@@ -50,10 +51,6 @@ const StyledSection = styled.section`
     padding: 0.5rem;
   }
 
-  .profile_container__data {
-    justify-self: center;
-  }
-
   .profile_container__data div {
     display: flex;
     flex-direction: column;
@@ -61,6 +58,27 @@ const StyledSection = styled.section`
   }
   .profile_container__data--title {
     font-weight: bold;
+  }
+
+  .profile_container__chips--chip {
+    width: fit-content;
+    font-size: 1rem;
+    background: none;
+    color: ${(props) => props.theme.iconColor};
+    border: 1px solid ${(props) => props.theme.iconColor};
+  }
+
+  .profile_container__data .profile_container__chips {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+  }
+
+  .profile_container__chips--chip:hover {
+    background-color: ${(props) => props.theme.bgColor1};
   }
 
   .profile_container--icons {

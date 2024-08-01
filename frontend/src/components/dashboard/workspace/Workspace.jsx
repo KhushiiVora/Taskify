@@ -12,6 +12,7 @@ import TaskCategoryList from "../taskcategory/TaskCategoryList";
 import Button from "../../atoms/Button";
 import TaskList from "../task/TaskList";
 import ProgressBar from "../ProgressBar";
+import TaskCategorySkeleton from "../../skeleton/TaskCategorySkeleton";
 
 import MUIButton from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
@@ -57,6 +58,7 @@ export default function Workspace(props) {
   const [filteredTaskCategories, setFilteredTaskCategories] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchFocus, setSearchFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const open = Boolean(anchorEl);
 
@@ -83,12 +85,16 @@ export default function Workspace(props) {
   });
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/dashboard/taskCategories/${workspaceId}/`, {
         withCredentials: true,
       })
       .then((response) => response.data)
-      .then((data) => setTaskCategories(data))
+      .then((data) => {
+        setTaskCategories(data);
+        setLoading(false);
+      })
       .catch((error) => {
         console.log(error);
         refreshPage(error.response.status);
@@ -103,6 +109,7 @@ export default function Workspace(props) {
           theme: "colored",
           transition: Slide,
         });
+        setLoading(false);
       });
 
     axios
@@ -478,12 +485,15 @@ export default function Workspace(props) {
               </div>
             </div>
           </section>
-          <ProgressBar
-            value={workspaceProgress.cumulativeProgress}
-            total={workspaceProgress.cumulativeTasks}
-          />
+          <TaskCategorySkeleton loading={loading} />
+          {!loading && (
+            <ProgressBar
+              value={workspaceProgress.cumulativeProgress}
+              total={workspaceProgress.cumulativeTasks}
+            />
+          )}
 
-          {taskCategories.length ? (
+          {!loading && taskCategories.length ? (
             <StyledSearchBar>
               <div
                 className={`searchbar__container category_search ${
@@ -519,7 +529,7 @@ export default function Workspace(props) {
             <></>
           )}
 
-          {taskCategories.length ? (
+          {!loading && taskCategories.length ? (
             <section className="categories_container">
               <TaskCategoryList
                 workspaceId={workspaceId}

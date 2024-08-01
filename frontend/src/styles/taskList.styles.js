@@ -98,6 +98,18 @@ const StyledSection = styled.section`
   .no_task img {
     width: 50%;
   }
+  .skeleton_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .skeleton__search,
+  .skeleton__taskrow {
+    border-radius: 0.7rem;
+  }
+  .skeleton__search {
+    margin: 0.5rem 0;
+  }
 `;
 
 const colorSuccess = {

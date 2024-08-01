@@ -147,13 +147,6 @@ export default function Profile() {
                 </Tooltip>
               </div>
             </td>
-            {/* <td onClick={handleDialogOpen}>
-              <Tooltip title="Edit">
-                <IconButton>
-                  <MdEdit />
-                </IconButton>
-              </Tooltip>
-            </td> */}
           </tr>
           <tr>
             <td className="profile_container--icons">
@@ -201,10 +194,8 @@ export default function Profile() {
               <div>
                 <span className="profile_container__data--title">Email</span>
                 <div>{user.email}</div>
-                {/* <hr /> */}
               </div>
             </td>
-            {/* <td></td> */}
           </tr>
           <tr>
             <td className="profile_container--icons">
@@ -254,12 +245,13 @@ export default function Profile() {
                 <span className="profile_container__data--title">
                   Workspaces
                 </span>
-                <div>
+                <div className="profile_container__chips">
                   {workspaces.map((workspace) => {
                     return (
                       <Chip
                         key={workspace._id}
                         label={workspace.name}
+                        className="profile_container__chips--chip"
                         onClick={() =>
                           navigate(`/dashboard/${username}`, {
                             state: { workspaceId: workspace._id },

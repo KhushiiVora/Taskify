@@ -7,6 +7,7 @@ import TaskDialog from "./TaskDialog";
 import TaskRowCard from "./TaskRowCard";
 import Button from "../../atoms/Button";
 import Checkbox from "@mui/material/Checkbox";
+import TaskSkeleton from "../../skeleton/TaskSkeleton";
 
 import { IoArrowBackCircle } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
@@ -29,11 +30,13 @@ function TaskList(props) {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [searchFocus, setSearchFocus] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const workspaceMembers = useSelector((state) => state.members);
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/dashboard/tasks/${workspaceId}/${categoryId}/`, {
         withCredentials: true,
@@ -41,6 +44,7 @@ function TaskList(props) {
       .then((response) => response.data)
       .then((data) => {
         setTasks(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.log(error.response.data);
@@ -57,6 +61,7 @@ function TaskList(props) {
           theme: "colored",
           transition: Slide,
         });
+        setLoading(false);
       });
   }, []);
 
@@ -180,6 +185,7 @@ function TaskList(props) {
           onClick={() => handleDialogOpen("add")}
         />
       </section>
+      <TaskSkeleton loading={loading} />
       {tasks.length ? (
         <StyledSearchBar>
           <div
@@ -257,10 +263,12 @@ function TaskList(props) {
             </tbody>
           </table>
         ) : (
-          <div className="no_task">
-            <img src={noTask} alt="Please Create a Task" />
-            <p>You don't have any Task Category, so please create one.</p>
-          </div>
+          !loading && (
+            <div className="no_task">
+              <img src={noTask} alt="Please Create a Task" />
+              <p>You don't have any Task Category, so please create one.</p>
+            </div>
+          )
         )}
       </section>
       <TaskDialog
