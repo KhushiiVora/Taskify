@@ -5,7 +5,7 @@ const theme = {
   bgColor1: "#f0faff",
   bgColor2: "#CADFE9",
   bgColor3: "#cff7f3", //signup
-  bgColor4: "#f5efe5", //signup: light grey color
+  bgColor4: "#f5efe5", //signup: light yellow color
 
   iconColor: "#175676",
   msgBgColor: "#fcf4e2aa",

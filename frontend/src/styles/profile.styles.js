@@ -10,6 +10,10 @@ const StyledSection = styled.section`
     width: 40%;
   }
 
+  .profile_page {
+    margin-top: 3.2rem;
+  }
+
   .profile_container thead,
   .profile_container tbody {
     width: 100%;
@@ -63,6 +67,7 @@ const StyledSection = styled.section`
   .profile_container__chips--chip {
     width: fit-content;
     font-size: 1rem;
+    flex-grow: 1;
     background: none;
     color: ${(props) => props.theme.iconColor};
     border: 1px solid ${(props) => props.theme.iconColor};

@@ -124,7 +124,7 @@ export default function Profile() {
   return (
     <StyledSection>
       {/* <section> */}
-      <table className="profile_container">
+      <table className="profile_container profile_page">
         <thead>
           <tr>
             <th>{user.username}</th>

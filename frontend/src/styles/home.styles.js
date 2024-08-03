@@ -13,6 +13,7 @@ const StyledSection = styled.section`
     height: 100%;
     width: 100%;
     margin-bottom: 6rem;
+    margin-top: 1rem;
   }
   .main_section__content {
     width: 50%;

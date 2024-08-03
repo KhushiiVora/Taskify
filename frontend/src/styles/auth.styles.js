@@ -11,6 +11,7 @@ const StyledSection = styled.section`
   align-items: center;
 
   .auth_container {
+    margin-top: 6rem;
     display: flex;
     width: 50%;
     height: 80%;

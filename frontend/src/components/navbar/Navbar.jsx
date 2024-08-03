@@ -7,19 +7,21 @@ export default function Navbar(props) {
   return (
     <>
       <StyledNav>
-        <NavLink
-          className={`${location.pathname === "/" ? "active" : ""}`}
-          to="/"
-        >
-          Home
-        </NavLink>
-        <NavLink
-          className={`${location.pathname === "/profile" ? "active" : ""}`}
-          to={"/profile"}
-        >
-          Profile
-        </NavLink>
-        <NavLink to={`/dashboard/${username}`}>Dashboard</NavLink>
+        <div className="navbar">
+          <NavLink
+            className={`${location.pathname === "/" ? "active" : ""}`}
+            to="/"
+          >
+            Home
+          </NavLink>
+          <NavLink
+            className={`${location.pathname === "/profile" ? "active" : ""}`}
+            to={"/profile"}
+          >
+            Profile
+          </NavLink>
+          <NavLink to={`/dashboard/${username}`}>Dashboard</NavLink>
+        </div>
       </StyledNav>
       <Outlet />
     </>
