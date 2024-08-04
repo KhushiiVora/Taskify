@@ -85,33 +85,6 @@ export default function Workspace(props) {
   });
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/dashboard/taskCategories/${workspaceId}/`, {
-        withCredentials: true,
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        setTaskCategories(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        refreshPage(error.response.status);
-        toast.error(error.response.data, {
-          position: "bottom-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-        setLoading(false);
-      });
-
     axios
       .get(`/dashboard/members/${workspaceId}/`, { withCredentials: true })
       .then((response) => response.data)
@@ -529,17 +502,19 @@ export default function Workspace(props) {
             <></>
           )}
 
-          {!loading && taskCategories.length ? (
-            <section className="categories_container">
-              <TaskCategoryList
-                workspaceId={workspaceId}
-                setTaskCategories={setTaskCategories}
-                isLeader={leaders.includes(user._id)}
-                taskCategories={displayTaskCategories}
-                handleExpand={handleExpand}
-              />
-            </section>
-          ) : (
+          <section className="categories_container">
+            <TaskCategoryList
+              workspaceId={workspaceId}
+              setTaskCategories={setTaskCategories}
+              isLeader={leaders.includes(user._id)}
+              taskCategories={displayTaskCategories}
+              handleExpand={handleExpand}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          </section>
+
+          {!loading && !taskCategories.length && (
             <div className="no_task_category">
               <img src={noTaskCategory} alt="No Task Category" />
               <p>You don't have any Task Category, so please create one.</p>

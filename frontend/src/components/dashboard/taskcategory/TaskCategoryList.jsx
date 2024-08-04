@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "../../../axiosConfig";
 import { refreshPage } from "../../../utils/refreshPage";
 
@@ -14,11 +14,61 @@ function TaskCategoryList(props) {
     setTaskCategories,
     isLeader,
     handleExpand,
+    loading,
+    setLoading,
   } = props;
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
 
   const [categoryToDelete, setCategoryToDelete] = useState(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      console.log("Timer Started🚀: ");
+      getTaskCategoryList();
+    }, 5000);
+
+    setLoading(true);
+    getTaskCategoryList();
+
+    return () => {
+      console.log("Stopped......");
+      clearInterval(timer);
+    };
+  }, [workspaceId]);
+
+  useEffect(() => {
+    setLoading(true);
+    getTaskCategoryList();
+  }, []);
+
+  const getTaskCategoryList = async () => {
+    axios
+      .get(`/dashboard/taskCategories/${workspaceId}/`, {
+        withCredentials: true,
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        setTaskCategories(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        refreshPage(error.response.status);
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+        setLoading(false);
+      });
+  };
 
   const handleConfirmDialogClose = () => {
     setOpenConfirmDialog(false);
@@ -54,7 +104,7 @@ function TaskCategoryList(props) {
   };
   console.log(" Task Categories: ", taskCategories);
 
-  return (
+  return !loading && (
     <>
       {taskCategories.map((category) => {
         return (
