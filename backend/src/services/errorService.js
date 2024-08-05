@@ -19,7 +19,12 @@ class ErrorService {
 
   handleCustomError(error) {
     this.error.message = error.message;
-    this.error.status = 400;
+    if (this.error.message === "Unable to complete action!") {
+      console.log("🔴🔴🔴");
+      this.error.status = 422; //422 Unprocessable Entity: The request is well-formed, but the server was unable to process it.
+    } else {
+      this.error.status = 400;
+    }
 
     return this.error;
   }

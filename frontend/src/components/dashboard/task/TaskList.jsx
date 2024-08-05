@@ -36,33 +36,18 @@ function TaskList(props) {
   const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`/dashboard/tasks/${workspaceId}/${categoryId}/`, {
-        withCredentials: true,
-      })
-      .then((response) => response.data)
-      .then((data) => {
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error.response.data);
-        refreshPage(error.response.status);
+    const timer = setInterval(() => {
+      console.log("(Task) Timer Started🚀: ");
+      getTaskList();
+    }, 5000);
 
-        toast.error(error.response.data, {
-          position: "bottom-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Slide,
-        });
-        setLoading(false);
-      });
+    setLoading(true);
+    getTaskList();
+
+    return () => {
+      console.log("Task timer stopped..");
+      clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -94,6 +79,41 @@ function TaskList(props) {
       );
     }
   }, [tasks]);
+
+  const getTaskList = async () => {
+    axios
+      .get(`/dashboard/tasks/${workspaceId}/${categoryId}/`, {
+        withCredentials: true,
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        setTasks(data);
+        console.log(" Task data: ", data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        console.log("❌: ", error.response.status)
+        if (error.response.status === 422) {
+          console("❌❌❌");
+          handleExpand(null,null);
+        } else {
+          refreshPage(error.response.status);
+        }
+        toast.error(error.response.data, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Slide,
+        });
+        setLoading(false);
+      });
+  };
 
   function computeMainCheckedValueOnTasksChange() {
     const mainCheckedValue = tasks.reduce((result, currentTask) => {

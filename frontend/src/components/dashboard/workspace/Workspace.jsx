@@ -203,7 +203,7 @@ export default function Workspace(props) {
 
   const handleExpand = (event, categoryId) => {
     setExpand(!expand);
-    if (event.target.tagName !== "BUTTON") setSelectedCategoryId(categoryId);
+    if (event?.target?.tagName !== "BUTTON") setSelectedCategoryId(categoryId);
   };
 
   const handleConfirmDialogClose = () => {

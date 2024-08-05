@@ -34,12 +34,18 @@ class TaskService {
         taskCategory = await TaskCategory.findById(categoryId).populate(
           populateWith
         );
+        if (!taskCategory) {
+          return { error: new Error("Task Category has been deleted!") };
+        }
         await this.filterAssigneeList(
           taskCategory.tasks,
           taskCategory.workspaceId
         );
       } else {
         taskCategory = await TaskCategory.findById(categoryId);
+        if (!taskCategory) {
+          return { error: new Error("Task Category has been deleted!") };
+        }
       }
       return { taskCategory };
     } catch (error) {
@@ -151,7 +157,9 @@ class TaskService {
   findTaskById = async (taskId) => {
     try {
       const task = await Task.findById(taskId);
-
+      if (!task) {
+        return { error: new Error("Unable to complete action!") };
+      }
       return { task };
     } catch (error) {
       console.log("Error in findTaskById: ", error);
