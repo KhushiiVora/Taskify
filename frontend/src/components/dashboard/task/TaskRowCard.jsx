@@ -30,6 +30,7 @@ function TaskRowCard(props) {
     setTaskToEdit,
     setFilteredTasks,
     searchInput,
+    handleExpand,
   } = props;
 
   const [isChecked, setIsChecked] = useState(task.state);
@@ -50,7 +51,11 @@ function TaskRowCard(props) {
         })
         .catch((error) => {
           console.log(error);
-          refreshPage(error.response.status);
+          if (error.response.status === 422) {
+            setTimeout(handleExpand, 3000);
+          } else {
+            refreshPage(error.response.status);
+          }
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -81,7 +86,11 @@ function TaskRowCard(props) {
         })
         .catch((error) => {
           console.log(error);
-          refreshPage(error.response.status);
+          if (error.response.status === 400) {
+            setTimeout(handleExpand, 3000);
+          } else {
+            refreshPage(error.response.status);
+          }
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,

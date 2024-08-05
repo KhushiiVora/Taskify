@@ -35,6 +35,7 @@ export default function TaskDialog(props) {
     setIsMainChecked,
     isNewTask,
     task,
+    handleExpand,
   } = props;
 
   const { members } = useSelector((state) => state.members);
@@ -127,7 +128,11 @@ export default function TaskDialog(props) {
         })
         .catch((error) => {
           console.log(error);
-          refreshPage(error.response.status);
+          if (error.response.status === 400) {
+            setTimeout(handleExpand, 3000);
+          } else {
+            refreshPage(error.response.status);
+          }
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -166,7 +171,11 @@ export default function TaskDialog(props) {
         })
         .catch((error) => {
           console.log(error);
-          refreshPage(error.response.status);
+          if (error.response.status === 422) {
+            setTimeout(handleExpand, 3000);
+          } else {
+            refreshPage(error.response.status);
+          }
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,

@@ -92,14 +92,8 @@ function TaskList(props) {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error.response.data);
-        console.log("❌: ", error.response.status)
-        if (error.response.status === 422) {
-          console("❌❌❌");
-          handleExpand(null,null);
-        } else {
-          refreshPage(error.response.status);
-        }
+        console.log(error);
+        refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,
@@ -164,7 +158,22 @@ function TaskList(props) {
         })
         .catch((error) => {
           console.log(error);
-          refreshPage(error.response.status);
+          if (error.response.status === 422) {
+            setTimeout(handleExpand, 3000);
+          } else {
+            refreshPage(error.response.status);
+          }
+          toast.error(error.response.data, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
         });
 
       return !prev;
@@ -277,6 +286,7 @@ function TaskList(props) {
                     setTaskToEdit={setTaskToEdit}
                     setFilteredTasks={setFilteredTasks}
                     searchInput={searchInput}
+                    handleExpand={handleExpand}
                   />
                 );
               })}
@@ -300,6 +310,7 @@ function TaskList(props) {
         handleDialogClose={handleDialogClose}
         setTasks={setTasks}
         setIsMainChecked={setIsChecked}
+        handleExpand={handleExpand}
       />
       <ToastContainer />
     </StyledSection>
