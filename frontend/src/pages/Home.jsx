@@ -122,8 +122,8 @@ export default function Home() {
       </section>
 
       {/* --------Section 4: Sub Features --------------*/}
-      <section className="section_conatiner">
-        <div className="section_container__sections">
+      <section className="section_container">
+        <div className="section_container__sections cards">
           <div className="section_container__sections--cards">
             <div className="section_container__sections--card">
               <div className="sections--card_img">
@@ -134,9 +134,11 @@ export default function Home() {
                 />
               </div>
               <div className="sections--card_content">
+                <h1>Progress Marking</h1>
+                <div></div>
                 <p>
-                  You can mark tasks as completed or uncompleted to track their
-                  status and progress effectively.
+                  Track progress with precision by marking tasks as complete or
+                  incomplete.
                 </p>
               </div>
             </div>
@@ -149,9 +151,11 @@ export default function Home() {
                 />
               </div>
               <div className="sections--card_content">
+                <h1>Workspace Security</h1>
+                <div></div>
                 <p>
-                  Leaders hold the privilege of locking or unlocking the
-                  workspace, managing who joins to enhance workspace security.
+                  Leaders safeguard workspace security by locking or unlocking
+                  it, overseeing who can join.
                 </p>
               </div>
             </div>
@@ -164,9 +168,11 @@ export default function Home() {
                 />
               </div>
               <div className="sections--card_content">
+                <h1>Profile Management</h1>
+                <div></div>
                 <p>
-                  You can manage your public profile to control how others see
-                  you online, helping you make a positive impression.
+                  Manage your public profile to shape your online presence and
+                  make a positive impression.
                 </p>
               </div>
             </div>
