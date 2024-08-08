@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import axios from "../../../axiosConfig";
 
 import Button from "../../atoms/Button";
 import { RiAddCircleFill } from "react-icons/ri";
@@ -8,12 +10,14 @@ import {
   OuterStyledSection,
 } from "../../../styles/workspaceList.styles";
 import { StyledSearchBar } from "../../../styles/searchbar.styles";
-import { useState } from "react";
 
 export default function WorkspaceList(props) {
   const { members, openedWorkspaceId, handleWorkspaceOpen, handleDialogOpen } =
     props;
-  const workspaces = useSelector((state) => state.workspaces.workspaces);
+
+  const [workspaces, setWorkspaces] = useState(
+    useSelector((state) => state.workspaces.workspaces)
+  );
 
   const [searchFocus, setSearchFocus] = useState(false);
   const [searchInput, setSearchInput] = useState("");
@@ -22,6 +26,24 @@ export default function WorkspaceList(props) {
   const displayWorkspaces = filteredWorkspaces.length
     ? filteredWorkspaces
     : workspaces;
+
+  useEffect(() => {
+    const timer = setInterval(getUpdatesOfWorkspace, 5000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  const getUpdatesOfWorkspace = async () => {
+    await axios
+      .get(`/user/workspaces`, { withCredentials: true })
+      .then((response) => response.data)
+      .then((data) => {
+        setWorkspaces(data);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const handleChange = (event) => {
     setSearchInput(event.target.value);

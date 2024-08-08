@@ -4,6 +4,17 @@ const userService = new UserService();
 const errorService = new ErrorService();
 
 // Error handling remaining
+const getWorkspaces = async (req, res) => {
+  const result = await userService.findUserById(req.user._id, "workspaces");
+
+  if (result.user) {
+    res.status(200).send(result.user.workspaces);
+  } else {
+    console.log("Error in getWorkspaces: ", result.error);
+    const error = errorService.handleError(result.error);
+    res.status(error.status).send(error.message);
+  }
+};
 const patchEditProfilePic = async (req, res) => {
   const { userId } = req.params;
   const { profilePic } = req.body;
@@ -47,4 +58,9 @@ const patchEditUserBio = async (req, res) => {
   }
 };
 
-module.exports = { patchEditProfilePic, patchEditUsername, patchEditUserBio };
+module.exports = {
+  getWorkspaces,
+  patchEditProfilePic,
+  patchEditUsername,
+  patchEditUserBio,
+};

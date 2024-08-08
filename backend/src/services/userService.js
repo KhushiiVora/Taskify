@@ -31,6 +31,11 @@ class UserService {
         user = await User.findById(userId)
           .populate(populateWith)
           .select("-password");
+
+        user.workspaces.sort(
+          (workspace1, workspace2) =>
+            workspace2.updatedAt - workspace1.updatedAt
+        );
       } else {
         user = await User.findById(userId).select("-password");
       }

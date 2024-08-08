@@ -25,6 +25,7 @@ app.get(
 
 app.use(authMiddleware);
 //it will return 401 unauthorized when token is not there
+app.use("/user", userRouter);
 app.use("/profile", userRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/chat", messageRouter);

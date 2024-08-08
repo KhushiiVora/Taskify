@@ -6,6 +6,7 @@ const {
   patchEditProfilePic,
   patchEditUsername,
   patchEditUserBio,
+  getWorkspaces,
 } = require("../controllers/user.controllers");
 
 /* VALIDATORS */
@@ -15,6 +16,8 @@ const {
 } = require("../validators/user.validators");
 
 const userProfileMiddleware = validateSchema(userProfileValidationSchema);
+
+router.get("/workspaces", getWorkspaces);
 
 router.patch("/edit/:userId/pic", patchEditProfilePic);
 
