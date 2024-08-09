@@ -156,66 +156,6 @@ const StyledSection = styled.section`
   }
 
   /**---------------- Section4: SubFeature Cards --------------*/
-  /* .section_container__sections--cards {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 4rem 5rem;
-  }
-  .section_container__sections--card {
-    margin: 0 1rem;
-    background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-    backdrop-filter: blur(4.5px);
-    -webkit-backdrop-filter: blur(4.5px);
-    border-radius: 0.7rem;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
-  }
-  .section_container__sections--card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
-  }
-  .sections--card_img {
-    width: 100%;
-    height: 60%;
-    display: flex;
-    justify-content: center;
-  }
-  .task_check_img {
-    height: 20rem;
-  }
-  .workspace_lock_img {
-    align-self: start;
-    width: 23rem;
-  }
-  .profile_img {
-    height: 17rem;
-  }
-  .sections--card_content {
-    width: 100%;
-    height: 40%;
-    padding: 0 3rem 2rem 3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .sections--card_content h1 {
-    font-size: 1.3rem;
-  }
-  .sections--card_content div {
-    margin: 1rem 0;
-    width: 80%;
-    border: 0.2rem solid ${(props) => props.theme.successColorDark};
-    border-radius: 0.5rem;
-  }
-  .sections--card_content p {
-    color: ${(props) => props.theme.textColor1};
-    text-align: justify;
-    font-size: 1.2rem;
-  } */
   .section_container__sections--cards {
     width: 100%;
     height: 100%;
@@ -227,7 +167,8 @@ const StyledSection = styled.section`
 
   .section_container__sections--card {
     background: rgba(255, 255, 255, 0.7);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    /* box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); */
+    box-shadow: 0px 0px 20px 8px ${(props) => props.theme.bgColor2};
     backdrop-filter: blur(4.5px);
     -webkit-backdrop-filter: blur(4.5px);
     border-radius: 0.7rem;
@@ -237,7 +178,9 @@ const StyledSection = styled.section`
   }
 
   .section_container__sections--card:hover {
-    box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+    /* box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5); */
+    box-shadow: 0px 5px 20px 8px ${(props) => props.theme.bgColor2};
+    transform: translateY(-2px);
   }
 
   .sections--card_img {
