@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useLogout from "../../../hooks/useLogout";
 import axios from "../../../axiosConfig";
 
 import Button from "../../atoms/Button";
@@ -10,6 +12,7 @@ import {
   OuterStyledSection,
 } from "../../../styles/workspaceList.styles";
 import { StyledSearchBar } from "../../../styles/searchbar.styles";
+import { restored as workspacesRestored } from "../../../state/workspaceSlice";
 
 export default function WorkspaceList(props) {
   const { members, openedWorkspaceId, handleWorkspaceOpen, handleDialogOpen } =
@@ -22,6 +25,10 @@ export default function WorkspaceList(props) {
   const [searchFocus, setSearchFocus] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [filteredWorkspaces, setFilteredWorkspaces] = useState([]);
+
+  const navigate = useNavigate();
+  const { clearState } = useLogout();
+  const dispatch = useDispatch();
 
   const displayWorkspaces = filteredWorkspaces.length
     ? filteredWorkspaces
@@ -40,9 +47,21 @@ export default function WorkspaceList(props) {
       .get(`/user/workspaces`, { withCredentials: true })
       .then((response) => response.data)
       .then((data) => {
+        if (data.length < workspaces.length) {
+          dispatch(workspacesRestored(data));
+          handleWorkspaceOpen(null, "");
+        }
         setWorkspaces(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        console.log(error);
+        if (error.response.status === 401) {
+          setTimeout(() => {
+            clearState();
+            navigate("/login");
+          }, 3000);
+        }
+      });
   };
 
   const handleChange = (event) => {

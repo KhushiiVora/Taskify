@@ -28,8 +28,6 @@ function TaskRowCard(props) {
     updateTaskState,
     handleDialogOpen,
     setTaskToEdit,
-    setFilteredTasks,
-    searchInput,
     handleExpand,
   } = props;
 

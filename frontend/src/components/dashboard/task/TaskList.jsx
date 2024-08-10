@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import useLogout from "../../../hooks/useLogout";
 import axios from "../../../axiosConfig";
 import { refreshPage } from "../../../utils/refreshPage";
 
@@ -32,6 +34,8 @@ function TaskList(props) {
   const [searchFocus, setSearchFocus] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+  const { clearState } = useLogout();
   const workspaceMembers = useSelector((state) => state.members);
   const user = useSelector((state) => state.user.user);
 
@@ -93,7 +97,16 @@ function TaskList(props) {
       })
       .catch((error) => {
         console.log(error);
-        refreshPage(error.response.status);
+        if (error.response.status === 500) {
+          setTimeout(handleExpand, 3000);
+        } else if (error.response.status === 401) {
+          setTimeout(() => {
+            clearState();
+            navigate("/login");
+          }, 3000);
+        } else {
+          refreshPage(error.response.status);
+        }
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 5000,

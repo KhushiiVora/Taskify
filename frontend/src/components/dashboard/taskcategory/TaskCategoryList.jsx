@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useLogout from "../../../hooks/useLogout";
 import axios from "../../../axiosConfig";
 import { refreshPage } from "../../../utils/refreshPage";
 
@@ -22,6 +24,8 @@ function TaskCategoryList(props) {
 
   const [categoryToDelete, setCategoryToDelete] = useState(null);
 
+  const navigate = useNavigate();
+  const { clearState } = useLogout();
   useEffect(() => {
     const timer = setInterval(() => {
       console.log("Timer Started🚀: ");
@@ -54,7 +58,14 @@ function TaskCategoryList(props) {
       })
       .catch((error) => {
         console.log(error);
-        refreshPage(error.response.status);
+        if (error.response.status === 401) {
+          setTimeout(() => {
+            clearState();
+            navigate("/login");
+          }, 3000);
+        } else {
+          // refreshPage(error.response.status);
+        }
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,
@@ -104,40 +115,42 @@ function TaskCategoryList(props) {
   };
   console.log(" Task Categories: ", taskCategories);
 
-  return !loading && (
-    <>
-      {taskCategories.map((category) => {
-        return (
-          <TaskCategoryCard
-            isLeader={isLeader}
-            setTaskCategories={setTaskCategories}
-            handleExpand={handleExpand}
-            key={category._id}
-            category={category}
-            workspaceId={workspaceId}
-            setOpenConfirmDialog={setOpenConfirmDialog}
-            setCategoryToDelete={setCategoryToDelete}
-          />
-        );
-      })}
-      <ConfirmationDialog
-        title={`${categoryToDelete?.name} Delete Confirmation`}
-        description={
-          <>
-            Are you sure you want to delete {categoryToDelete?.name} ? <br />
-            NOTE: This action will permanently delete {
-              categoryToDelete?.name
-            }{" "}
-            and its progress.
-          </>
-        }
-        confirmText="Yes, Delete"
-        openConfirmDialog={openConfirmDialog}
-        handleConfirmDialogClose={handleConfirmDialogClose}
-        handleConfirmAction={handleTaskCategoryDelete}
-      />
-      <ToastContainer />
-    </>
+  return (
+    !loading && (
+      <>
+        {taskCategories.map((category) => {
+          return (
+            <TaskCategoryCard
+              isLeader={isLeader}
+              setTaskCategories={setTaskCategories}
+              handleExpand={handleExpand}
+              key={category._id}
+              category={category}
+              workspaceId={workspaceId}
+              setOpenConfirmDialog={setOpenConfirmDialog}
+              setCategoryToDelete={setCategoryToDelete}
+            />
+          );
+        })}
+        <ConfirmationDialog
+          title={`${categoryToDelete?.name} Delete Confirmation`}
+          description={
+            <>
+              Are you sure you want to delete {categoryToDelete?.name} ? <br />
+              NOTE: This action will permanently delete {
+                categoryToDelete?.name
+              }{" "}
+              and its progress.
+            </>
+          }
+          confirmText="Yes, Delete"
+          openConfirmDialog={openConfirmDialog}
+          handleConfirmDialogClose={handleConfirmDialogClose}
+          handleConfirmAction={handleTaskCategoryDelete}
+        />
+        <ToastContainer />
+      </>
+    )
   );
 }
 

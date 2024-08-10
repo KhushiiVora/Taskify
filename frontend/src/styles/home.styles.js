@@ -32,7 +32,7 @@ const StyledSection = styled.section`
   }
 
   .main_section__content--start_btn {
-    min-height: 100%;
+    min-height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;

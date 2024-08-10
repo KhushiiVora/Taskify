@@ -23,11 +23,7 @@ const useLogout = () => {
       .then((response) => response.data)
       .then((data) => {
         console.log(data);
-        dispatch(workspacesCleared());
-        dispatch(socketCleared());
-        dispatch(membersCleared());
-        dispatch(chatStateCleared());
-        dispatch(userCleared());
+        clearState();
       })
       .catch((error) => {
         console.log(error);
@@ -46,6 +42,13 @@ const useLogout = () => {
 
     setLoading(false);
   };
-  return { loading, logout };
+  const clearState = () => {
+    dispatch(workspacesCleared());
+    dispatch(socketCleared());
+    dispatch(membersCleared());
+    dispatch(chatStateCleared());
+    dispatch(userCleared());
+  };
+  return { loading, logout, clearState };
 };
 export default useLogout;

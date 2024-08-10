@@ -17,7 +17,7 @@ const onlineUsers = {};
 let room;
 
 io.on("connection", (socket) => {
-  console.log(socket.id);
+  console.log("socket id: ", socket.id);
   const userID = socket.handshake.query.userId;
 
   socket.on("join-workspace-room", (workspaceId) => {
