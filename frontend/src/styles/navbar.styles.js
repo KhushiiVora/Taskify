@@ -8,15 +8,30 @@ const StyledNav = styled.nav`
   z-index: 2;
 
   .navbar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid ${(props) => props.theme.iconColor};
+    box-shadow: 0px 2px 20px ${(props) => props.theme.iconColor};
+    border-radius: 0 0 0.7rem 0.7rem;
+    overflow: hidden;
+  }
+
+  .navbar__logo {
+    width: 8%;
+    margin: 0.2rem 0 0 0.5rem;
+    background-color: ${props=>props.theme.color1}
+  }
+  .navbar__logo img{
+    width: 100%;
+  }
+  
+  .navbar__links {
     font-weight: bold;
     font-size: 1.1rem;
     padding: 0.7rem;
     display: flex;
-    justify-content: end;
+    /* justify-content: end; */
     gap: 1rem;
-    border-bottom: 2px solid ${(props) => props.theme.iconColor};
-    box-shadow: 0px 2px 20px ${(props) => props.theme.iconColor};
-    border-radius: 0 0 0.7rem 0.7rem;
   }
 
   a {

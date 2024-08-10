@@ -24,6 +24,10 @@ export default function Home() {
       <section className="main_section">
         <div className="main_section__content">
           <h1>Taskify Your Day, Simplify Your Way</h1>
+          <div
+            className="separator"
+            style={{ borderColor: theme.iconColor }}
+          ></div>
           <p>
             Taskify! Where organization meets collaboration seamlessly.
             Streamline tasks, categorize, and chat live – all in one workspace!
@@ -179,7 +183,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section>
+      <section className="section_container__footer">
         <Footer />
       </section>
     </StyledSection>

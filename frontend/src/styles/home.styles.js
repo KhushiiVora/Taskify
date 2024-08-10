@@ -121,7 +121,8 @@ const StyledSection = styled.section`
     font-size: 2.5rem;
     align-self: first baseline;
   }
-  .section_container__sections--content div {
+  .section_container__sections--content div,
+  .main_section__content .separator {
     margin-top: 2rem;
     width: 20%;
     border-width: 0.3rem;
@@ -129,7 +130,6 @@ const StyledSection = styled.section`
     border-radius: 0.5rem;
     align-self: first baseline;
   }
-
   .section_container__sections--content p {
     padding-top: 3rem;
     font-size: 1.5rem;
@@ -231,6 +231,22 @@ const StyledSection = styled.section`
     color: ${(props) => props.theme.textColor1};
     text-align: justify;
     font-size: 1.2rem;
+  }
+
+  /**---------------- Section4: Footer --------------*/
+  .section_container__footer {
+    /* height: 100%; */
+    height: 20vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${(props) => props.theme.borderColor};
+    color: ${(props) => props.theme.color1};
+    line-height: 1.7;
+  }
+  .copyright {
+    font-size: 1.1rem;
   }
 `;
 
