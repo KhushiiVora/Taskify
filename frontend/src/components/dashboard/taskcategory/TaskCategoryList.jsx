@@ -64,7 +64,7 @@ function TaskCategoryList(props) {
             navigate("/login");
           }, 3000);
         } else {
-          // refreshPage(error.response.status);
+          refreshPage(error.response.status);
         }
         toast.error(error.response.data, {
           position: "bottom-center",

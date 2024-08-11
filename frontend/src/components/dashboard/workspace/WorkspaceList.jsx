@@ -12,7 +12,6 @@ import {
   OuterStyledSection,
 } from "../../../styles/workspaceList.styles";
 import { StyledSearchBar } from "../../../styles/searchbar.styles";
-import { restored as workspacesRestored } from "../../../state/workspaceSlice";
 
 export default function WorkspaceList(props) {
   const { members, openedWorkspaceId, handleWorkspaceOpen, handleDialogOpen } =
@@ -47,10 +46,6 @@ export default function WorkspaceList(props) {
       .get(`/user/workspaces`, { withCredentials: true })
       .then((response) => response.data)
       .then((data) => {
-        if (data.length < workspaces.length) {
-          dispatch(workspacesRestored(data));
-          handleWorkspaceOpen(null, "");
-        }
         setWorkspaces(data);
       })
       .catch((error) => {
