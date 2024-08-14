@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { io } from "socket.io-client";
 import { workspaceIdSaved } from "../state/chatSlice";
 import { saved as socketSaved } from "../state/socketSlice";
+import { cleared as chatsCleared } from "../state/chatSlice";
 
 import MessageContainer from "../components/chat/messages/MessageContainer";
 import ChatBoxSidebar from "../components/chat/members/ChatBoxSidebar";
@@ -28,16 +29,17 @@ const ChatBox = () => {
   );
 
   useEffect(() => {
-    // console.log("Socket: ", socket);
     dispatch(workspaceIdSaved(workspaceId));
     dispatch(socketSaved(socket));
 
     socket.on("connection", () => {
       setSocketId(socket.id);
-      console.log("inside connection event", socket);
-      console.log("connected", socket.id);
+      // console.log("inside connection event", socket);
+      // console.log("connected", socket.id);
     });
-
+    return () => {
+      dispatch(chatsCleared());
+    };
     // socket.emit("join-workspace-room", workspaceId);
   }, []);
 

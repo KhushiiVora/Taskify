@@ -22,11 +22,9 @@ const useLogout = () => {
       .get("/auth/logout/", { withCredentials: true })
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         clearState();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,

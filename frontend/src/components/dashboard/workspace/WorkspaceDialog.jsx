@@ -46,7 +46,6 @@ export default function WorkspaceDialog(props) {
           });
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -74,7 +73,6 @@ export default function WorkspaceDialog(props) {
           });
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,

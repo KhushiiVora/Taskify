@@ -49,7 +49,7 @@ class WorkspaceService {
       }
       return { workspace };
     } catch (error) {
-      console.log("error in findWorkspaceById service", error);
+      console.log("Error in findWorkspaceById service", error);
       return { error };
     }
   };
@@ -139,7 +139,7 @@ class WorkspaceService {
       ).populate("members");
       return { updatedWorkspace };
     } catch (error) {
-      console.log("error in removeWorkspaceMember service: ", error);
+      console.log("Error in removeWorkspaceMember service: ", error);
       return { error: new Error("Unable to remove user!") };
     }
   };

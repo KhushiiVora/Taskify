@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import MainNavbar from "./components/navbar/MainNavbar";
 import ChatBox from "./pages/ChatBox";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,13 +27,12 @@ function App() {
       .get("/user", { withCredentials: true })
       .then((response) => response.data)
       .then((user) => {
-        console.log("user", user);
         dispatch(workspacesRestored(user.workspaces));
         delete user.workspaces;
         delete user.password;
         dispatch(userSaved(user));
       })
-      .catch((error) => console.log("Hello user"));
+      .catch((error) => {});
   }, []);
 
   return (
@@ -65,6 +65,7 @@ function App() {
           />
         </Route>
         <Route path="/chatbox/:workspaceId" element={<ChatBox />} />
+        <Route path="/*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

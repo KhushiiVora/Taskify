@@ -92,7 +92,7 @@ class TaskService {
       updateTaskCategory = { ...updateTaskCategory.toObject(), progress };
       return { updateTaskCategory };
     } catch (error) {
-      console.log("Error in categoryName service: ", error);
+      console.log("Error in editCategoryName service: ", error);
       return { error };
     }
   };
@@ -130,7 +130,7 @@ class TaskService {
 
       return { taskCategories };
     } catch (error) {
-      console.log("error in  deleteTaskcategory", error);
+      console.log("Error in  deleteTaskcategory", error);
       return { error };
     }
   };

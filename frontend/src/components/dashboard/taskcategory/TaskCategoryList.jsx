@@ -28,7 +28,6 @@ function TaskCategoryList(props) {
   const { clearState } = useLogout();
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("Timer Started🚀: ");
       getTaskCategoryList();
     }, 5000);
 
@@ -36,7 +35,6 @@ function TaskCategoryList(props) {
     getTaskCategoryList();
 
     return () => {
-      console.log("Stopped......");
       clearInterval(timer);
     };
   }, [workspaceId]);
@@ -57,7 +55,6 @@ function TaskCategoryList(props) {
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 401) {
           setTimeout(() => {
             clearState();
@@ -93,11 +90,9 @@ function TaskCategoryList(props) {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         setTaskCategories(data);
       })
       .catch((error) => {
-        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
@@ -113,7 +108,6 @@ function TaskCategoryList(props) {
       });
     handleConfirmDialogClose();
   };
-  console.log(" Task Categories: ", taskCategories);
 
   return (
     !loading && (

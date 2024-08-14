@@ -48,7 +48,6 @@ function TaskRowCard(props) {
           updateTaskState(data._id, data.state);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 422) {
             setTimeout(handleExpand, 3000);
           } else {
@@ -83,7 +82,6 @@ function TaskRowCard(props) {
           setTasks(data);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 400) {
             setTimeout(handleExpand, 3000);
           } else {

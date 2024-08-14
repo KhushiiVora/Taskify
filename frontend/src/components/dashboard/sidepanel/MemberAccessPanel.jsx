@@ -33,11 +33,9 @@ function MemberAccessPanel(props) {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         dispatch(membersRestored(data));
       })
       .catch((error) => {
-        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
@@ -62,11 +60,9 @@ function MemberAccessPanel(props) {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         dispatch(membersRestored(data));
       })
       .catch((error) => {
-        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",

@@ -18,10 +18,9 @@ const useSendMessage = () => {
       })
       .then((response) => response.data)
       .then((data) => {
-        console.log(data.message);
+        // console.log(data.message);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,

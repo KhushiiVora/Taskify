@@ -6,7 +6,7 @@ const validateSchema = (schema) => {
     const { error } = schema.validate(req.body);
     if (error) {
       const joiError = errorService.handleJoiError(error);
-      console.log(joiError);
+      console.log("Joi Error: ",joiError);
       res.status(joiError.status).json(joiError.message);
     } else next();
   };

@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { StyledSection } from "../../styles/dialog.styles";
 
 export default function AvatarDialog(props) {
-  const { open, handleDialogClose } = props;
+  const { open, handleDialogClose, setOpenAvatarDialog } = props;
   const [isGirl, setIsGirl] = useState(1);
   const [selectedImage, setSelectedImage] = useState("");
   const { user } = useSelector((state) => state.user);
@@ -37,12 +37,10 @@ export default function AvatarDialog(props) {
         )
         .then((response) => response.data)
         .then((data) => {
-          console.log(data);
           dispatch(userSaved(data));
           setSelectedImage("");
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -55,7 +53,7 @@ export default function AvatarDialog(props) {
             transition: Slide,
           });
         });
-      handleDialogClose(event);
+      setOpenAvatarDialog(false);
     }
   };
 

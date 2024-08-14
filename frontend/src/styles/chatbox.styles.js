@@ -3,8 +3,6 @@ import { styled as MUIStyled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 
 const StyledSection = styled.section`
-  /* flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 */
-
   display: flex;
   height: 100%;
   img {
@@ -95,6 +93,14 @@ const StyledSection = styled.section`
   }
   .chatbox__message_container--form input:focus {
     border: 2px solid ${(props) => props.theme.iconColor};
+  }
+
+  .chatbox__message_container--skeleton {
+    border-radius: none;
+    border-radius: 0 0.7rem 0.7rem 0.7rem;
+  }
+  .chatbox__message_container--skeleton.sender {
+    border-radius: 0.7rem 0rem 0.7rem 0.7rem;
   }
 `;
 

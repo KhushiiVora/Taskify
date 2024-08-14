@@ -1,3 +1,0 @@
-const NoResultFound = () => {
-  <div></div>;
-};

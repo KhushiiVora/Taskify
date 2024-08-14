@@ -21,7 +21,7 @@ import { StyledSection, colorSuccess } from "../../../styles/taskList.styles";
 import { StyledSearchBar } from "../../../styles/searchbar.styles";
 
 function TaskList(props) {
-  const { handleExpand, categoryId, workspaceId } = props;
+  const { handleExpand, categoryId, workspaceId, categoryName } = props;
 
   const [isNewTask, setIsNewTask] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
@@ -41,7 +41,6 @@ function TaskList(props) {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      console.log("(Task) Timer Started🚀: ");
       getTaskList();
     }, 5000);
 
@@ -49,7 +48,6 @@ function TaskList(props) {
     getTaskList();
 
     return () => {
-      console.log("Task timer stopped..");
       clearInterval(timer);
     };
   }, []);
@@ -92,11 +90,9 @@ function TaskList(props) {
       .then((response) => response.data)
       .then((data) => {
         setTasks(data);
-        console.log(" Task data: ", data);
         setLoading(false);
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 500) {
           setTimeout(handleExpand, 3000);
         } else if (error.response.status === 401) {
@@ -170,7 +166,6 @@ function TaskList(props) {
           setTasks(data);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 422) {
             setTimeout(handleExpand, 3000);
           } else {
@@ -201,7 +196,7 @@ function TaskList(props) {
     if (event.target.value) {
       setFilteredTasks(
         tasks.filter((task) =>
-          task.name.toLowerCase().includes(event.target.value)
+          task.name.toLowerCase().includes(event.target.value.toLowerCase())
         )
       );
     } else {
@@ -219,6 +214,7 @@ function TaskList(props) {
           type="button"
           icon={<IoArrowBackCircle className="icons" />}
         />
+        <h1>{categoryName}</h1>
         <Button
           className="underlined_button"
           type="button"

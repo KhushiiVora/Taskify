@@ -123,6 +123,12 @@ const ButtonDiv = styled.div`
     font-style: italic;
     cursor: pointer;
   }
+
+  .pink {
+    background: ${(props) => props.theme.color2};
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 `;
 
 export default ButtonDiv;

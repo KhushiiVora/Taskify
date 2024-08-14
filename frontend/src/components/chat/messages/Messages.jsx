@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import useGetMessages from "../../../hooks/useGetMessages";
 import useListenMessages from "../../../hooks/useListenMessages";
-import MessageSkeleton from "./MessageSkeleton";
+import Skeleton from "@mui/material/Skeleton";
 import MessageCard from "./MessageCard";
 import { ToastContainer } from "react-toastify";
 
@@ -24,9 +24,17 @@ const Messages = () => {
     <div className="chatbox__message_container--messages">
       {/* Case 1: Show skeleton when it is loading i.e. still fetching the data */}
       {loading &&
-        [...Array(4)].map((_, index) => {
-          <MessageSkeleton key={index} />;
-        })}
+        [...Array(10)].map((_, index) => (
+          <Skeleton
+            key={index}
+            className={`chatbox__message_container--skeleton ${
+              index % 3 ? "sender" : ""
+            }`}
+            variant="rectangular"
+            width={((index % 4) + 1) * 120}
+            height={60}
+          />
+        ))}
       {/* Case 2: Show a text message when there no messages between the sender and the receiver */}
       {!loading && messages.length === 0 && (
         <p className="text-center text-white ">

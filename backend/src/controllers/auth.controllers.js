@@ -38,7 +38,7 @@ const getLogout = (req, res) => {
     res.cookie("token", "", { maxAge: 0, httpOnly: true });
     res.status(200).send("Logged out successfully");
   } catch (error) {
-    console.log("error in logout", error);
+    console.log("Error in getLogout: ", error);
     res.status(500).send("Unable to log out! Try again.");
   }
 };

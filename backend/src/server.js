@@ -19,8 +19,6 @@ app.use(cookieParser());
 server.listen(port, () => {
   console.log("Server is on at port", port, "!!!");
 });
-// app.listen(port, () => {
-//   console.log("Server is on at port", port, "!!!");
-// });
+
 
 module.exports = app;

@@ -52,10 +52,7 @@ export default function Profile() {
     setOpenAvatarDialog(true);
   };
   const handleDialogClose = (event) => {
-    if (
-      event.target.tagName === "SECTION" ||
-      event.target.name === "selectAvatarButton"
-    ) {
+    if (event.target.tagName === "SECTION") {
       setOpenAvatarDialog(false);
     }
   };
@@ -71,11 +68,9 @@ export default function Profile() {
         )
         .then((response) => response.data)
         .then((data) => {
-          console.log("Updated user: ", data);
           dispatch(userSaved(data));
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -102,11 +97,9 @@ export default function Profile() {
         )
         .then((response) => response.data)
         .then((data) => {
-          console.log("Updated user: ", data);
           dispatch(userSaved(data));
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -160,6 +153,7 @@ export default function Profile() {
                 ) : (
                   <Input
                     name="username"
+                    type="text"
                     value={username}
                     onChange={(event) => {
                       setUsername(event?.target?.value);
@@ -282,6 +276,7 @@ export default function Profile() {
       <AvatarDialog
         open={openAvatarDialog}
         handleDialogClose={handleDialogClose}
+        setOpenAvatarDialog={setOpenAvatarDialog}
       />
     </StyledSection>
   );

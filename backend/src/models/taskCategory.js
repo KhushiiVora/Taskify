@@ -37,8 +37,8 @@ taskCategorySchema.methods.getTasksWithStateTrue = async function () {
   try {
     await this.populate("progress");
     return this.progress;
-  } catch (err) {
-    console.error("Error retrieving tasks with state true:", err);
+  } catch (error) {
+    console.error("Error in taskCategory model (retrieving tasks with state true):", error);
     return [];
   }
 };

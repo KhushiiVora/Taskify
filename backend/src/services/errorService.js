@@ -65,7 +65,7 @@ class ErrorService {
       }
       this.error.status = 409;
     }
-    console.log(this.error);
+    console.log("Error in errorService (handleMongooseError)", this.error);
     return this.error;
   }
 }

@@ -49,7 +49,6 @@ export default function WorkspaceList(props) {
         setWorkspaces(data);
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 401) {
           setTimeout(() => {
             clearState();
@@ -65,7 +64,7 @@ export default function WorkspaceList(props) {
     if (event.target.value) {
       setFilteredWorkspaces(
         workspaces.filter((workspace) =>
-          workspace.name.toLowerCase().includes(event.target.value)
+          workspace.name.toLowerCase().includes(event.target.value.toLowerCase())
         )
       );
     } else {

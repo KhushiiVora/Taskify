@@ -29,6 +29,15 @@ const StyledDiv = styled.div`
     justify-content: space-between;
     line-height: 1.3;
   }
+  .category_content input {
+    font-size: 1.2rem;
+    font-weight: bold;
+    font-family: inherit;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const menuItemEditStyling = {

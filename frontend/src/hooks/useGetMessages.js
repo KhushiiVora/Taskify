@@ -25,9 +25,9 @@ const useGetMessages = () => {
           if (data.length) {
             dispatch(messagesRestored(data));
           }
+          setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
@@ -39,13 +39,13 @@ const useGetMessages = () => {
             theme: "colored",
             transition: Slide,
           });
+          setLoading(false);
         });
-
-      setLoading(false);
     };
 
     if (chatsData.workspaceId) getMessages();
     // }, [selectedConversation._id, setMessages]);
+   
   }, [chatsData.workspaceId]);
 
   return { loading };

@@ -10,23 +10,23 @@ import MemberAccessPanel from "../components/dashboard/sidepanel/MemberAccessPan
 import Workspace from "../components/dashboard/workspace/Workspace";
 
 import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { IoHome } from "react-icons/io5";
 import { IoLogOut } from "react-icons/io5";
 import { RiAddCircleFill } from "react-icons/ri";
+import SpinnerIcon from "../components/atoms/SpinnerIcon";
 import noWorkspaceSelected from "/img/noWorkspaceSelected.svg";
 import { StyledSection } from "../styles/dashboard.styles";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Dashboard() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [openMemberAccessPanel, setOpenMemberAccessPanel] = useState(false);
-  // const [workspaceOpen, setWorkspaceOpen] = useState(false);
   const [openedWorkspaceId, setOpenedWorkspaceId] = useState("");
   const { username } = useSelector((state) => state.user.user);
   const { members } = useSelector((state) => state.members);
   const { workspaces } = useSelector((state) => state.workspaces);
 
-  const { logout } = useLogout();
+  const { logout, loading } = useLogout();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -35,7 +35,6 @@ export default function Dashboard() {
     if (location.state?.workspaceId) {
       setOpenedWorkspaceId(location.state.workspaceId);
     }
-    console.log(username);
   }, []);
 
   const handleDialogClose = (event) => {
@@ -49,12 +48,8 @@ export default function Dashboard() {
 
   const handleWorkspaceOpen = (event, key) => {
     // setWorkspaceOpen(true);
-    console.log(key);
     setOpenedWorkspaceId(key);
   };
-  // const handleWorkspaceClose = (event) => {
-  //   setWorkspaceOpen(false);
-  // };
 
   return (
     <StyledSection>
@@ -85,7 +80,7 @@ export default function Dashboard() {
         <Button
           type="button"
           className="text_button"
-          icon={<IoLogOut className="text_icons" />}
+          icon={loading ? <SpinnerIcon /> : <IoLogOut className="text_icons" />}
           text="Logout"
           onClick={logout}
         />
@@ -128,7 +123,6 @@ export default function Dashboard() {
 
 const NoWorkspaceSelected = () => {
   const { user } = useSelector((state) => state.user);
-  const { workspaces } = useSelector((state) => state.workspaces);
   return (
     <div className="dashboard__empty">
       <div>

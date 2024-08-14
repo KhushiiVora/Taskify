@@ -62,7 +62,7 @@ class AuthService {
       const token = jwt.sign(payload, this.secret, options);
       return token;
     } catch (error) {
-      console.log(error);
+      console.log("Error AuthService  (generating token): ", error);
       return null;
     }
   };

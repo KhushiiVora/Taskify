@@ -41,7 +41,7 @@ class UserService {
       }
       return { user };
     } catch (error) {
-      console.log("error in findUserById service", error);
+      console.log("Error in findUserById service", error);
       return { error };
     }
   };

@@ -27,8 +27,12 @@ const StyledSection = styled.section`
   .tasklist__header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.2rem;
+  }
+  .tasklist__header h1 {
+
   }
   .tasklist__header .underlined_button {
     height: 2.7rem;

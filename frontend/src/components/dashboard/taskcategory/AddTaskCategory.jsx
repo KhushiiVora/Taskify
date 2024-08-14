@@ -39,12 +39,10 @@ function AddTaskCategory(props) {
         )
         .then((response) => response.data)
         .then((taskCategory) => {
-          console.log("handleSubmit in taskcategory", taskCategory);
           setTaskCategories((previousList) => [...previousList, taskCategory]);
           setOpenTaskCategoryInput(false);
         })
         .catch((error) => {
-          console.log(error);
           refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
@@ -71,7 +69,6 @@ function AddTaskCategory(props) {
         )
         .then((response) => response.data)
         .then((data) => {
-          console.log(data);
           setTaskCategories((previousList) => {
             const newList = [...previousList];
             newList.forEach((categoryData) => {
@@ -85,7 +82,6 @@ function AddTaskCategory(props) {
           });
         })
         .catch((error) => {
-          console.log(error);
           refreshPage(error.response.status);
           toast.error(error.response.data, {
             position: "bottom-center",
@@ -109,6 +105,7 @@ function AddTaskCategory(props) {
         name="categoryName"
         onChange={handleChange}
         value={title}
+        placeholder="Task Category name"
         ref={inputRef}
         onBlur={() => {
           if (isNewCategory) {

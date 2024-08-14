@@ -10,7 +10,6 @@ const leaderPrivilegeMiddleware = (req, res, next) => {
   });
 
   if (!isLeader) {
-    console.log("Your access is denied!!");
     return res.status(403).send("Access denied!! You're not a leader.");
   }
 

@@ -19,7 +19,6 @@ const getTaskCategories = async (req, res) => {
         return { ...taskCategory.toObject(), progress };
       })
     );
-    // console.log("objects with progress------", taskCategories);
     res.status(200).send(taskCategories);
   } else {
     const error = errorService.handleError(result.error);

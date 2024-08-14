@@ -92,7 +92,6 @@ export default function Workspace(props) {
         dispatch(membersRestored(data));
       })
       .catch((error) => {
-        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
@@ -107,6 +106,8 @@ export default function Workspace(props) {
         });
       });
     setExpand(false);
+    setSearchInput("");
+    setFilteredTaskCategories([]);
   }, [workspaceId]);
 
   const handleWorkspaceLock = async () => {
@@ -120,11 +121,9 @@ export default function Workspace(props) {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         dispatch(lockStateSaved(data));
       })
       .catch((error) => {
-        console.log(error);
         refreshPage(error.response.status);
         toast.error(error.response.data, {
           position: "bottom-center",
@@ -150,11 +149,9 @@ export default function Workspace(props) {
       )
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         quickRefresh();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,
@@ -177,11 +174,9 @@ export default function Workspace(props) {
       })
       .then((response) => response.data)
       .then((data) => {
-        console.log(data);
         quickRefresh();
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,
@@ -221,7 +216,7 @@ export default function Workspace(props) {
     if (filteredTaskCategories.length && searchInput) {
       setFilteredTaskCategories(
         taskCategories.filter((taskCategory) =>
-          taskCategory.name.toLowerCase().includes(searchInput)
+          taskCategory.name.toLowerCase().includes(searchInput.toLowerCase())
         )
       );
     }
@@ -237,7 +232,9 @@ export default function Workspace(props) {
     if (event.target.value) {
       setFilteredTaskCategories(
         taskCategories.filter((taskCategory) =>
-          taskCategory.name.toLowerCase().includes(event.target.value)
+          taskCategory.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase())
         )
       );
     } else {
@@ -252,6 +249,11 @@ export default function Workspace(props) {
           <TaskList
             handleExpand={handleExpand}
             categoryId={selectedCategoryId}
+            categoryName={
+              taskCategories.find(
+                (taskCategory) => taskCategory._id === selectedCategoryId
+              )?.name
+            }
             workspaceId={workspaceId}
           />
         </section>
@@ -355,7 +357,6 @@ export default function Workspace(props) {
               <div
                 className="avatar-container"
                 onClick={() => {
-                  // console.log("div");
                   setOpenMemberAccessPanel(true);
                 }}
               >

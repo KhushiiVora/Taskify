@@ -72,7 +72,6 @@ export default function Login() {
         navigate(`/dashboard/${user.username}`);
       })
       .catch((error) => {
-        console.log(error);
         toast.error(error.response.data, {
           position: "bottom-center",
           autoClose: 3000,

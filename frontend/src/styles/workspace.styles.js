@@ -35,7 +35,9 @@ const StyledSection = styled.section`
   .workspace__header {
     display: flex;
     justify-content: space-between;
+    position: relative;
     margin: 0.3rem;
+    margin-bottom: 0.5rem;
   }
 
   .workspace__header--actions {
@@ -43,6 +45,15 @@ const StyledSection = styled.section`
     gap: 0.7rem;
   }
 
+  .workspace__header--actions input {
+    padding: 0.7rem;
+    position: absolute;
+    top: 3rem;
+    z-index: 1;
+    outline: none;
+    border-radius: 0.5rem;
+    border: 1px solid ${(props) => props.theme.color3};
+  }
   .action_lock,
   .action_locked {
     height: 100%;

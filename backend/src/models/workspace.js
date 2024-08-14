@@ -33,15 +33,11 @@ const workspaceSchema = new mongoose.Schema(
       type: [mongoose.Schema.Types.ObjectId],
       ref: "User",
       required: true,
-      validate: (value) => {
-        console.log(value);
-      },
     },
 
     taskCategories: {
       type: [mongoose.Schema.Types.ObjectId],
       ref: "TaskCategory",
-      // unique: true,
     },
   },
   { timestamps: true }

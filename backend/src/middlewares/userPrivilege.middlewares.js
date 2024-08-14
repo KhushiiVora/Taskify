@@ -10,7 +10,6 @@ const userPrivilegeMiddleware = (req, res, next) => {
   });
 
   if (!isValidWorkspace) {
-    console.log("Your access is denied!!");
     return res.status(403).send("Access denied!! You've been removed.");
   }
 

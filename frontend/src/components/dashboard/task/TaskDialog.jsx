@@ -127,7 +127,6 @@ export default function TaskDialog(props) {
           handleDialogClose(event);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 400) {
             setTimeout(handleExpand, 3000);
           } else {
@@ -170,7 +169,6 @@ export default function TaskDialog(props) {
           handleDialogClose(event);
         })
         .catch((error) => {
-          console.log(error);
           if (error.response.status === 422) {
             setTimeout(handleExpand, 3000);
           } else {

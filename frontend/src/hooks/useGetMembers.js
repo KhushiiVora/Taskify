@@ -20,11 +20,9 @@ const useGetMembers = (workspaceId) => {
         })
         .then((response) => response.data)
         .then((data) => {
-          console.log(data);
           dispatch(workspaceMemebersRestored(data));
         })
         .catch((error) => {
-          console.log(error);
           toast.error(error.response.data, {
             position: "bottom-center",
             autoClose: 3000,
