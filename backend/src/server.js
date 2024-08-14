@@ -5,10 +5,11 @@ const cors = require("cors");
 // const app = express();
 require("./db/mongoose");
 const port = process.env.PORT;
+const baseURL = process.env.BASE_URL;
 
 app.use(
   cors({
-    origin: `http://localhost:5173`,
+    origin: baseURL,
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
     credentials: true,
   })
@@ -19,6 +20,5 @@ app.use(cookieParser());
 server.listen(port, () => {
   console.log("Server is on at port", port, "!!!");
 });
-
 
 module.exports = app;
