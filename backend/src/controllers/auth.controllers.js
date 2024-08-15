@@ -26,6 +26,8 @@ const postLogin = async (req, res) => {
     res.cookie("token", result.jwt, {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
+      sameSite: "None",
+      secure: process.env.NODE_ENV === "production",
     });
     res.status(200).send(result.user);
   } else {
