@@ -129,6 +129,24 @@ const ButtonDiv = styled.div`
     font-size: 1.2rem;
     font-weight: bold;
   }
+
+  .addTaskCategory--button {
+    outline: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .addTaskCategory--button.add {
+    border-left: 2px solid ${(props) => props.theme.color3};
+    color: ${(props) => props.theme.color3};
+    font-size: 1.5rem;
+    height: 100%;
+    width: 2rem;
+  }
+  .addTaskCategory--button.edit {
+    color: ${(props) => props.theme.successColorDark};
+    font-size: 1.3rem;
+  }
 `;
 
 export default ButtonDiv;

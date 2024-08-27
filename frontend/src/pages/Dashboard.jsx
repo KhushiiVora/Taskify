@@ -102,7 +102,7 @@ export default function Dashboard() {
             setOpenMemberAccessPanel={setOpenMemberAccessPanel}
           />
         ) : (
-          <NoWorkspaceSelected />
+          <NoWorkspaceSelected workspaces={workspaces} />
         )}
       </section>
       <WorkspaceDialog
@@ -121,22 +121,31 @@ export default function Dashboard() {
   );
 }
 
-const NoWorkspaceSelected = () => {
+const NoWorkspaceSelected = (props) => {
+  const { workspaces } = props;
   const { user } = useSelector((state) => state.user);
   return (
     <div className="dashboard__empty">
       <div>
-        <h2>Welcome {user.username}!</h2>
+        <h2>
+          Welcome {workspaces.length ? "back" : ""} {user.username}!
+        </h2>
         <img
           className="dashboard__empty--img"
           src={noWorkspaceSelected}
           alt="No Workspace Selected"
         />
-        <p>
-          {/* {workspaces.length ? "Select" : "Create"} a workspace to start with */}
-          Ready to boost your productivity? Create your new workspace or join an
-          existing one by clicking the {<RiAddCircleFill />} button.
-        </p>
+        {!workspaces.length ? (
+          <p>
+            Ready to enhance your productivity? Click the <RiAddCircleFill />{" "}
+            button to create or join a workspace.
+          </p>
+        ) : (
+          <p>
+            Ready to enhance your productivity? Select a workspace to get
+            started.
+          </p>
+        )}
       </div>
     </div>
   );

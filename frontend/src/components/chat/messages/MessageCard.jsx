@@ -9,15 +9,13 @@ const MessageCard = React.forwardRef((props, ref) => {
   const { user } = useSelector((state) => state.user);
   const { members } = useSelector((state) => state.members);
 
-  // const { workspaceId } = useSelector((state) => state.chats);
   const fromMe = message.senderId === user._id;
 
   const profilePic = fromMe
     ? user.profilePic
     : members.filter((member) => member._id === message.senderId)[0]
         ?.profilePic;
-  // console.log(profilePic);
-  // const bubbleBgColor = fromMe ? "bg-blue-500" : "";
+
   const formattedTime = extractTime(message.createdAt);
 
   return (

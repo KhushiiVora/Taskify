@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "../../../axiosConfig";
 import { refreshPage } from "../../../utils/refreshPage";
+import Button from "../../atoms/Button";
 
+import { IoAddOutline } from "react-icons/io5";
+import { MdSaveAs } from "react-icons/md";
 import { toast, Slide, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SpinnerIcon from "../../atoms/SpinnerIcon";
 
 function AddTaskCategory(props) {
   const {
@@ -15,6 +19,7 @@ function AddTaskCategory(props) {
     workspaceId,
   } = props;
   const [title, setTitle] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const inputRef = useRef(null);
 
@@ -27,12 +32,13 @@ function AddTaskCategory(props) {
     setTitle(event.target.value);
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async () => {
+    setLoading(true);
     if (isNewCategory) {
       await axios
         .post(
           `/dashboard/taskCategories/${workspaceId}/create`,
-          { categoryName: event.target.value },
+          { categoryName: title },
           {
             withCredentials: true,
           }
@@ -41,6 +47,7 @@ function AddTaskCategory(props) {
         .then((taskCategory) => {
           setTaskCategories((previousList) => [...previousList, taskCategory]);
           setOpenTaskCategoryInput(false);
+          setLoading(false);
         })
         .catch((error) => {
           refreshPage(error.response.status);
@@ -55,8 +62,10 @@ function AddTaskCategory(props) {
             theme: "colored",
             transition: Slide,
           });
+          setLoading(false);
         });
     } else {
+      console.log("hollaaaa");
       if (title === categoryToEdit.name) {
         setCategoryToEdit(null);
         return;
@@ -80,6 +89,8 @@ function AddTaskCategory(props) {
             });
             return newList;
           });
+          setCategoryToEdit(null);
+          setLoading(false);
         })
         .catch((error) => {
           refreshPage(error.response.status);
@@ -94,32 +105,52 @@ function AddTaskCategory(props) {
             theme: "colored",
             transition: Slide,
           });
+          setLoading(false);
+          setCategoryToEdit(null);
         });
-      setCategoryToEdit(null);
     }
   };
 
   return (
     <>
-      <input
-        name="categoryName"
-        onChange={handleChange}
-        value={title}
-        placeholder="Task Category name"
-        ref={inputRef}
+      <form
+        className="addTaskCategory__form"
         onBlur={() => {
           if (isNewCategory) {
-            !title
-              ? setOpenTaskCategoryInput(false)
-              : setOpenTaskCategoryInput(true);
+            !title && setOpenTaskCategoryInput(false);
           } else {
-            setCategoryToEdit(null);
+            categoryToEdit.name === title &&
+              !loading &&
+              setCategoryToEdit(null);
           }
         }}
-        onKeyDown={(event) => {
-          if (event.key === "Enter" && title) handleSubmit(event);
-        }}
-      />
+      >
+        <input
+          className="addTaskCategory--input"
+          name="categoryName"
+          onChange={handleChange}
+          value={title}
+          placeholder="Task Category name"
+          ref={inputRef}
+        />
+        <Button
+          type="button"
+          name="addTaskCategory"
+          onClick={() => title && handleSubmit()}
+          className={`addTaskCategory--button ${
+            isNewCategory ? "add" : "edit"
+          }`}
+          icon={
+            loading ? (
+              <SpinnerIcon />
+            ) : isNewCategory ? (
+              <IoAddOutline />
+            ) : (
+              <MdSaveAs />
+            )
+          }
+        />
+      </form>
       <ToastContainer />
     </>
   );

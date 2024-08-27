@@ -42,7 +42,7 @@ function TaskList(props) {
   useEffect(() => {
     const timer = setInterval(() => {
       getTaskList();
-    }, 5000);
+    }, 6000);
 
     setLoading(true);
     getTaskList();

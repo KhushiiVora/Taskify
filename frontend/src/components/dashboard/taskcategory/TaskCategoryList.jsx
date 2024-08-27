@@ -29,7 +29,7 @@ function TaskCategoryList(props) {
   useEffect(() => {
     const timer = setInterval(() => {
       getTaskCategoryList();
-    }, 5000);
+    }, 6000);
 
     setLoading(true);
     getTaskCategoryList();

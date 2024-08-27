@@ -37,9 +37,7 @@ const Messages = () => {
         ))}
       {/* Case 2: Show a text message when there no messages between the sender and the receiver */}
       {!loading && messages.length === 0 && (
-        <p className="text-center text-white ">
-          Send a message to start the conversation
-        </p>
+        <p>Send a message to start the conversation</p>
       )}
       {/* Case 3: There are messages and not loading */}
       {!loading &&

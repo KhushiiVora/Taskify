@@ -38,6 +38,7 @@ const StyledSection = styled.section`
   .dashboard__empty {
     width: 100%;
     display: flex;
+    font-size: 1.2rem;
     justify-content: center;
     align-items: center;
     text-align: center;

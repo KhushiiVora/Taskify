@@ -24,7 +24,7 @@ const StyledSection = styled.section`
   }
 
   .no_task_category p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     text-align: center;
     margin: 0.5rem;
   }
@@ -45,14 +45,21 @@ const StyledSection = styled.section`
     gap: 0.7rem;
   }
 
-  .workspace__header--actions input {
-    padding: 0.7rem;
+  .workspace__header--actions .addTaskCategory__form {
     position: absolute;
     top: 3rem;
     z-index: 1;
-    outline: none;
+    display: flex;
     border-radius: 0.5rem;
-    border: 1px solid ${(props) => props.theme.color3};
+    border: 2px solid ${(props) => props.theme.color3};
+    background-color: ${(props) => props.theme.color1};
+    overflow: hidden;
+  }
+
+  .addTaskCategory__form .addTaskCategory--input {
+    outline: none;
+    border: none;
+    padding: 0.5rem;
   }
   .action_lock,
   .action_locked {

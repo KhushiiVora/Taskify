@@ -5,11 +5,11 @@ const cors = require("cors");
 // const app = express();
 require("./db/mongoose");
 const port = process.env.PORT;
-const baseURL = process.env.BASE_URL;
+require("dotenv").config();
 
 app.use(
   cors({
-    origin: baseURL,
+    origin: process.env.BASE_URL,
     allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept",
     credentials: true,
   })

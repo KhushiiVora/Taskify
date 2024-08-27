@@ -20,6 +20,17 @@ const StyledSection = styled.section`
     gap: 1rem;
     border: 1px solid ${(props) => props.theme.iconColor};
   }
+
+  .chatbox__sidebar--heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .chatbox__sidebar--heading h2 {
+    color: ${(props) => props.theme.iconColor};
+  }
+
   .chatbox__sidebar--member_card {
     display: flex;
     align-items: center;
@@ -101,6 +112,11 @@ const StyledSection = styled.section`
   }
   .chatbox__message_container--skeleton.sender {
     border-radius: 0.7rem 0rem 0.7rem 0.7rem;
+  }
+  .chatbox__sidebar_skeleton {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
   }
 `;
 

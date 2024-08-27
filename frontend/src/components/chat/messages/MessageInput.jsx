@@ -23,10 +23,10 @@ const MessageInput = () => {
     <form className="chatbox__message_container--form" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="border text-sm rounded-lg block w-full p-2.5  bg-gray-700 border-gray-600 text-white"
         placeholder="Send a message"
         value={message}
         onChange={handleChange}
+        disabled={loading}
       />
       <Button
         type="submit"

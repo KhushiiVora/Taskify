@@ -29,14 +29,19 @@ const StyledDiv = styled.div`
     justify-content: space-between;
     line-height: 1.3;
   }
-  .category_content input {
+  .category_content .addTaskCategory__form {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid ${(props) => props.theme.textColor};
+    margin-bottom: 0.5rem;
+  }
+  .category_content .addTaskCategory__form input {
     font-size: 1.2rem;
     font-weight: bold;
     font-family: inherit;
     outline: none;
     border: none;
-    border-bottom: 1px solid ${(props) => props.theme.textColor};
-    margin-bottom: 0.5rem;
+    padding: 0;
   }
 `;
 

@@ -34,7 +34,7 @@ export default function WorkspaceList(props) {
     : workspaces;
 
   useEffect(() => {
-    const timer = setInterval(getUpdatesOfWorkspace, 5000);
+    const timer = setInterval(getUpdatesOfWorkspace, 6000);
 
     return () => {
       clearInterval(timer);
@@ -64,7 +64,9 @@ export default function WorkspaceList(props) {
     if (event.target.value) {
       setFilteredWorkspaces(
         workspaces.filter((workspace) =>
-          workspace.name.toLowerCase().includes(event.target.value.toLowerCase())
+          workspace.name
+            .toLowerCase()
+            .includes(event.target.value.toLowerCase())
         )
       );
     } else {
