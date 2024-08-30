@@ -134,7 +134,7 @@ const StyledSection = styled.section`
     padding-top: 3rem;
     font-size: 1.5rem;
     text-align: justify;
-    line-height: 2rem;
+    line-height: 1.5;
     color: ${(props) => props.theme.textColor1};
   }
 
@@ -208,7 +208,7 @@ const StyledSection = styled.section`
   }
   .sections--card_content {
     width: 100%;
-    height: 40%;
+    max-height: 40%;
     padding: 0 3rem 2rem;
     display: flex;
     flex-direction: column;
@@ -235,7 +235,6 @@ const StyledSection = styled.section`
 
   /**---------------- Section4: Footer --------------*/
   .section_container__footer {
-    /* height: 100%; */
     height: 20vh;
     width: 100%;
     display: flex;
@@ -247,6 +246,90 @@ const StyledSection = styled.section`
   }
   .copyright {
     font-size: 1.1rem;
+  }
+
+  @media screen and (min-width: 965px) and (max-width: 1200px) {
+    .main_section {
+      margin-bottom: 4rem;
+    }
+    .main_section__content {
+      width: 60%;
+      padding: 5rem 4rem;
+    }
+    .main_section__content .separator {
+      margin-top: 1.5rem;
+      width: 20%;
+      border-width: 0.2rem;
+    }
+    .main_section__content--start_btn {
+      min-height: 50%;
+    }
+    .bottom_img--img3 {
+      top: 35%;
+    }
+    .section_container {
+      padding: 4rem 2.5rem 2rem 2.5rem;
+    }
+    .section_container__sections--content {
+      width: 50%;
+    }
+    .section_container__sections--content h1 {
+      font-size: 2rem;
+    }
+    .section_container__sections--content div {
+      margin-top: 1.5rem;
+      width: 25%;
+      border-width: 0.2rem;
+    }
+    .section_container__sections--content p {
+      padding-top: 1.5rem;
+      font-size: 1.3rem;
+      text-align: justify;
+      line-height: 1.3;
+      color: ${(props) => props.theme.textColor1};
+    }
+    .section_container__sections--img {
+      width: 50%;
+    }
+    .section_container__sections--cards {
+      gap: 1rem;
+    }
+    .sections--card_img {
+      width: 100%;
+      height: 40%;
+      margin: 1rem;
+    }
+    .task_check_img {
+      height: 15rem;
+      align-self: first baseline;
+    }
+    .workspace_lock_img {
+      height: 12rem;
+      align-self: last baseline;
+    }
+    .profile_img {
+      height: 12rem;
+      align-self: first baseline;
+    }
+    .sections--card_content {
+      max-height: 100%;
+      padding: 1.5rem 1.5rem 0rem;
+    }
+    .sections--card_content h1 {
+      font-size: 1.2rem;
+    }
+    .sections--card_content div {
+      width: 70%;
+      border-width: 0.13rem;
+    }
+    .sections--card_content p {
+      font-size: 1.1rem;
+      padding: 0 1rem;
+    }
+    .section_container__footer {
+      height: 10vh;
+      line-height: 1.5;
+    }
   }
 `;
 

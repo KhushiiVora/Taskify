@@ -17,6 +17,7 @@ import Dashboard from "./pages/Dashboard";
 import MainNavbar from "./components/navbar/MainNavbar";
 import ChatBox from "./pages/ChatBox";
 import PageNotFound from "./pages/PageNotFound";
+import NonDesktop from "./components/NonDesktop";
 
 function App() {
   const dispatch = useDispatch();
@@ -38,34 +39,42 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={user ? <Navbar username={user.username} /> : <MainNavbar />}
-        >
-          <Route index element={<Home />} />
-          <Route
-            path="profile"
-            element={
-              <ProtectedRoute user={user}>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="signup" element={<SignUp />} />
-          <Route path="login" element={<Login />} />
-        </Route>
-        <Route path="/dashboard">
-          <Route
-            path=":username"
-            element={
-              <ProtectedRoute user={user}>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Route>
-        <Route path="/chatbox/:workspaceId" element={<ChatBox />} />
-        <Route path="/*" element={<PageNotFound />} />
+        {window.innerWidth < 965 ? (
+          <Route path="/*" element={<NonDesktop />} />
+        ) : (
+          <>
+            <Route
+              path="/"
+              element={
+                user ? <Navbar username={user.username} /> : <MainNavbar />
+              }
+            >
+              <Route index element={<Home />} />
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="login" element={<Login />} />
+            </Route>
+            <Route path="/dashboard">
+              <Route
+                path=":username"
+                element={
+                  <ProtectedRoute user={user}>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/chatbox/:workspaceId" element={<ChatBox />} />
+            <Route path="/*" element={<PageNotFound />} />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

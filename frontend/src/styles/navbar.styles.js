@@ -18,13 +18,15 @@ const StyledNav = styled.nav`
 
   .navbar__logo {
     width: 8%;
+    display: flex;
+    align-items: center;
     margin: 0.2rem 0 0 0.5rem;
-    background-color: ${props=>props.theme.color1}
+    background-color: ${(props) => props.theme.color1};
   }
-  .navbar__logo img{
+  .navbar__logo img {
     width: 100%;
   }
-  
+
   .navbar__links {
     font-weight: bold;
     font-size: 1.1rem;
