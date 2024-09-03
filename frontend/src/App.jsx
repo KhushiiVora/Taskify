@@ -40,7 +40,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         {window.innerWidth < 965 ? (
-          <Route path="/*" element={<NonDesktop />} />
+          <>
+            <Route path="/" element={<NonDesktop />} />
+            <Route path="/*" element={<NonDesktop />} />
+          </>
         ) : (
           <>
             <Route
