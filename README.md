@@ -1,5 +1,5 @@
 <p align="center">
-    # Taskify
+    <h1>Taskify</h1>
 </p>
 
 ---
