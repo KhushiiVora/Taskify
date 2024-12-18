@@ -1,6 +1,6 @@
 # Taskify
 
-[Demo Video](https://drive.google.com/file/d/11ZPP3igjV5Ph3R6D1AKP0H0MTSbvYrHS/preview)
+[Demo Video](https://drive.google.com/file/d/11ZPP3igjV5Ph3R6D1AKP0H0MTSbvYrHS/view)
 
 ## 📈 Tech Stack:
 
