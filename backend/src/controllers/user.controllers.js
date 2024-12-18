@@ -3,7 +3,6 @@ const ErrorService = require("../services/errorService");
 const userService = new UserService();
 const errorService = new ErrorService();
 
-// Error handling remaining
 const getWorkspaces = async (req, res) => {
   const result = await userService.findUserById(req.user._id, "workspaces");
 
