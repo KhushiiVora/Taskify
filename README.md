@@ -1,10 +1,6 @@
-<p align="center" style="font-size: 30px;font-weight: bold">
-    Taskify
-</p>
+# Taskify
 
----
-
-<p align="center"><a href="https://drive.google.com/file/d/11ZPP3igjV5Ph3R6D1AKP0H0MTSbvYrHS/view?usp=drive_link">Demo Video</a></p>
+[Demo Video](https://drive.google.com/file/d/11ZPP3igjV5Ph3R6D1AKP0H0MTSbvYrHS/preview)
 
 ## 📈 Tech Stack:
 
