@@ -1,12 +1,14 @@
+<p align="center">
+    # Taskify
+</p>
+
+---
+
+<p align="center"><a href="https://drive.google.com/file/d/11ZPP3igjV5Ph3R6D1AKP0H0MTSbvYrHS/view?usp=drive_link">Demo Video</a></p>
+
 ## 📈 Tech Stack:
 
-Frontend: ReactJS, React Router, Redux Toolkit, Redux Persist, Material-UI (MUI)
-
-Backend: ExpressJS, Mongoose, SocketIO
-
-Authentication & Validation: Passport, JWT, JOI
-
-| Category                        | Technologies                                                           |
+| Category                        | Libraries                                                              |
 | ------------------------------- | ---------------------------------------------------------------------- |
 | **Frontend**                    | ReactJS, React Router, Redux Toolkit, Redux Persist, Material-UI (MUI) |
 | **Backend**                     | ExpressJS, Mongoose, Socket.IO                                         |
@@ -25,6 +27,8 @@ Authentication & Validation: Passport, JWT, JOI
 ✔️ Leader Privileges: Role assignment, member management, task and workspace control
 
 ✔️ Real-time ChatBox for team communication
+
+---
 
 ## 🧑🏻‍💻Technical Highlights:
 
