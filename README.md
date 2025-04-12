@@ -28,7 +28,7 @@
 
 ## 🧑🏻‍💻Technical Highlights:
 
-📌 API Pooling for real-time updates
+📌 API Polling for real-time updates
 
 📌 Custom Hooks for increasing reusability
 
